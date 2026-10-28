@@ -1,10 +1,10 @@
 {
   "schema_version": 1,
-  "revision": 0,
-  "updated_at": "2026-10-28T19:27:52.091Z",
+  "revision": 4,
+  "updated_at": "2026-10-28T19:37:02.185Z",
   "workspace_relative_to_repo": ".",
-  "active_context": "development",
-  "last_checkpoint": null,
+  "active_context": "operations",
+  "last_checkpoint": "docs/workflow/handoffs/2026-10-28T19-37-02-185Z-r4.json",
   "gate_policy": {
     "version": 1,
     "legacy_task_ids": []
@@ -55,11 +55,11 @@
       "id": "japanese_history_bootstrap",
       "context": "development",
       "title": "初期コピーの検証結果を初回コミット後に記録する",
-      "status": "doing",
+      "status": "done",
       "depends_on": [],
       "authorization": "requested",
       "request_ref": "2026-10-28 ユーザー依頼：同じシステムから科目固有要素を外して指定フォルダへコピー",
-      "next_action": "初回コミット後に既存の検証根拠を評価し、完了checkpointを記録する。",
+      "next_action": "実教材・原典・正式分類の追加依頼を待つ。",
       "evidence": [
         "docs/verification.md",
         "docs/copy-manifest.md"
@@ -94,34 +94,44 @@
       "execution": {
         "worker": "root",
         "max_attempts": 3,
-        "attempts": []
+        "attempts": [
+          {
+            "number": 1,
+            "outcome": "passed",
+            "summary": "初回コミットが作成され、初期コピーの検証根拠と独立レビュー、今回の168件検査を確認した。元の409件・型検査・ビルド・PC/SPは既存の検証記録に基づく。",
+            "at": "2026-10-28T19:31:01.958Z",
+            "failed_criteria": []
+          }
+        ]
       }
     },
     {
       "id": "create_github_remote",
       "context": "operations",
       "title": "非公開GitHubリポジトリを作成してコミット・pushする",
-      "status": "doing",
+      "status": "done",
       "depends_on": [
         "japanese_history_bootstrap"
       ],
       "authorization": "requested",
       "request_ref": "2026-10-29 ユーザー依頼：/Users/yoshiki/Desktop/japanese-history-practice のリモートリポジトリ作成、コミット・push。公開・デプロイは依頼されていない。",
-      "next_action": "送信対象を検査し、初回コミット・非公開リポジトリ作成・mainのpushと照合を行う。",
+      "next_action": "記録ファイルの追加コミットをpushし、最終HEAD一致と最新CIを確認する。",
       "evidence": [
         "docs/remote-repository.md"
       ],
-      "last_verified_at": null,
-      "verification_scope": "送信範囲・資料保護・Git履歴・非公開リポジトリ・mainの同期。アプリ本体の変更や公開は対象外。",
+      "last_verified_at": "2026-10-28T19:35:57.612Z",
+      "verification_scope": "送信前の168件テスト・設定検査・資料保護、191ファイルの初回コミット、Privateと配信未接続、初回push後のmainのSHA一致、初回pushのCI成功を確認。アプリ本体は変更せず、並行作業の未コミット変更は保持。",
       "acceptance": [
         {
           "id": "checks",
           "kind": "automated",
           "description": "資料保護検査・ハーネス検査が成功し、非公開リポジトリのmainとローカルHEADが一致する",
           "verification": "送信前フック、全履歴検査、差分検査、168件の軽量テスト、GitHubの非公開設定とリモートSHAを確認する",
-          "status": "pending",
-          "evidence": [],
-          "checked_at": null
+          "status": "passed",
+          "evidence": [
+            "docs/remote-repository.md"
+          ],
+          "checked_at": "2026-10-28T19:35:57.612Z"
         },
         {
           "id": "review",
@@ -132,14 +142,22 @@
           "evidence": [
             "docs/remote-repository.md"
           ],
-          "checked_at": "2026-10-28T19:22:25Z",
+          "checked_at": "2026-10-28T19:36:52.526Z",
           "reviewer": "remote_safety_review"
         }
       ],
       "execution": {
         "worker": "root",
         "max_attempts": 3,
-        "attempts": []
+        "attempts": [
+          {
+            "number": 1,
+            "outcome": "passed",
+            "summary": "資料保護・168件検査・独立レビュー・初回CI成功と非公開mainのpushおよびSHA一致を確認した。配色作業の未コミット変更を保持する。",
+            "at": "2026-10-28T19:36:56.621Z",
+            "failed_criteria": []
+          }
+        ]
       }
     },
     {
@@ -171,7 +189,7 @@
           "verification": "review_palette によるソースとPC/SP画像の独立レビュー",
           "status": "pending",
           "evidence": [],
-          "checked_at": "2026-10-28T19:29:52Z",
+          "checked_at": null,
           "reviewer": null
         }
       ],

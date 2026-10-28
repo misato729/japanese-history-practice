@@ -63,5 +63,6 @@ unset ADMIN_PASSWORD
 - [進捗と引き継ぎ](docs/workflow/README.md)
 - [初期コピーの検証記録](docs/verification.md)
 - [全ファイルと差し替え一覧](docs/copy-manifest.md)
+- [リモート作成・送信の確認](docs/remote-repository.md)
 
-Gitは履歴・リモートなしの新規リポジトリです。コミット・push・公開は実施していません。元サービスの資料・利用者・履歴・認証情報・決済設定・作業履歴は含みません。
+2026-10-29の明示依頼に基づき、[非公開リポジトリ](https://github.com/misato729/japanese-history-practice)を作成し、mainへコミット・pushしました。デプロイや自動配信は開始していません。元サービスの資料・利用者・履歴・認証情報・決済設定・作業履歴は含みません。

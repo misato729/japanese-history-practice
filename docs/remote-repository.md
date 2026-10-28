@@ -23,10 +23,17 @@ remote_safety_review、2026-10-28T19:22:25Z。送信候補190件で保護対象�
 
 - リモート：`https://github.com/misato729/japanese-history-practice`。所有者misato729、Private、空の状態で新規作成した。
 - GitHub APIでもPrivate・空リポジトリ・mainを確認。Webhook 0件、Deployment 0件、Pages無効。
-- 初回コミットとpushの結果は実施後に追記する。当初はGitHub CLI・Gitの認証が未設定だったため、ユーザーへGitHubログインを依頼し、ログイン後に所有者misato729への接続を確認した。認証情報はGitへ含めていない。
+- 初回コミット：`6d3d81b1f9317b52f17655f1b606dcc35a563f73`、191ファイル。mainへpush成功。送信前フックも成功し、GitHub APIでリモートmainとローカルHEADの一致を確認した。
+- 当初はGitHub CLI・Gitの認証が未設定だったため、ユーザーへGitHubログインを依頼し、ログイン後に所有者misato729への接続を確認した。認証情報はGitへ含めていない。
+- push後もPrivate、Webhook 0件、Deployment 0件、Pages無効。既存の検査用CIが起動した。記録コミットの送信後に最新の検査結果と同期状態を確認する。
+- 初回コミット待ちだった初期コピーの評価・完了checkpointを保存した。初回コミット後に別途生じた `frontend/app/assets/css/main.css` と `frontend/public/images/logo.svg` の変更は今回の記録コミットに含めず、そのまま保持する。
 
 既存の初期コピー検証409件・型検査・ビルド・PC/SP操作の根拠は `docs/verification.md` にあり、今回の再実行結果と区別する。
 
 作成結果用に取得した画像へ追加認証画面が混入していたため、独立レビューで差し戻し、初回コミット前に画像と参照を削除した。認証情報をGit履歴へ保存・送信していない。画像を含まない最終indexを再確認する。
 
 修正後の独立再確認：remote_safety_review、2026-10-28T19:29:52Z。最終stage191件、差戻し画像と参照なし、保護対象0件、全履歴保護検査と差分検査成功。初回コミット可能、未解決指摘なし。
+
+初回pushのGitHub Actions（40754969241）はharness・verifyとも成功。別タスクに誤って記入した未コミットの進捗項目は、当該タスクの登録記録と照合して原状へ戻し、IDで今回のタスクだけを更新した。以降の状態書込はタスクIDと最新世代を照合する。
+
+最終独立レビュー受領：remote_safety_review、2026-10-28T19:36:52.526Z。別タスクの復元、今回のタスクだけへの結果記録、書式・根拠・差分、他作業の保持を確認。未解決指摘なし。
