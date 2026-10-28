@@ -4,7 +4,7 @@
 :root {
   color-scheme: light;
   /* The reference cover pairs vivid red with deep navy and white. */
-  --ink: #101638;
+  --ink: #080b22;
   --muted: #686575;
   --text-secondary: #484556;
   --line: #e6d9dd;
@@ -17,7 +17,7 @@
   --teal: var(--brand-primary, #e60020);
   --teal-dark: var(--brand-primary-dark, #a60017);
   --focus: var(--ink);
-  --shadow-color: 16, 22, 56;
+  --shadow-color: 8, 11, 34;
   --yellow: #f4c95d;
   --coral: #e66b54;
   --success: #21735d;

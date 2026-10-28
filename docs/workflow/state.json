@@ -1,10 +1,10 @@
 {
   "schema_version": 1,
-  "revision": 4,
-  "updated_at": "2026-10-28T19:37:02.185Z",
+  "revision": 8,
+  "updated_at": "2026-10-28T20:11:04.348Z",
   "workspace_relative_to_repo": ".",
-  "active_context": "operations",
-  "last_checkpoint": "docs/workflow/handoffs/2026-10-28T19-37-02-185Z-r4.json",
+  "active_context": "development",
+  "last_checkpoint": "docs/workflow/handoffs/2026-10-28T20-04-01-405Z-r8.json",
   "gate_policy": {
     "version": 1,
     "legacy_task_ids": []
@@ -164,20 +164,87 @@
       "id": "japanese_history_cover_palette",
       "context": "development",
       "title": "参考画像の赤・濃紺・白へサイトの基調カラーを変更する",
-      "status": "doing",
+      "status": "done",
       "depends_on": [],
       "authorization": "requested",
-      "request_ref": "2026-10-29 ユーザー依頼：添付した日本史表紙の色をサイトの基調カラーにする",
-      "next_action": "共通配色・ロゴ・管理画面のアクセントを調整し、PC/SP実操作と独立レビューを記録する",
-      "evidence": [],
-      "last_verified_at": null,
-      "verification_scope": "実装・検証中。ローカル変更のみ。",
+      "request_ref": "2026-10-29 ユーザー依頼：添付した日本史表紙の色をサイトの基調カラーにする。追加依頼：ブラウザ接続を再試行しPC・スマホの表示確認まで完了させる。",
+      "next_action": "今回の配色変更は完了。コミット・push・公開は追加の明示依頼を待つ。",
+      "evidence": [
+        "docs/color-verification.md"
+      ],
+      "last_verified_at": "2026-10-28T20:03:15.232Z",
+      "verification_scope": "配色実装・既存フロント154件・設定/資料保護/差分検査・色コントラスト・ソース独立レビュー、PC1440x725/SP393x852で表示・条件選択・メニュー・ログインへの移動・0件時の無効状態、8画像の独立レビューを確認。実問題・認証後画面・管理画面実操作は範囲外。Git送信・公開操作なし。",
       "acceptance": [
         {
           "id": "checks",
           "kind": "automated",
           "description": "設定検査・既存フロント検査が成功し、PC/SPで新しい配色と選択・メニュー・画面移動を確認する",
           "verification": "check-template、frontend npm test、ブラウザ実操作、主要色の文字コントラスト",
+          "status": "passed",
+          "evidence": [
+            "docs/color-verification.md"
+          ],
+          "checked_at": "2026-10-28T20:03:15.232Z"
+        },
+        {
+          "id": "review",
+          "kind": "review",
+          "description": "別担当が色の適用範囲と可読性、機能・コピーの保持を確認する",
+          "verification": "review_palette によるソースとPC/SP画像の独立レビュー",
+          "status": "passed",
+          "evidence": [
+            "docs/color-verification.md"
+          ],
+          "checked_at": "2026-10-28T20:03:15.232Z",
+          "reviewer": "review_palette"
+        }
+      ],
+      "execution": {
+        "worker": "root",
+        "max_attempts": 3,
+        "attempts": [
+          {
+            "number": 1,
+            "outcome": "failed",
+            "summary": "配色実装・154件検査・ソース独立レビュー・HTTP200の赤設定反映は確認。ブラウザ接続障害によりPC/SP実操作と画像レビューは未達。",
+            "at": "2026-10-28T19:43:27.817Z",
+            "failed_criteria": [
+              "checks",
+              "review"
+            ]
+          },
+          {
+            "number": 2,
+            "outcome": "passed",
+            "summary": "PC1440x725・SP393x852の表示と条件選択・メニュー・ログイン移動・0件時無効を実操作で確認し、8画像の独立レビューで問題なし。既存154件成功と今回の設定・資料保護・差分検査も確認。",
+            "at": "2026-10-28T20:03:19.968Z",
+            "failed_criteria": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "push_cover_palette",
+      "context": "operations",
+      "title": "配色変更とPC/SP確認記録をコミット・pushする",
+      "status": "doing",
+      "depends_on": [
+        "japanese_history_cover_palette"
+      ],
+      "authorization": "requested",
+      "request_ref": "2026-10-29 ユーザー依頼：OKです。コミット・pushしてください",
+      "next_action": "資料保護・独立レビュー後に承認対象だけをコミットしmainへpush、リモート一致とCIを確認する",
+      "evidence": [
+        "docs/color-verification.md"
+      ],
+      "last_verified_at": null,
+      "verification_scope": "送信前検査中。公開・デプロイは対象外。",
+      "acceptance": [
+        {
+          "id": "checks",
+          "kind": "automated",
+          "description": "承認対象だけをコミット・pushし、資料保護・設定・進捗検査が成功してリモートmainと送信commitが一致する",
+          "verification": "差分とstage対象、check-private-sources、check-template、ハーネス、pre-pushフック、GitHubのmainとCIを確認",
           "status": "pending",
           "evidence": [],
           "checked_at": null
@@ -185,12 +252,14 @@
         {
           "id": "review",
           "kind": "review",
-          "description": "別担当が色の適用範囲と可読性、機能・コピーの保持を確認する",
-          "verification": "review_palette によるソースとPC/SP画像の独立レビュー",
-          "status": "pending",
-          "evidence": [],
-          "checked_at": null,
-          "reviewer": null
+          "description": "別担当が送信ファイルに保護対象・秘密値・個人情報がなく配信停止方針が保持されることを確認する",
+          "verification": "review_palette がアプリ差分・記録・8画像と配信構成を独立確認",
+          "status": "passed",
+          "evidence": [
+            "docs/color-verification.md"
+          ],
+          "checked_at": "2026-10-28T20:11:04.348Z",
+          "reviewer": "review_palette"
         }
       ],
       "execution": {

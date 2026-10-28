@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "revision": 6,
+  "state_hash": "1aeae9c4293f9a4f38402da7a1963949a1bde2f70e448fcab788b925f0d5fe54",
+  "recorded_at": "2026-10-28T19:43:50.154Z",
+  "timezone": "UTC",
+  "context": "development",
+  "task": "japanese_history_cover_palette",
+  "summary": "配色変更と自動検査・ソースレビューの根拠を保存。PC/SP実操作と画像レビューはブラウザ接続障害により未確認で、完了判定を保留する。",
+  "next_action": "ブラウザ接続復旧後にPC/SP実操作と画像レビューを確認し、残り2回以内で再評価する",
+  "missing_local_files": [],
+  "git": {
+    "available": true,
+    "head": "54b9bf76354e684c86c44dabf620d2fba2e82b82",
+    "changes": [
+      {
+        "status": " M",
+        "path": "frontend/app/assets/css/main.css"
+      },
+      {
+        "status": " M",
+        "path": "frontend/public/images/logo.svg"
+      },
+      {
+        "status": "??",
+        "path": "docs/color-verification.md"
+      }
+    ]
+  },
+  "file_hashes": {
+    "AGENTS.md": "694830fc967e37c0df20f341d65e42e2e7191b114c6a859d2d35cb52da36c998",
+    "README.md": "13db1d2c82bfae17e9be7e23d79436a112bae969a92f2ea818f6907fc65594d7",
+    "docs/testing.md": "60ca85668a355f2b4636c032a2ea59aa89d515421cbd1c64fcda187c9dd66bda",
+    "docs/workflow/README.md": "45ae8a20c72aa9c36f17f24c1d5b9fa40f45e5db2e89f44a9e1888e60aeea2fc",
+    "docs/workflow/policy.json": "a8a06204e633bbc5ea100a10dfec4b41f97326ced0d53346c48a643017f0c5a3",
+    "docs/workflow/task.example.json": "4bf161efce99b7d0a26798e3445d1f142505e512eedd591ea11cfb194d67da9f",
+    "docs/workflow/contexts/product.md": "172c5934e1627e359c505a748091b143ce900212c35b391cbd1f3c50cb23cddb",
+    "docs/workflow/contexts/development.md": "fc2c06f76ad5cb8162c93e67992e64a20e7aea337ffaf8f0b5e242af3bb12dab",
+    "docs/workflow/contexts/operations.md": "6c4dc1183d9ed6124d3ac681d20a828fbdc0fb9336aa13c803e0641779b3b195",
+    "scripts/context.mjs": "3828c41d1cc5a6977b8444035e094e61e1c9895fcaa9451ecb1919e799ecaffc",
+    "scripts/context.test.mjs": "bc14ad1ba5d331f75d5f34923ac59a2cfe29b5b1c12174b0aa57e6d8ee572923",
+    "scripts/workflow-policy.mjs": "60535f2c9bf42203c059ca39a0b254c168b7cfb2468904a3842725fe3797141e",
+    "scripts/workflow-policy.test.mjs": "394287e7d1e84756a3ac8833918f964ee66f0ef2c34934d121d055fb37af4782",
+    "scripts/workspace-policy.mjs": "7df0ef39ed1ccc26807c9be13bf7f738ea84237716085d6d3093c87d1445caa3",
+    "scripts/workspace-policy.test.mjs": "ee8fd9f4b55b3bebedbb654a8a2f945c3c11ab732240ba639cf679624e99e77a",
+    "scripts/check-private-sources.mjs": "1d28447b51b39591d42151f236b837b33d695662168ee5c71500205aa0de96af",
+    "scripts/check-private-sources.test.mjs": "be62774be1c55d0c586d2b3cfdfd530d5a8358c4597d756edcb9625b2419ce4e",
+    ".gitignore": "a5db1953d822ec6cbb6bbe4999c83596aa73fd86f7810b57a40c097e9b293307",
+    ".dockerignore": "a6f14e87f2ed1eaceb22cf119f268fce4a6338fb2cc853fb957a0330ef9d9430",
+    ".githooks/pre-push": "3529b300f7a655102ad899ab31fa8b2c404ec37479d1195aa9bcd3efa97bf90c",
+    "config/exam.json": "4ea07bb25a34c50c0abda4336f6db9612ca606dd217caaa57781429c7a44ebdb",
+    "docs/verification.md": "c9232834f12be4380417793aa4bd210e2543f44490fde109d2a1e1d437498d70"
+  },
+  "verification_note": "ハッシュ・Git・記録済み完了条件の確認であり、テストや出典照合の自動再実行ではない。依頼・権限は最新のユーザー指示とAGENTS.mdに従う。"
+}
