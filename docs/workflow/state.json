@@ -1,10 +1,10 @@
 {
   "schema_version": 1,
-  "revision": 8,
-  "updated_at": "2026-10-28T20:11:04.348Z",
+  "revision": 10,
+  "updated_at": "2026-10-28T20:15:34.194Z",
   "workspace_relative_to_repo": ".",
-  "active_context": "development",
-  "last_checkpoint": "docs/workflow/handoffs/2026-10-28T20-04-01-405Z-r8.json",
+  "active_context": "operations",
+  "last_checkpoint": "docs/workflow/handoffs/2026-10-28T20-15-34-194Z-r10.json",
   "gate_policy": {
     "version": 1,
     "legacy_task_ids": []
@@ -227,27 +227,29 @@
       "id": "push_cover_palette",
       "context": "operations",
       "title": "配色変更とPC/SP確認記録をコミット・pushする",
-      "status": "doing",
+      "status": "done",
       "depends_on": [
         "japanese_history_cover_palette"
       ],
       "authorization": "requested",
       "request_ref": "2026-10-29 ユーザー依頼：OKです。コミット・pushしてください",
-      "next_action": "資料保護・独立レビュー後に承認対象だけをコミットしmainへpush、リモート一致とCIを確認する",
+      "next_action": "配色変更と送信は完了。追加依頼を待ち、配信停止を維持する。",
       "evidence": [
         "docs/color-verification.md"
       ],
-      "last_verified_at": null,
-      "verification_scope": "送信前検査中。公開・デプロイは対象外。",
+      "last_verified_at": "2026-10-28T20:15:22.347Z",
+      "verification_scope": "承認対象16ファイルをf01251fとしてコミットしmainへpush、送信前168件・設定/資料保護/差分/進捗検査と独立レビュー、pre-push、ローカルとリモートSHA一致、GitHub Actions40761108178のharness/verify成功、Deployment0を確認。現状Public、可視性・配信設定の変更なし。",
       "acceptance": [
         {
           "id": "checks",
           "kind": "automated",
           "description": "承認対象だけをコミット・pushし、資料保護・設定・進捗検査が成功してリモートmainと送信commitが一致する",
           "verification": "差分とstage対象、check-private-sources、check-template、ハーネス、pre-pushフック、GitHubのmainとCIを確認",
-          "status": "pending",
-          "evidence": [],
-          "checked_at": null
+          "status": "passed",
+          "evidence": [
+            "docs/color-verification.md"
+          ],
+          "checked_at": "2026-10-28T20:15:22.347Z"
         },
         {
           "id": "review",
@@ -265,7 +267,15 @@
       "execution": {
         "worker": "root",
         "max_attempts": 3,
-        "attempts": []
+        "attempts": [
+          {
+            "number": 1,
+            "outcome": "passed",
+            "summary": "承認対象をf01251fとしてmainへpushしSHA一致を確認。168件・資料保護・独立レビュー・送信フックとGitHub Actionsのharness/verify成功。Deployment0、配信設定変更なし。",
+            "at": "2026-10-28T20:15:23.911Z",
+            "failed_criteria": []
+          }
+        ]
       }
     }
   ]

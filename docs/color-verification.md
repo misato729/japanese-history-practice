@@ -17,6 +17,8 @@
 | `docs/workflow/handoffs/2026-10-28T19-43-50-154Z-r6.json` | 未完了の確認範囲と再開手順を保存 |
 | `docs/workflow/handoffs/2026-10-28T20-03-19-968Z-r7.json` | PC/SP実操作と独立画像レビューを含む第2回の合格評価 |
 | `docs/workflow/handoffs/2026-10-28T20-04-01-405Z-r8.json` | gate通過後の完了checkpoint |
+| `docs/workflow/handoffs/2026-10-28T20-15-23-911Z-r9.json` | 承認済みpush・SHA一致・CI成功の合格評価 |
+| `docs/workflow/handoffs/2026-10-28T20-15-34-194Z-r10.json` | 送信完了のcheckpoint |
 
 ## 自動検査と独立レビュー
 
@@ -79,3 +81,11 @@
 送信前のGitHub API確認では、現在のリポジトリはPublic、Pages無効、Webhook 0件、Deployment 0件でした。以前の非公開作成記録とは時点が異なり、今回の作業では可視性を変更しません。公開リポジトリへの送信として対象内容を独立再確認し、保護対象・秘密値・個人情報の混入なしと判定しました。`core.hooksPath=.githooks` とpre-pushを維持し、`[skip netlify]` を付けて送信します。
 
 送信前の軽量回帰（ハーネス・完了判定・資料保護4ファイル）は168件成功、失敗・スキップ0。設定検査、進捗の形式・根拠パス検査、stage後の資料保護検査、差分検査も成功しました。
+
+### 送信結果
+
+- 配色と検証記録のコミット：`f01251fb8bf200dc06097f29f1b03566b80ee495`（16ファイル、`[skip netlify]` 付き）。
+- `origin/main` へpush成功。ローカルHEADとリモートmainのSHA一致を確認。pre-pushの全履歴資料保護検査も成功。
+- [GitHub Actions 40761108178](https://github.com/misato729/japanese-history-practice/actions/runs/40761108178)：harness・verifyとも成功。資料保護、進捗、設定、独立DBのAPI/セキュリティ検査、フロントテスト、型検査、ビルドまで成功。
+- push後のDeploymentは0件。公開設定・配信接続・デプロイは変更していません。
+- 送信完了の評価は第1回で合格し、gateもpassed。世代10のcheckpointで `push_cover_palette` をdoneとして保存しました。この追加記録を同じ承認範囲の記録コミット対象に含めています。
