@@ -1,0 +1,25 @@
+.env
+.env.*
+!.env.example
+.DS_Store
+**/node_modules/
+**/.nuxt/
+**/.output/
+**/coverage/
+**/.data/
+*.pem
+*.key
+
+# Copyrighted reference materials and derived full OCR/images: local only.
+**/[pP][aA][sS][tT]-[eE][xX][aA][mM]/
+**/[gG][lL][oO][sS][sS][aA][rR][yY]*
+**/分析/
+# Full classification reference stays on the local workstation.
+**/[cC][lL][aA][sS][sS][iI][fF][iI][cC][aA][tT][iI][oO][nN].[mM][dD]*
+歴検**.[pP][dD][fF]
+歴検**.[zZ][iI][pP]
+
+# Shared optional local-only policy and transient workflow files.
+**/[lL][oO][cC][aA][lL]-[oO][nN][lL][yY]/
+/docs/workflow/.context.lock/
+/docs/workflow/state.json.*.tmp

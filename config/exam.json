@@ -1,0 +1,107 @@
+{
+  "schema_version": 1,
+  "site": {
+    "id": "japanese-history-practice",
+    "name": "日本史ラボ",
+    "short_name": "日本史ラボ",
+    "exam_name": "日本史演習",
+    "description": "日本史の学習を支援する演習サービスです。選択問題・語句記述・論述と解説で、知識のつながりや正誤判断を確かめられます。",
+    "tagline": "知識をつなげ、日本史を読み解く。",
+    "logo_path": "/images/logo.svg",
+    "primary_color": "#e60020",
+    "contact_email": "",
+    "overview": [
+      {
+        "title": "対象とする学習",
+        "body": "日本史の学習を支援する演習サービスです。対象試験・出題範囲・章節の分類は、今後設定します。"
+      },
+      {
+        "title": "現在の収録内容",
+        "body": "日本史の実問題は未登録です。教材と問題は管理画面から登録できます。"
+      },
+      {
+        "title": "学習の進め方",
+        "body": "公開された問題に1問ずつ回答すると、正答・解説・参照資料を確認できます。会員登録すると回答履歴とお気に入りを使えます。"
+      },
+      {
+        "title": "問題と解説の根拠",
+        "body": "各問題には、作問時に実際に確認した資料を登録します。日本史の参照資料は未登録です。"
+      }
+    ]
+  },
+  "exam": {
+    "set_count": 5,
+    "questions_per_exam": 5,
+    "choice_labels": [
+      "①",
+      "②",
+      "③",
+      "④"
+    ],
+    "formats": {
+      "group_practice": {
+        "group_count": 1,
+        "allowed_group_question_counts": [
+          7,
+          8
+        ]
+      },
+      "rekiken_mock": {
+        "group_count": 4,
+        "question_count": 30,
+        "allowed_group_question_counts": [
+          7,
+          8
+        ]
+      }
+    }
+  },
+  "categories": {
+    "major": [
+      {
+        "value": "chapter_01",
+        "label": "第1章（未設定）"
+      },
+      {
+        "value": "chapter_02",
+        "label": "第2章（未設定）"
+      }
+    ],
+    "minor": [
+      {
+        "value": "chapter_01_section_01",
+        "label": "1（未設定）",
+        "major_category_value": "chapter_01"
+      },
+      {
+        "value": "chapter_02_section_01",
+        "label": "1（未設定）",
+        "major_category_value": "chapter_02"
+      }
+    ]
+  },
+  "payments": {
+    "enabled": false,
+    "free_exam_count": 1,
+    "amount": 500,
+    "currency": "jpy"
+  },
+  "cultural_history_categories": [
+    {
+      "value": "art_history",
+      "label": "美術史"
+    },
+    {
+      "value": "music_history",
+      "label": "音楽史"
+    },
+    {
+      "value": "literature_history",
+      "label": "文学史"
+    },
+    {
+      "value": "other_cultural_history",
+      "label": "その他"
+    }
+  ]
+}

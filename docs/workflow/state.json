@@ -1,0 +1,185 @@
+{
+  "schema_version": 1,
+  "revision": 0,
+  "updated_at": "2026-10-28T19:27:52.091Z",
+  "workspace_relative_to_repo": ".",
+  "active_context": "development",
+  "last_checkpoint": null,
+  "gate_policy": {
+    "version": 1,
+    "legacy_task_ids": []
+  },
+  "contexts": [
+    {
+      "id": "product",
+      "title": "学習設計・サービスの方針",
+      "card": "docs/workflow/contexts/product.md"
+    },
+    {
+      "id": "development",
+      "title": "実装・検証",
+      "card": "docs/workflow/contexts/development.md"
+    },
+    {
+      "id": "operations",
+      "title": "資料・データ・配信の運用",
+      "card": "docs/workflow/contexts/operations.md"
+    }
+  ],
+  "watch_files": [
+    "AGENTS.md",
+    "README.md",
+    "docs/testing.md",
+    "docs/workflow/README.md",
+    "docs/workflow/policy.json",
+    "docs/workflow/task.example.json",
+    "docs/workflow/contexts/product.md",
+    "docs/workflow/contexts/development.md",
+    "docs/workflow/contexts/operations.md",
+    "scripts/context.mjs",
+    "scripts/context.test.mjs",
+    "scripts/workflow-policy.mjs",
+    "scripts/workflow-policy.test.mjs",
+    "scripts/workspace-policy.mjs",
+    "scripts/workspace-policy.test.mjs",
+    "scripts/check-private-sources.mjs",
+    "scripts/check-private-sources.test.mjs",
+    ".gitignore",
+    ".dockerignore",
+    ".githooks/pre-push",
+    "config/exam.json",
+    "docs/verification.md"
+  ],
+  "tasks": [
+    {
+      "id": "japanese_history_bootstrap",
+      "context": "development",
+      "title": "初期コピーの検証結果を初回コミット後に記録する",
+      "status": "doing",
+      "depends_on": [],
+      "authorization": "requested",
+      "request_ref": "2026-10-28 ユーザー依頼：同じシステムから科目固有要素を外して指定フォルダへコピー",
+      "next_action": "初回コミット後に既存の検証根拠を評価し、完了checkpointを記録する。",
+      "evidence": [
+        "docs/verification.md",
+        "docs/copy-manifest.md"
+      ],
+      "last_verified_at": "2026-10-28T15:03:54.205Z",
+      "verification_scope": "新規コピー・独立設定・原資料除外・409自動テスト・型検査・ビルド・PC/SPの初期画面と絞り込み操作。実教材・公開・販売は対象外。",
+      "acceptance": [
+        {
+          "id": "checks",
+          "kind": "automated",
+          "description": "共通機能を維持し、独立したDB設定と合成データで検査が通る",
+          "verification": "資料・秘密値・履歴の除外、設定検査、ハーネス、フロント・API・型検査・ビルド、PC/SPを確認する",
+          "status": "passed",
+          "evidence": [
+            "docs/verification.md"
+          ],
+          "checked_at": "2026-10-28T15:03:54.205Z"
+        },
+        {
+          "id": "review",
+          "kind": "review",
+          "description": "独立レビューで科目固有要素と元環境への依存が残っていない",
+          "verification": "別担当がコピー差分、設定、DBと資料の分離、検証範囲を確認する",
+          "status": "passed",
+          "evidence": [
+            "docs/verification.md"
+          ],
+          "checked_at": "2026-10-28T15:03:54.205Z",
+          "reviewer": "review_japanese_copy"
+        }
+      ],
+      "execution": {
+        "worker": "root",
+        "max_attempts": 3,
+        "attempts": []
+      }
+    },
+    {
+      "id": "create_github_remote",
+      "context": "operations",
+      "title": "非公開GitHubリポジトリを作成してコミット・pushする",
+      "status": "doing",
+      "depends_on": [
+        "japanese_history_bootstrap"
+      ],
+      "authorization": "requested",
+      "request_ref": "2026-10-29 ユーザー依頼：/Users/yoshiki/Desktop/japanese-history-practice のリモートリポジトリ作成、コミット・push。公開・デプロイは依頼されていない。",
+      "next_action": "送信対象を検査し、初回コミット・非公開リポジトリ作成・mainのpushと照合を行う。",
+      "evidence": [
+        "docs/remote-repository.md"
+      ],
+      "last_verified_at": null,
+      "verification_scope": "送信範囲・資料保護・Git履歴・非公開リポジトリ・mainの同期。アプリ本体の変更や公開は対象外。",
+      "acceptance": [
+        {
+          "id": "checks",
+          "kind": "automated",
+          "description": "資料保護検査・ハーネス検査が成功し、非公開リポジトリのmainとローカルHEADが一致する",
+          "verification": "送信前フック、全履歴検査、差分検査、168件の軽量テスト、GitHubの非公開設定とリモートSHAを確認する",
+          "status": "pending",
+          "evidence": [],
+          "checked_at": null
+        },
+        {
+          "id": "review",
+          "kind": "review",
+          "description": "別担当が送信対象と資料保護、自動配信を開始しない構成を確認する",
+          "verification": "remote_safety_review が除外設定・送信対象・送信フック・CI構成を独立確認する",
+          "status": "passed",
+          "evidence": [
+            "docs/remote-repository.md"
+          ],
+          "checked_at": "2026-10-28T19:22:25Z",
+          "reviewer": "remote_safety_review"
+        }
+      ],
+      "execution": {
+        "worker": "root",
+        "max_attempts": 3,
+        "attempts": []
+      }
+    },
+    {
+      "id": "japanese_history_cover_palette",
+      "context": "development",
+      "title": "参考画像の赤・濃紺・白へサイトの基調カラーを変更する",
+      "status": "doing",
+      "depends_on": [],
+      "authorization": "requested",
+      "request_ref": "2026-10-29 ユーザー依頼：添付した日本史表紙の色をサイトの基調カラーにする",
+      "next_action": "共通配色・ロゴ・管理画面のアクセントを調整し、PC/SP実操作と独立レビューを記録する",
+      "evidence": [],
+      "last_verified_at": null,
+      "verification_scope": "実装・検証中。ローカル変更のみ。",
+      "acceptance": [
+        {
+          "id": "checks",
+          "kind": "automated",
+          "description": "設定検査・既存フロント検査が成功し、PC/SPで新しい配色と選択・メニュー・画面移動を確認する",
+          "verification": "check-template、frontend npm test、ブラウザ実操作、主要色の文字コントラスト",
+          "status": "pending",
+          "evidence": [],
+          "checked_at": null
+        },
+        {
+          "id": "review",
+          "kind": "review",
+          "description": "別担当が色の適用範囲と可読性、機能・コピーの保持を確認する",
+          "verification": "review_palette によるソースとPC/SP画像の独立レビュー",
+          "status": "pending",
+          "evidence": [],
+          "checked_at": "2026-10-28T19:29:52Z",
+          "reviewer": null
+        }
+      ],
+      "execution": {
+        "worker": "root",
+        "max_attempts": 3,
+        "attempts": []
+      }
+    }
+  ]
+}
