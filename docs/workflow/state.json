@@ -1,10 +1,10 @@
 {
   "schema_version": 1,
-  "revision": 10,
-  "updated_at": "2026-10-28T20:15:34.194Z",
+  "revision": 18,
+  "updated_at": "2026-10-29T18:29:59.207Z",
   "workspace_relative_to_repo": ".",
   "active_context": "operations",
-  "last_checkpoint": "docs/workflow/handoffs/2026-10-28T20-15-34-194Z-r10.json",
+  "last_checkpoint": "docs/workflow/handoffs/2026-10-29T18-29-59-207Z-r18.json",
   "gate_policy": {
     "version": 1,
     "legacy_task_ids": []
@@ -276,6 +276,179 @@
             "failed_criteria": []
           }
         ]
+      }
+    },
+    {
+      "id": "past_exam_analysis_2024_2025",
+      "context": "product",
+      "title": "受領済み過去問の形式・難易度と参考教科書を分析する",
+      "status": "done",
+      "depends_on": [],
+      "authorization": "requested",
+      "request_ref": "2026-10-29 ユーザー依頼：past-exam内の過去問・解答解説の出題形式や難易度を分析。参考は受領済み教科書、用語集は後日受領。 追加情報：界隈の推定配点として選択3点×20、語句記述3点×8、論述8点×2を提示。",
+      "next_action": "用語集の受領後に追加照合する。未コミット・未公開、配信停止を維持する。",
+      "evidence": [
+        "分析/過去問分析.md",
+        "分析/教科書照合.md",
+        "分析/集計検査結果.json",
+        "分析/総合レビュー.md",
+        "分析/検証と変更一覧.md"
+      ],
+      "last_verified_at": "2026-10-29T12:32:17.767Z",
+      "verification_scope": "受領済み2年度の全60問・解答解説を目視整理して相互レビュー。代表12問の教科書照合、別担当が書誌・代表6問の根拠画像・12件の設問と頁対応を確認。全60問の集計再計算、資料保護45件、全履歴・設定・差分検査成功。難度は暫定、配点はユーザー提示の非公式推定。全肢照合・用語集・公式配点と採点基準・実測難度は未確認。DB・アプリ機能・配信は変更せず、未コミット・未公開。",
+      "acceptance": [
+        {
+          "id": "checks",
+          "kind": "automated",
+          "description": "設問数・形式の集計と配点記載の有無が原資料に一致し、原資料と分析のローカル保護を確認する",
+          "verification": "設問台帳の一意性・件数集計・公式配点のnull保持と非公式推定配点の分離、資料保護検査、既存ポリシー検査、差分検査",
+          "status": "passed",
+          "evidence": [
+            "分析/集計検査結果.json",
+            "分析/資料保護検査.log",
+            "分析/資料保護レビュー.md",
+            "分析/検証と変更一覧.md"
+          ],
+          "checked_at": "2026-10-29T12:32:17.767Z"
+        },
+        {
+          "id": "review",
+          "kind": "review",
+          "description": "別担当が出題分析と教科書照合の根拠・未確認範囲を確認する",
+          "verification": "年度間の相互レビューと主担当以外による集計・代表照合の独立確認",
+          "status": "passed",
+          "evidence": [
+            "分析/相互レビュー2024.md",
+            "分析/相互レビュー2025.md",
+            "分析/総合レビュー.md",
+            "分析/資料保護レビュー.md"
+          ],
+          "checked_at": "2026-10-29T12:32:17.767Z",
+          "reviewer": "exam2024 / exam2025"
+        }
+      ],
+      "execution": {
+        "worker": "root",
+        "max_attempts": 3,
+        "attempts": [
+          {
+            "number": 1,
+            "outcome": "passed",
+            "summary": "全60問の年度別整理と相互レビュー、代表12問の教科書照合と別担当の6問画像確認・12件頁確認、集計再計算、資料保護45件および全履歴・設定・差分検査を確認。非公式推定配点と未確認範囲を分離した。",
+            "at": "2026-10-29T12:32:18.007Z",
+            "failed_criteria": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "past_exam_glossary_reanalysis",
+      "context": "product",
+      "title": "受領した用語集を踏まえ過去問分析を更新する",
+      "status": "done",
+      "depends_on": [
+        "past_exam_analysis_2024_2025"
+      ],
+      "authorization": "requested",
+      "request_ref": "2026-10-29 ユーザー依頼：新たに格納した日本史用語集PDFを踏まえて再度過去問を分析する。",
+      "next_action": "追加の原典照合等は新しい依頼に応じる。未コミット・未公開、配信停止を維持する。",
+      "evidence": [
+        "分析/過去問分析.md",
+        "分析/用語集再分析/2024用語集照合.json",
+        "分析/用語集再分析/2025用語集照合.json",
+        "分析/用語集再分析/集計検査結果.json",
+        "分析/用語集再分析/総合レビュー.md",
+        "分析/用語集再分析/検証と変更一覧.md"
+      ],
+      "last_verified_at": "2026-10-29T15:13:00.002Z",
+      "verification_scope": "受領用語集の書誌確認範囲・凡例・位置体系と全60問の主知識/関連背景を実頁照合。細部確認47、一部2、背景7、史料読解中心4。年度別の構造全30件ずつと各代表6問の根拠画像、集計と総合結論を独立確認。設問誤読1件を原問題・解説・用語集で訂正し、初回保存・現行資料・分野集計・共通防止手順へ反映。資料保護45件、全60問構造、全12リンク、全履歴・設定・差分検査成功。全肢監査・公式点と採点・実測難度・原文全出典・資料完全性は未確認。OCRは155頁の検索候補で全処理終了。未コミット・未公開、アプリ/DB/配信変更なし。",
+      "acceptance": [
+        {
+          "id": "checks",
+          "kind": "automated",
+          "description": "全60設問の参照と照合範囲・頁の整合および新資料のローカル保護を確認する",
+          "verification": "設問対応・一意性・頁範囲・判定集計・JSON/リンク・資料保護の既存検査と差分検査",
+          "status": "passed",
+          "evidence": [
+            "分析/用語集再分析/集計検査結果.json",
+            "分析/用語集再分析/資料保護検査.log",
+            "分析/用語集再分析/検証と変更一覧.md"
+          ],
+          "checked_at": "2026-10-29T15:13:00.002Z"
+        },
+        {
+          "id": "review",
+          "kind": "review",
+          "description": "別担当が資料照合と再分析の結論・保留区分を独立確認する",
+          "verification": "年度別相互レビュー、代表根拠画像と主張の照合、総合分析と保護設定の独立レビュー",
+          "status": "passed",
+          "evidence": [
+            "分析/用語集再分析/2024独立レビュー.md",
+            "分析/用語集再分析/2025独立レビュー.md",
+            "分析/用語集再分析/2025訂正反映レビュー.md",
+            "分析/用語集再分析/総合レビュー.md",
+            "分析/用語集再分析/資料保護レビュー.md"
+          ],
+          "checked_at": "2026-10-29T15:13:00.002Z",
+          "reviewer": "exam2025 / textbook"
+        }
+      ],
+      "execution": {
+        "worker": "root",
+        "max_attempts": 3,
+        "attempts": [
+          {
+            "number": 1,
+            "outcome": "passed",
+            "summary": "用語集を加えた全60問の照合・原画像確認、年度別と総合の独立レビュー、全60件構造と12リンク・45件保護検査を確認。設問誤読を訂正し、初回保存・現行集計と共通防止手順を整合させた。",
+            "at": "2026-10-29T15:13:00.268Z",
+            "failed_criteria": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "push_analysis_protection",
+      "context": "operations",
+      "title": "分析後の保護設定と進捗記録をコミット・pushする",
+      "status": "doing",
+      "depends_on": [
+        "past_exam_analysis_2024_2025",
+        "past_exam_glossary_reanalysis"
+      ],
+      "authorization": "requested",
+      "request_ref": "2026-10-30 ユーザー依頼：OKです。コミット・pushしてください。原資料とローカル専用分析を送信する許可ではなく、保護方針を維持して送信する。",
+      "next_action": "生成されたメタデータを追加して最終検査後にコミット・pushし、リモートmainとCIを確認する。",
+      "evidence": [],
+      "last_verified_at": null,
+      "verification_scope": "保護設定・共通再読手順・安全な進捗と引継ぎ記録のみを送信。原資料、分析、OCR、画像、問題本文・正答、秘密値は除外する。公開・デプロイは行わない。",
+      "acceptance": [
+        {
+          "id": "checks",
+          "kind": "automated",
+          "description": "送信前検査が成功し、保護対象を含めずに送信したコミットとリモートmainが一致する",
+          "verification": "ハーネス4ファイル・設定・全履歴とstageの保護・差分・進捗検査、pre-pushとGitHub main/CIの確認",
+          "status": "pending",
+          "evidence": [],
+          "checked_at": null
+        },
+        {
+          "id": "review",
+          "kind": "review",
+          "description": "別担当が公開送信対象に原資料・分析内容・秘密値がなく配信停止方針が保持されることを確認する",
+          "verification": "独立担当による全変更と引継ぎ記録の送信対象レビュー、フックとCIの維持確認",
+          "status": "passed",
+          "evidence": [
+            "docs/push-analysis-review.md"
+          ],
+          "checked_at": "2026-10-29T18:29:55.173Z",
+          "reviewer": "textbook"
+        }
+      ],
+      "execution": {
+        "worker": "root",
+        "max_attempts": 3,
+        "attempts": []
       }
     }
   ]

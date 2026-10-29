@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "revision": 11,
+  "state_hash": "ce97d5a25232fa5d4bd5e1bd4def99f6000d4dd84045e644acd9b8b9e23598bf",
+  "recorded_at": "2026-10-29T12:09:53.991Z",
+  "timezone": "UTC",
+  "context": "product",
+  "task": "past_exam_analysis_2024_2025",
+  "summary": "受領済み2年度の過去問分析を登録し、年度別調査と参考教科書の代表抽出照合を分担した。",
+  "next_action": "設問台帳と根拠を集計し、独立レビューを実施する。",
+  "missing_local_files": [],
+  "git": {
+    "available": true,
+    "head": "05f44098ac0629bdb8caac96c90656eab4c95d29",
+    "changes": [
+      {
+        "status": " M",
+        "path": ".dockerignore"
+      },
+      {
+        "status": " M",
+        "path": ".gitignore"
+      },
+      {
+        "status": " M",
+        "path": "docs/workflow/policy.json"
+      },
+      {
+        "status": " M",
+        "path": "scripts/workspace-policy.mjs"
+      },
+      {
+        "status": " M",
+        "path": "scripts/workspace-policy.test.mjs"
+      }
+    ]
+  },
+  "file_hashes": {
+    "AGENTS.md": "694830fc967e37c0df20f341d65e42e2e7191b114c6a859d2d35cb52da36c998",
+    "README.md": "13db1d2c82bfae17e9be7e23d79436a112bae969a92f2ea818f6907fc65594d7",
+    "docs/testing.md": "60ca85668a355f2b4636c032a2ea59aa89d515421cbd1c64fcda187c9dd66bda",
+    "docs/workflow/README.md": "45ae8a20c72aa9c36f17f24c1d5b9fa40f45e5db2e89f44a9e1888e60aeea2fc",
+    "docs/workflow/policy.json": "41f665b79cdb0b8d4cf4cd87b8ea12fecd71477cd02b6ad8aec3878501deac63",
+    "docs/workflow/task.example.json": "4bf161efce99b7d0a26798e3445d1f142505e512eedd591ea11cfb194d67da9f",
+    "docs/workflow/contexts/product.md": "172c5934e1627e359c505a748091b143ce900212c35b391cbd1f3c50cb23cddb",
+    "docs/workflow/contexts/development.md": "fc2c06f76ad5cb8162c93e67992e64a20e7aea337ffaf8f0b5e242af3bb12dab",
+    "docs/workflow/contexts/operations.md": "6c4dc1183d9ed6124d3ac681d20a828fbdc0fb9336aa13c803e0641779b3b195",
+    "scripts/context.mjs": "3828c41d1cc5a6977b8444035e094e61e1c9895fcaa9451ecb1919e799ecaffc",
+    "scripts/context.test.mjs": "bc14ad1ba5d331f75d5f34923ac59a2cfe29b5b1c12174b0aa57e6d8ee572923",
+    "scripts/workflow-policy.mjs": "60535f2c9bf42203c059ca39a0b254c168b7cfb2468904a3842725fe3797141e",
+    "scripts/workflow-policy.test.mjs": "394287e7d1e84756a3ac8833918f964ee66f0ef2c34934d121d055fb37af4782",
+    "scripts/workspace-policy.mjs": "cad9b58751143477cc24c76ef7319f27c0ece7d367988b0a170150b9429c406f",
+    "scripts/workspace-policy.test.mjs": "e8578ee3bce0f380381407794e2a82999fb410348d5111f85c08677b0ec7dcb8",
+    "scripts/check-private-sources.mjs": "1d28447b51b39591d42151f236b837b33d695662168ee5c71500205aa0de96af",
+    "scripts/check-private-sources.test.mjs": "be62774be1c55d0c586d2b3cfdfd530d5a8358c4597d756edcb9625b2419ce4e",
+    ".gitignore": "c14593ab1adda686c872ee04893993c15cb32644cbc0b11ea9f5059f9b20d632",
+    ".dockerignore": "ad9c2ab800b20fa043b84c11b97551a0b0f57716d959c29ba0352ff7adfde594",
+    ".githooks/pre-push": "3529b300f7a655102ad899ab31fa8b2c404ec37479d1195aa9bcd3efa97bf90c",
+    "config/exam.json": "4ea07bb25a34c50c0abda4336f6db9612ca606dd217caaa57781429c7a44ebdb",
+    "docs/verification.md": "c9232834f12be4380417793aa4bd210e2543f44490fde109d2a1e1d437498d70"
+  },
+  "verification_note": "ハッシュ・Git・記録済み完了条件の確認であり、テストや出典照合の自動再実行ではない。依頼・権限は最新のユーザー指示とAGENTS.mdに従う。"
+}
