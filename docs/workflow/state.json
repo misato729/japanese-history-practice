@@ -1,10 +1,10 @@
 {
   "schema_version": 1,
-  "revision": 18,
-  "updated_at": "2026-10-29T18:29:59.207Z",
+  "revision": 20,
+  "updated_at": "2026-10-29T18:36:00.410Z",
   "workspace_relative_to_repo": ".",
   "active_context": "operations",
-  "last_checkpoint": "docs/workflow/handoffs/2026-10-29T18-29-59-207Z-r18.json",
+  "last_checkpoint": "docs/workflow/handoffs/2026-10-29T18-36-00-410Z-r20.json",
   "gate_policy": {
     "version": 1,
     "legacy_task_ids": []
@@ -411,26 +411,32 @@
       "id": "push_analysis_protection",
       "context": "operations",
       "title": "分析後の保護設定と進捗記録をコミット・pushする",
-      "status": "doing",
+      "status": "done",
       "depends_on": [
         "past_exam_analysis_2024_2025",
         "past_exam_glossary_reanalysis"
       ],
       "authorization": "requested",
       "request_ref": "2026-10-30 ユーザー依頼：OKです。コミット・pushしてください。原資料とローカル専用分析を送信する許可ではなく、保護方針を維持して送信する。",
-      "next_action": "生成されたメタデータを追加して最終検査後にコミット・pushし、リモートmainとCIを確認する。",
-      "evidence": [],
-      "last_verified_at": null,
-      "verification_scope": "保護設定・共通再読手順・安全な進捗と引継ぎ記録のみを送信。原資料、分析、OCR、画像、問題本文・正答、秘密値は除外する。公開・デプロイは行わない。",
+      "next_action": "完了記録を送信して最終状態を確認した後、追加依頼を待つ。",
+      "evidence": [
+        "docs/analysis-delivery.md",
+        "docs/push-analysis-review.md"
+      ],
+      "last_verified_at": "2026-10-29T18:35:59.048Z",
+      "verification_scope": "保護設定・共通確認手順・安全な進捗/引継ぎ記録の18ファイルをdb7de3f、記録末尾の空行を12134e2としてコミットしmainへpush。168件・設定・全履歴保護・差分・進捗の厳密検査と独立レビュー、pre-push成功。GitHub mainが12134e2bf687bd3d33d362d387a31f0de45fc098と一致し、Actions40931672557のharness/verifyがsuccess。GitHub Pagesなし/Webhook0/Deployment0、[skip netlify]併用。Netlify管理画面は未確認。原資料・分析本文・OCR・画像・秘密値は送信せず、配信開始なし。完了記録の追加送信後に最終SHAとCIを確認する。",
       "acceptance": [
         {
           "id": "checks",
           "kind": "automated",
           "description": "送信前検査が成功し、保護対象を含めずに送信したコミットとリモートmainが一致する",
           "verification": "ハーネス4ファイル・設定・全履歴とstageの保護・差分・進捗検査、pre-pushとGitHub main/CIの確認",
-          "status": "pending",
-          "evidence": [],
-          "checked_at": null
+          "status": "passed",
+          "evidence": [
+            "docs/analysis-delivery.md",
+            "docs/push-analysis-review.md"
+          ],
+          "checked_at": "2026-10-29T18:35:59.048Z"
         },
         {
           "id": "review",
@@ -439,16 +445,25 @@
           "verification": "独立担当による全変更と引継ぎ記録の送信対象レビュー、フックとCIの維持確認",
           "status": "passed",
           "evidence": [
+            "docs/analysis-delivery.md",
             "docs/push-analysis-review.md"
           ],
-          "checked_at": "2026-10-29T18:29:55.173Z",
+          "checked_at": "2026-10-29T18:35:59.048Z",
           "reviewer": "textbook"
         }
       ],
       "execution": {
         "worker": "root",
         "max_attempts": 3,
-        "attempts": []
+        "attempts": [
+          {
+            "number": 1,
+            "outcome": "passed",
+            "summary": "承認対象のみをmainへpushしSHA一致を確認。168件・資料保護・独立レビュー・pre-pushとGitHub Actionsのharness/verifyが成功し、Deployment0を確認した。",
+            "at": "2026-10-29T18:35:59.697Z",
+            "failed_criteria": []
+          }
+        ]
       }
     }
   ]

@@ -25,3 +25,15 @@ GitHub管理情報を今回再確認し、Public、既定ブランチmain、ア�
 独立レビューの担当はtextbook。根拠は `docs/push-analysis-review.md`。原資料や分析本文を送信検査ログへコピーせず、安全な状態とファイル名のみを記録する。
 
 アプリ本体の変更はないため、ローカルのDB・サーバー・重いビルド検査は起動しない。push後のGitHub Actionsとリモートmainの一致は、実施後の記録で確認する。
+
+## 送信結果
+
+- 保護設定と分析進捗のコミット：`db7de3f`（18ファイル）。
+- 送信レビュー記録の末尾空行の修正：`12134e2bf687bd3d33d362d387a31f0de45fc098`。差分検査が指摘した空行を追加コミットで修正し、既存履歴は書き換えていない。
+- 両コミットに `[skip netlify]` を付与。通常のfast-forwardでmainへpushし、既存pre-pushの全履歴保護検査も成功した。
+- GitHub APIで送信後のmainが `12134e2bf687bd3d33d362d387a31f0de45fc098` と一致。Deploymentは引き続き0件。原資料・分析本文・OCR・画像の実体は送信していない。
+- GitHub Actions：`40931672557`（Template checks）。harness・verifyともsuccessを確認した。verifyには隔離DB検査・フロント検査・型検査・ビルドが含まれる。
+
+## 完了記録の送信
+
+上記の送信・SHA一致・CI成功を確認後、今回の依頼の合格評価を `docs/workflow/handoffs/2026-10-29T18-35-59-697Z-r19.json`、完了引継ぎを `docs/workflow/handoffs/2026-10-29T18-36-00-410Z-r20.json` に保存した。これらの安全な記録だけを追加コミットし、同じmainへ通常pushする。原資料と分析本文は引き続きローカル専用である。
