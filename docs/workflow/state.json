@@ -1,10 +1,10 @@
 {
   "schema_version": 1,
-  "revision": 20,
-  "updated_at": "2026-10-29T18:36:00.410Z",
+  "revision": 28,
+  "updated_at": "2026-10-30T07:48:57.927Z",
   "workspace_relative_to_repo": ".",
   "active_context": "operations",
-  "last_checkpoint": "docs/workflow/handoffs/2026-10-29T18-36-00-410Z-r20.json",
+  "last_checkpoint": "docs/workflow/handoffs/2026-10-30T07-48-57-927Z-r28.json",
   "gate_policy": {
     "version": 1,
     "legacy_task_ids": []
@@ -464,6 +464,250 @@
             "failed_criteria": []
           }
         ]
+      }
+    },
+    {
+      "id": "author_five_mock_sets",
+      "context": "product",
+      "title": "過去問の形式と知識・読解負荷に合わせた予想問題5セットを作成する",
+      "status": "done",
+      "depends_on": [
+        "past_exam_glossary_reanalysis"
+      ],
+      "authorization": "requested",
+      "request_ref": "2026-10-30 ユーザー依頼：コミット・pushの完了後に、過去問の形式・難易度などを忠実に再現した予想問題を5セット作成する。",
+      "next_action": "冊子での演習・確認。DB登録・公開・送信は実施せず追加の明示依頼を待つ。",
+      "evidence": [
+        "local-only/predicted-exams-20261030/README.md",
+        "local-only/predicted-exams-20261030/reviews/completion.json",
+        "local-only/predicted-exams-20261030/reviews/automated-check.json",
+        "local-only/predicted-exams-20261030/reviews/delivery-verification.json",
+        "local-only/predicted-exams-20261030/reviews/final-assembly-review.json"
+      ],
+      "last_verified_at": "2026-10-29T19:51:49.127Z",
+      "verification_scope": "各set4大問30問、四択20/語句8/80字論述2、非公式推定100点。教科書・用語集の実頁で全肢と解答根拠を確認。原稿はローカル専用でDB登録・公開・コミット/pushは含まない。実測正答率による同難度の保証は含まない。",
+      "acceptance": [
+        {
+          "id": "checks",
+          "kind": "automated",
+          "description": "5セット150問の形式・一意性・配点・字数・参照・答えの整合と資料保護が成立する",
+          "verification": "独立した原稿検査で100四択/40語句/10論述、選択正答1件、短答字数、論述80字・8点、本文参照・空欄・正答漏出、全肢根拠、ローカル除外を確認する",
+          "status": "passed",
+          "evidence": [
+            "local-only/predicted-exams-20261030/reviews/automated-check.json",
+            "local-only/predicted-exams-20261030/reviews/delivery-verification.json",
+            "local-only/predicted-exams-20261030/reviews/completion.json"
+          ],
+          "checked_at": "2026-10-29T19:51:49.127Z"
+        },
+        {
+          "id": "review",
+          "kind": "review",
+          "description": "別担当が全設問の正確性・全肢の根拠・論述条件と形式/難度の対応を確認する",
+          "verification": "各時代の原稿を別担当が全件レビューし、根拠画像・判断経路・曖昧さ・重複・他小問からの露出を確認する",
+          "status": "passed",
+          "evidence": [
+            "local-only/predicted-exams-20261030/reviews/ancient-independent-review.json",
+            "local-only/predicted-exams-20261030/reviews/medieval-independent-review.json",
+            "local-only/predicted-exams-20261030/reviews/early_modern-independent-review.json",
+            "local-only/predicted-exams-20261030/reviews/early_modern-source-independent-review.json",
+            "local-only/predicted-exams-20261030/reviews/modern-independent-review.json",
+            "local-only/predicted-exams-20261030/reviews/modern-fix-confirmation.json",
+            "local-only/predicted-exams-20261030/reviews/ancient-balance-independent-review.json",
+            "local-only/predicted-exams-20261030/reviews/medieval-balance-independent-review.json",
+            "local-only/predicted-exams-20261030/reviews/final-assembly-review.json"
+          ],
+          "checked_at": "2026-10-29T19:51:49.127Z",
+          "reviewer": "author_ancient / author_medieval / author_early_modern"
+        }
+      ],
+      "execution": {
+        "worker": "root",
+        "max_attempts": 3,
+        "attempts": [
+          {
+            "number": 1,
+            "outcome": "failed",
+            "summary": "150問の構造検査を通過。独立レビューで史料転記・論述根拠・誤肢品質の修正が必要と判定した。",
+            "at": "2026-10-29T19:26:49.340Z",
+            "failed_criteria": [
+              "checks",
+              "review"
+            ]
+          },
+          {
+            "number": 2,
+            "outcome": "passed",
+            "summary": "予想問題5セット150問を作成。全肢出典、独立レビュー、改稿と再編、最終冊子対応、字数・露出・保護検査を確認した。",
+            "at": "2026-10-29T19:51:49.520Z",
+            "failed_criteria": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "recalibrate_mock_difficulty",
+      "context": "product",
+      "title": "過去問・用語集と比較して予想問題5セットの難度を再評価し改稿する",
+      "status": "done",
+      "depends_on": [
+        "author_five_mock_sets"
+      ],
+      "authorization": "requested",
+      "request_ref": "2026-10-30 ユーザーの難度不足の指摘。過去問と用語集の用語難度を照合し難度再考、必要に応じ改稿する依頼。",
+      "next_action": "改訂版5セットと比較結果を提示。追加指示がある場合に調整する。",
+      "evidence": [
+        "local-only/predicted-exams-20261030-v2/README.md",
+        "local-only/predicted-exams-20261030-v2/難度再検討.md",
+        "local-only/predicted-exams-20261030-v2/reviews/final-validation.json",
+        "local-only/predicted-exams-20261030-v2/reviews/difficulty-comparison.json",
+        "local-only/predicted-exams-20261030-v2/reviews/method-independent.json"
+      ],
+      "last_verified_at": "2026-10-30T07:31:06.086Z",
+      "verification_scope": "過去問60問・初稿150問・改訂150問を比較。137問・本文20本を改稿し、短答40語の個別見出し冊数、四択の唯一性・全肢根拠、文字種字数、論述80字/参考8点、全150問の別担当による最短解法評価、ローカル保護を確認。知識要求の偏りは改善。P1/P2境界差と未知史料の照合が少ない限界が残り、過去問との完全な同難度・実測正答率による等化は未確認。DB登録・公開・外部送信・コミット/pushなし。",
+      "acceptance": [
+        {
+          "id": "checks",
+          "kind": "automated",
+          "description": "基準60問・旧稿150問・改訂150問の対応と形式、用語照合根拠、字数・正答一意性・露出・保護が成立する",
+          "verification": "全件のID・形式数・根拠参照と本文/他小問の手掛かり、文字種字数、80字/8点、改稿差分、資料除外を検査する。",
+          "status": "passed",
+          "evidence": [
+            "local-only/predicted-exams-20261030-v2/reviews/automated-check.json",
+            "local-only/predicted-exams-20261030-v2/reviews/final-validation.json",
+            "local-only/predicted-exams-20261030-v2/reviews/difficulty-comparison.json"
+          ],
+          "checked_at": "2026-10-30T07:31:06.086Z"
+        },
+        {
+          "id": "review",
+          "kind": "review",
+          "description": "独立した難度比較と改稿全肢レビューで旧稿の過小評価を是正する",
+          "verification": "過去問の核心語と最易経路を独立評価し、低難度とした問いの改稿・保持理由を根拠付きで再評価する。",
+          "status": "passed",
+          "evidence": [
+            "local-only/predicted-exams-20261030-v2/reviews/ancient-independent.json",
+            "local-only/predicted-exams-20261030-v2/reviews/medieval-independent.json",
+            "local-only/predicted-exams-20261030-v2/reviews/early_modern-independent.json",
+            "local-only/predicted-exams-20261030-v2/reviews/modern-independent.json",
+            "local-only/predicted-exams-20261030-v2/reviews/method-independent.json"
+          ],
+          "checked_at": "2026-10-30T07:31:06.086Z",
+          "reviewer": "final_method_review（比較方法）、時代別の作問担当と異なる担当（全150問）"
+        }
+      ],
+      "execution": {
+        "worker": "root",
+        "max_attempts": 3,
+        "attempts": [
+          {
+            "number": 1,
+            "outcome": "passed",
+            "summary": "過去問60・初稿150・改訂150の比較、137問と本文20本の改稿、全問独立評価と保護検査を確認。史料照合負荷の限界を明記。",
+            "at": "2026-10-30T07:31:07.954Z",
+            "failed_criteria": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "push_mock_authoring_records",
+      "context": "operations",
+      "title": "作問基準と進捗記録を保護検査後にコミット・pushする",
+      "status": "doing",
+      "depends_on": [
+        "author_five_mock_sets",
+        "recalibrate_mock_difficulty"
+      ],
+      "authorization": "requested",
+      "request_ref": "2026-10-30 ユーザーの「コミット・pushしてください」という明示依頼。ローカル専用資料・予想問題原稿は除外し、配信を開始しない。",
+      "next_action": "許可された記録だけをコミット・pushし、リモート一致を確認する。",
+      "evidence": [
+        "local-only/push-authoring-20261030/checks.json",
+        "local-only/push-authoring-20261030/review.json"
+      ],
+      "last_verified_at": null,
+      "verification_scope": "対象は作問ルール、学習方針、進捗状態と引き継ぎ記録。過去問・参考書・分析・予想問題原稿はローカル保持。DB変更・公開・デプロイなし。",
+      "acceptance": [
+        {
+          "id": "checks",
+          "kind": "automated",
+          "description": "送信対象・全履歴の資料保護、進捗記録と軽量検査が成立し、フックを維持する。",
+          "verification": "差分と保護検査、既存の進捗・ポリシー検査、配信経路の確認を行う。",
+          "status": "passed",
+          "evidence": [
+            "local-only/push-authoring-20261030/checks.json"
+          ],
+          "checked_at": "2026-10-30T07:48:57.566Z"
+        },
+        {
+          "id": "review",
+          "kind": "review",
+          "description": "別担当が全送信候補に問題本文・原本・秘密値がないことを確認する。",
+          "verification": "差分と追加引き継ぎ記録を独立点検する。",
+          "status": "passed",
+          "evidence": [
+            "local-only/push-authoring-20261030/review.json"
+          ],
+          "checked_at": "2026-10-30T07:48:57.566Z",
+          "reviewer": "push_safety_review"
+        },
+        {
+          "id": "sync",
+          "kind": "automated",
+          "description": "承認範囲のコミットをpushし、ローカルとリモートのコミット一致を確認する。",
+          "verification": "pre-push検査を通し、GitHubのmainとローカルHEADを読み取り照合する。",
+          "status": "pending",
+          "evidence": [],
+          "checked_at": null
+        }
+      ],
+      "execution": {
+        "worker": "root",
+        "max_attempts": 3,
+        "attempts": []
+      }
+    },
+    {
+      "id": "refine_source_reading_load",
+      "context": "product",
+      "title": "改訂版の史料読解と複数知識を照合する負荷を改善する",
+      "status": "todo",
+      "depends_on": [
+        "recalibrate_mock_difficulty",
+        "push_mock_authoring_records"
+      ],
+      "authorization": "requested",
+      "request_ref": "2026-10-30 ユーザーの「改訂版の修正も進めてください」という追加依頼。直前に示した史料読解・複数照合の不足を改善する。",
+      "next_action": "5セットそれぞれで複数の独立した判断を必要とする改稿候補を選び、出典を確認して改稿する。",
+      "evidence": [],
+      "last_verified_at": null,
+      "verification_scope": "既存改訂版を保持してローカルで修正する。難語や肢の長さだけで難化せず、史料の読解・帰属と時期・制度・主体などの知識の両方を必要とする最短解法を検証する。DB登録・外部送信・公開なし。",
+      "acceptance": [
+        {
+          "id": "checks",
+          "kind": "automated",
+          "description": "5セットの形式・配点・出典・全肢正誤・語句露出・論述字数とローカル保護が成立する。",
+          "verification": "既存の生成検査と改稿差分・参照整合を確認する。",
+          "status": "pending",
+          "evidence": [],
+          "checked_at": null
+        },
+        {
+          "id": "review",
+          "kind": "review",
+          "description": "各セットで少なくとも2問を対象に、史料と独立知識の複数判断が必要か別担当が再評価する。",
+          "verification": "比較過去問、最短経路、本文・他肢・他小問の抜け道を設問別に検討し、同難度の根拠と限界を分ける。",
+          "status": "pending",
+          "evidence": [],
+          "checked_at": null,
+          "reviewer": null
+        }
+      ],
+      "execution": {
+        "worker": "root",
+        "max_attempts": 3,
+        "attempts": []
       }
     }
   ]
