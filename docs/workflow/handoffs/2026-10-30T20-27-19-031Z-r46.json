@@ -1,0 +1,171 @@
+{
+  "schema_version": 1,
+  "revision": 46,
+  "state_hash": "1c952975eab5ac11572f9165ec75d2247d389442f73f3744cc9bdd53d56054e9",
+  "recorded_at": "2026-10-30T20:27:19.031Z",
+  "timezone": "UTC",
+  "context": "development",
+  "task": "horizontal_exam_sidebar",
+  "summary": "サイドバー横開閉をPC/SP実操作・フォーカス修正・画像独立レビューまで完了。第2回評価とgateがpassed。既存変更を保持し、今回分は未コミット・未送信。",
+  "next_action": "横開閉の追加依頼、または今回分のGit操作への明示依頼を待つ",
+  "missing_local_files": [],
+  "git": {
+    "available": true,
+    "head": "3788743b074303bc090b769119ca4db821c9ca0f",
+    "changes": [
+      {
+        "status": " M",
+        "path": ".dockerignore"
+      },
+      {
+        "status": " M",
+        "path": ".gitignore"
+      },
+      {
+        "status": " M",
+        "path": "AGENTS.md"
+      },
+      {
+        "status": " M",
+        "path": "config/exam.json"
+      },
+      {
+        "status": " M",
+        "path": "docs/architecture.md"
+      },
+      {
+        "status": " M",
+        "path": "docs/workflow/contexts/development.md"
+      },
+      {
+        "status": " M",
+        "path": "docs/workflow/contexts/operations.md"
+      },
+      {
+        "status": " M",
+        "path": "docs/workflow/contexts/product.md"
+      },
+      {
+        "status": " M",
+        "path": "docs/workflow/policy.json"
+      },
+      {
+        "status": " M",
+        "path": "frontend/app/components/EssayScoringResult.vue"
+      },
+      {
+        "status": " M",
+        "path": "frontend/app/components/ExamSidebar.vue"
+      },
+      {
+        "status": " M",
+        "path": "frontend/app/layouts/default.vue"
+      },
+      {
+        "status": " M",
+        "path": "frontend/app/utils/essayPresentation.ts"
+      },
+      {
+        "status": " M",
+        "path": "frontend/nuxt.config.ts"
+      },
+      {
+        "status": " M",
+        "path": "frontend/server/data/essay-rule-profiles.ts"
+      },
+      {
+        "status": " M",
+        "path": "frontend/server/services/essay-scoring.ts"
+      },
+      {
+        "status": " M",
+        "path": "frontend/server/services/learning.ts"
+      },
+      {
+        "status": " M",
+        "path": "frontend/tests/essayPresentation.test.ts"
+      },
+      {
+        "status": " M",
+        "path": "frontend/tests/essayProfiles.test.ts"
+      },
+      {
+        "status": " M",
+        "path": "frontend/tests/essayScoring.test.ts"
+      },
+      {
+        "status": " M",
+        "path": "frontend/tests/examSidebarLayout.test.ts"
+      },
+      {
+        "status": " M",
+        "path": "scripts/check-private-sources.test.mjs"
+      },
+      {
+        "status": " M",
+        "path": "scripts/workspace-policy.mjs"
+      },
+      {
+        "status": " M",
+        "path": "scripts/workspace-policy.test.mjs"
+      },
+      {
+        "status": "??",
+        "path": "docs/screenshots/sidebar-pc-collapsed.png"
+      },
+      {
+        "status": "??",
+        "path": "docs/screenshots/sidebar-pc-expanded.png"
+      },
+      {
+        "status": "??",
+        "path": "docs/screenshots/sidebar-pc-groups.png"
+      },
+      {
+        "status": "??",
+        "path": "docs/screenshots/sidebar-sp-320.png"
+      },
+      {
+        "status": "??",
+        "path": "docs/screenshots/sidebar-sp-closed.png"
+      },
+      {
+        "status": "??",
+        "path": "docs/screenshots/sidebar-sp-open.png"
+      },
+      {
+        "status": "??",
+        "path": "docs/sidebar-verification.md"
+      },
+      {
+        "status": "??",
+        "path": "frontend/tests/essayCatalog.test.ts"
+      }
+    ]
+  },
+  "file_hashes": {
+    "AGENTS.md": "06b10ea56c7feafc401d9a114a4affab7c2a37bead01f532c84cab2f0fb67148",
+    "README.md": "13db1d2c82bfae17e9be7e23d79436a112bae969a92f2ea818f6907fc65594d7",
+    "docs/testing.md": "60ca85668a355f2b4636c032a2ea59aa89d515421cbd1c64fcda187c9dd66bda",
+    "docs/workflow/README.md": "45ae8a20c72aa9c36f17f24c1d5b9fa40f45e5db2e89f44a9e1888e60aeea2fc",
+    "docs/workflow/policy.json": "d21fbb063281b36ef860225f34009c32b37dd2153fbd35138bb872a6f5f947f7",
+    "docs/workflow/task.example.json": "4bf161efce99b7d0a26798e3445d1f142505e512eedd591ea11cfb194d67da9f",
+    "docs/workflow/contexts/product.md": "038c3bbdcfdc9ab38384f503d039af6c1a4a566c4dc762df7f2b203ed36131e0",
+    "docs/workflow/contexts/development.md": "032250ecf8cc1c5d3bdb64b09e2d0717da202e756014cd2829700259e883e12d",
+    "docs/workflow/contexts/operations.md": "fb83513467d1b559bd1d25e1bcaccf352f6cf95bb35f7b5c683d03de2c558ae8",
+    "scripts/context.mjs": "3828c41d1cc5a6977b8444035e094e61e1c9895fcaa9451ecb1919e799ecaffc",
+    "scripts/context.test.mjs": "bc14ad1ba5d331f75d5f34923ac59a2cfe29b5b1c12174b0aa57e6d8ee572923",
+    "scripts/workflow-policy.mjs": "60535f2c9bf42203c059ca39a0b254c168b7cfb2468904a3842725fe3797141e",
+    "scripts/workflow-policy.test.mjs": "394287e7d1e84756a3ac8833918f964ee66f0ef2c34934d121d055fb37af4782",
+    "scripts/workspace-policy.mjs": "685272056c1fcaba765a5c1529b13a5c703aa9c6708baf13b0d63d0d189d6fcb",
+    "scripts/workspace-policy.test.mjs": "2f5517e76009fd3541cddfab0c7577f60870477a15677f53ec3284bcc434bd21",
+    "scripts/check-private-sources.mjs": "1d28447b51b39591d42151f236b837b33d695662168ee5c71500205aa0de96af",
+    "scripts/check-private-sources.test.mjs": "6e3194bd9dd502d3c40390f101d0313593eb3494e50fb11ea33da769cf615c14",
+    ".gitignore": "90d186e052011e432fbf48bc1e4f8a9f97fe1b8921ccfae965d267645ebab810",
+    ".dockerignore": "aeede9bfd7aef2fecb772184be3c55be741086156af7e5c1f97b6335825b4564",
+    ".githooks/pre-push": "3529b300f7a655102ad899ab31fa8b2c404ec37479d1195aa9bcd3efa97bf90c",
+    "config/exam.json": "0eda1b007987b45b64e15a59a26fbe6b674df1dd2083bcdc453855e6f9c5b2d0",
+    "docs/verification.md": "c9232834f12be4380417793aa4bd210e2543f44490fde109d2a1e1d437498d70"
+  },
+  "verification_note": "ハッシュ・Git・記録済み完了条件の確認であり、テストや出典照合の自動再実行ではない。依頼・権限は最新のユーザー指示とAGENTS.mdに従う。"
+}

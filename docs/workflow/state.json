@@ -1,10 +1,10 @@
 {
   "schema_version": 1,
-  "revision": 33,
-  "updated_at": "2026-10-30T11:42:44.231Z",
+  "revision": 49,
+  "updated_at": "2026-10-31T00:19:44.810Z",
   "workspace_relative_to_repo": ".",
-  "active_context": "product",
-  "last_checkpoint": "docs/workflow/handoffs/2026-10-30T11-42-44-231Z-r33.json",
+  "active_context": "operations",
+  "last_checkpoint": "docs/workflow/handoffs/2026-10-31T00-19-44-810Z-r49.json",
   "gate_policy": {
     "version": 1,
     "legacy_task_ids": []
@@ -740,6 +740,170 @@
             "failed_criteria": []
           }
         ]
+      }
+    },
+    {
+      "id": "horizontal_exam_sidebar",
+      "context": "development",
+      "title": "模擬試験サイドバーを左右に開閉できる形へ変更する",
+      "status": "done",
+      "depends_on": [],
+      "authorization": "requested",
+      "request_ref": "2026-10-31 ユーザー依頼：サイドバーをヨコに開閉式にしたい",
+      "next_action": "横開閉の追加依頼、または今回分のGit操作への明示依頼を待つ",
+      "evidence": [
+        "docs/sidebar-verification.md"
+      ],
+      "last_verified_at": "2026-10-30T20:24:45.452Z",
+      "verification_scope": "PC1440/761・SP393/320・760/761境界を実操作。260↔64pxの本文幅連動、反復開閉、キーボード循環/復帰、背景/×/Escape/大問移動で閉鎖、スクロール復元を確認。開直後のフォーカス不具合をCSSで修正。最終7件・型検査・差分検査成功、ソースと画像をreview_paletteが独立確認。空一覧/資格エラー/認証別の実画面は未変更。既存dirty保持、Git送信/公開/DB変更なし。",
+      "acceptance": [
+        {
+          "id": "checks",
+          "kind": "automated",
+          "description": "既存カタログ・大問ナビゲーションを維持し、対象回帰検査と型検査が成功する",
+          "verification": "既存sidebar関連テスト、Nuxt型検査、差分検査",
+          "status": "passed",
+          "evidence": [
+            "docs/sidebar-verification.md"
+          ],
+          "checked_at": "2026-10-30T20:24:45.452Z"
+        },
+        {
+          "id": "ui_review",
+          "kind": "review",
+          "description": "PC/SPで横開閉・本文幅・閉状態の操作制限・移動・Escapeを実操作し、別担当がソースと画像を確認する",
+          "verification": "PC/SPブラウザ操作とスクリーンショット、review_palette独立レビュー",
+          "status": "passed",
+          "evidence": [
+            "docs/sidebar-verification.md"
+          ],
+          "checked_at": "2026-10-30T20:24:45.452Z",
+          "reviewer": "review_palette"
+        }
+      ],
+      "execution": {
+        "worker": "root",
+        "max_attempts": 3,
+        "attempts": [
+          {
+            "number": 1,
+            "outcome": "failed",
+            "summary": "横開閉実装・既存7件・型検査・差分検査とソース独立レビューは確認。ブラウザ有効化後も接続がタイムアウトし、PC/SP実操作と画像レビューは未達。",
+            "at": "2026-10-30T19:52:36.784Z",
+            "failed_criteria": [
+              "ui_review"
+            ]
+          },
+          {
+            "number": 2,
+            "outcome": "passed",
+            "summary": "PC/SP実操作と画像独立レビューを完了。開直後のフォーカスをCSSで修正し、最終7件・型検査・差分検査成功。空一覧等の未確認範囲と環境の一時遅延は検証記録へ明記。",
+            "at": "2026-10-30T20:26:25.220Z",
+            "failed_criteria": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "darken_sidebar_background",
+      "context": "development",
+      "title": "サイドバーの背景色を少し濃くする",
+      "status": "done",
+      "depends_on": [
+        "horizontal_exam_sidebar"
+      ],
+      "authorization": "requested",
+      "request_ref": "2026-10-31 ユーザー依頼：サイドバーの背景色をやや濃くしてください",
+      "next_action": "追加依頼を待つ",
+      "evidence": [
+        "docs/sidebar-verification.md"
+      ],
+      "acceptance": [
+        {
+          "id": "diff_check",
+          "kind": "automated",
+          "description": "サイドバー専用色のみ変更し差分検査が成功する",
+          "verification": "git diff --checkと背景指定の確認",
+          "status": "passed",
+          "evidence": [
+            "docs/sidebar-verification.md"
+          ],
+          "checked_at": "2026-10-30T20:37:45.974Z"
+        },
+        {
+          "id": "color_review",
+          "kind": "review",
+          "description": "PC/SP実操作と画像で背景の濃さ・文字の視認性・開閉を確認する",
+          "verification": "PC/SPブラウザ操作とreview_paletteによるソース/画像独立レビュー",
+          "status": "passed",
+          "evidence": [
+            "docs/sidebar-verification.md"
+          ],
+          "reviewer": "review_palette",
+          "checked_at": "2026-10-30T20:37:45.974Z"
+        }
+      ],
+      "execution": {
+        "worker": "root",
+        "max_attempts": 3,
+        "attempts": [
+          {
+            "number": 1,
+            "outcome": "passed",
+            "summary": "背景を専用色#f8dce1へ変更。PC/SP実操作・差分検査・ソース/画像独立レビュー成功。既存差分を保持。",
+            "at": "2026-10-30T20:37:54.064Z",
+            "failed_criteria": []
+          }
+        ]
+      },
+      "last_verified_at": "2026-10-30T20:37:45.974Z",
+      "verification_scope": "PC1440/SP393の背景色rgb(248,220,225)、文字/白い項目の視認性、横はみ出しなしと開閉を実操作確認。差分検査成功。review_paletteがソース/PC/SP画像を独立確認し指摘なし。CSS背景のみのため新規テスト/型検査/ビルドは追加実施せず。既存dirty保持、未コミット/未送信/未公開、DB変更なし。"
+    },
+    {
+      "id": "push_sidebar",
+      "context": "operations",
+      "title": "サイドバー横開閉と背景調整をコミット・pushする",
+      "status": "doing",
+      "depends_on": [
+        "horizontal_exam_sidebar",
+        "darken_sidebar_background"
+      ],
+      "authorization": "requested",
+      "request_ref": "2026-10-31 ユーザー：OKです。コミット・pushしてください",
+      "next_action": "送信対象のステージ検証と独立レビュー後にcommit/pushし、CI完了と同期を確認する",
+      "evidence": [
+        "docs/sidebar-delivery.md"
+      ],
+      "verification_scope": "サイドバー3ファイル、確認画像8枚と検証・進捗記録に限定。既存dirtyと別作業タスクは保持。配信停止を維持。",
+      "acceptance": [
+        {
+          "id": "protected_delivery",
+          "kind": "automated",
+          "description": "対象だけのステージ・保護検査・検証とpush後のリモート同期/CI成功を確認する",
+          "verification": "明示的なstage、資料保護、対象検査、CI完了とリモートOID確認",
+          "status": "pending",
+          "evidence": [
+            "docs/sidebar-delivery.md"
+          ],
+          "checked_at": "2026-10-31T00:19:44.551Z"
+        },
+        {
+          "id": "scope_review",
+          "kind": "review",
+          "description": "別担当が送信対象に原資料/問題本文/秘密値や別作業が含まれないことを確認する",
+          "verification": "review_paletteのステージ差分・画像・stateタスクID確認",
+          "status": "pending",
+          "evidence": [
+            "docs/sidebar-delivery.md"
+          ],
+          "reviewer": "review_palette",
+          "checked_at": "2026-10-31T00:19:44.552Z"
+        }
+      ],
+      "execution": {
+        "worker": "root",
+        "max_attempts": 3,
+        "attempts": []
       }
     }
   ]
