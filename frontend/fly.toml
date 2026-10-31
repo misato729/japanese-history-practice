@@ -1,4 +1,4 @@
-app = ""
+app = "japanese-history-practice"
 primary_region = "nrt"
 
 [build]
