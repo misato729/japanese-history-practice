@@ -5,7 +5,7 @@ import {getDatabase,query,transaction,type Database} from '../core/db.ts'
 import {fail} from '../core/errors.ts'
 import type {EssayGrade} from '../../shared/types/essay.ts'
 import {gradeEssay} from './essay-scoring.ts'
-import {essayRuleProfiles} from '../data/essay-rule-profiles.ts'
+import {getEssayRuleProfiles} from '../data/essay-rule-profiles.ts'
 import {requireCurrentEssayProfile,hasUnsupportedEssayCharacters} from './essay-profile.ts'
 import {excerptFrom,integer,sanitizeQuestionInput,normalizeAnswerText,checkTextConstraints,record} from './learning-validation.ts'
 import {deleteQuestion,loadQuestion,saveQuestion,QUESTION_WRITE_LOCK,type ChoiceRecord,type QuestionRecord} from './learning-writer.ts'
@@ -127,10 +127,18 @@ export async function answerQuestion(id:number,answer:unknown,user:User|null,db?
 export async function listExams(user:User|null,db:Database=getDatabase(),params:Record<string,unknown>={}){
  const values:unknown[]=[];const conditions=[questionVisibility()];questionFilters(params,conditions,values)
  const rows=await query<any>(`SELECT id,exam_number,question_number,group_id,group_question_number FROM questions WHERE ${conditions.join(' AND ')} ORDER BY ${displayOrder}`,values,db)
+ if(!rows.length)return {data:[]}
+ const examNumbers=[...new Set(rows.map(q=>Number(q.exam_number)))]
+ // Public navigation needs only metadata, never the full question/group editor.
+ const [sets,groups]=await Promise.all([
+  query<{exam_number:number;title:string;format_code:string}>('SELECT exam_number,title,format_code FROM exam_sets WHERE exam_number=ANY($1::integer[])',[examNumbers],db),
+  query<{id:number;exam_number:number;group_number:number;title:string}>("SELECT id,exam_number,group_number,title FROM question_groups WHERE exam_number=ANY($1::integer[]) AND publication_status='published' ORDER BY exam_number,group_number,id",[examNumbers],db),
+ ])
+ const byExam=new Map(sets.map(set=>[Number(set.exam_number),set]))
  const full=await hasPaidAccess(user,db);const result:any[]=[]
- for(const n of [...new Set(rows.map(q=>Number(q.exam_number)))]){
-  const qs=rows.filter(q=>q.exam_number===n),set=await loadExamSet(n,db)
-  result.push({exam_number:n,title:set.title,format_code:set.format_code,question_numbers:qs.map(q=>q.question_number),question_count:qs.length,published_question_count:qs.length,groups:set.groups.filter(g=>g.publication_status==='published'&&qs.some(q=>q.group_id===g.id)).map(g=>({id:g.id,group_number:g.group_number,title:g.title,question_numbers:qs.filter(q=>q.group_id===g.id).map(q=>q.question_number)})),access:!paymentsEnabled||n<=freeExamMax||full?'available':'paid_membership_required'})
+ for(const n of examNumbers){
+  const qs=rows.filter(q=>q.exam_number===n),set=byExam.get(n)??{title:`教材 ${n}`,format_code:'legacy_practice'}
+  result.push({exam_number:n,title:set.title,format_code:set.format_code,question_numbers:qs.map(q=>q.question_number),question_count:qs.length,published_question_count:qs.length,groups:groups.filter(g=>Number(g.exam_number)===n&&qs.some(q=>q.group_id===g.id)).map(g=>({id:g.id,group_number:g.group_number,title:g.title,question_numbers:qs.filter(q=>q.group_id===g.id).map(q=>q.question_number)})),access:!paymentsEnabled||n<=freeExamMax||full?'available':'paid_membership_required'})
  }
  return {data:result}
 }
@@ -193,7 +201,7 @@ async function dispatchLearning(event:H3Event,parts:string[],user:User|null):Pro
  if(parts.length===1&&parts[0]==='favorites'&&method==='GET')return listFavorites(user,getQuery(event))
  if(parts[0]==='admin'){
   checkAdmin(user)
-  if(parts.length===2&&parts[1]==='essay_profiles'&&method==='GET')return {data:essayRuleProfiles.map(({id,version,title,max_characters,required_terms,elements})=>({id,version,title,max_characters,required_terms,elements:elements.map(({id,label,points})=>({id,label,points}))}))}
+  if(parts.length===2&&parts[1]==='essay_profiles'&&method==='GET')return {data:getEssayRuleProfiles().map(({id,version,title,max_characters,required_terms,elements})=>({id,version,title,max_characters,required_terms,elements:elements.map(({id,label,points})=>({id,label,points}))}))}
   if(parts[1]==='exams'){
    if(parts.length===2&&method==='GET')return {data:await listExamSets(db)}
    const n=idFrom(parts[2]);if(n>configuration.exam.set_count)return notFound()

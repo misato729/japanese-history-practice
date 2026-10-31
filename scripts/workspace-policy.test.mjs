@@ -88,7 +88,7 @@ test('policy aliases, outside parents, dangling links, and oversized files are r
 
 test('japanese-history source protection survives missing or replaced optional policy', t => {
   const f = fixture(t)
-  const paths = ['past-exam/test.pdf', 'nested/PAST-EXAM/test.pdf', '分析/result.md', 'nested/分析/pages/001.png', 'glossary.pdf', 'nested/GLOSSARY-data/images/page.png', 'nested\\glossary-old\\page.png', '歴検1級日本史_2025.pdf', 'nested/歴検1級日本史_2008.ZIP', 'nested/歴検1級日本史_2025.PDF/derived.txt', '詳説日本史.pdf', 'nested/詳説日本史-ocr.txt', 'nested/詳説日本史画像/page.png', '日本史用語集.pdf', 'nested/日本史用語集-ocr.txt', 'nested/日本史用語集画像/page.png']
+  const paths = ['past-exam/test.pdf', 'nested/PAST-EXAM/test.pdf', '分析/result.md', 'nested/分析/pages/001.png', 'glossary.pdf', 'nested/GLOSSARY-data/images/page.png', 'nested\\glossary-old\\page.png', '歴検1級日本史_2025.pdf', 'nested/歴検1級日本史_2008.ZIP', 'nested/歴検1級日本史_2025.PDF/derived.txt', '詳説日本史.pdf', 'nested/詳説日本史-ocr.txt', 'nested/詳説日本史画像/page.png', '日本史用語集.pdf', 'nested/日本史用語集-ocr.txt', 'nested/日本史用語集画像/page.png', '日本史新課程用語.pdf', 'nested/日本史新課程用語-ocr.txt', 'nested/日本史新課程用語画像/page.png', 'nested\\日本史新課程用語.pdf']
   for (const path of paths) assert(isLocalOnlyPath(path, loadWorkspacePolicy(f.repo)), path)
   f.save({ schema_version: 1, local_only: { directory_names: ['extra-only'], filename_prefixes: [] } })
   for (const path of paths) assert(isLocalOnlyPath(path, loadWorkspacePolicy(f.repo)), path)

@@ -1,12 +1,15 @@
 <script setup lang="ts">
 import type { EssayGrade } from '../../shared/types/essay'
+import { essayElementCounts } from '../utils/essayPresentation'
 
-defineProps<{ result: EssayGrade; modelAnswer?: string; submittedText?: string }>()
+const props = defineProps<{ result: EssayGrade; modelAnswer?: string; submittedText?: string }>()
+const elementCounts = computed(() => essayElementCounts(props.result.elements))
 const statusLabel = { matched: '確認できた', contradicted: '誤りの条件に一致', pending: '判定保留' }
 </script>
 
 <template>
   <div class="essay-score">
+    <p class="essay-score-summary">確認できた解答要素：<strong>{{ elementCounts.matched }} / {{ elementCounts.total }}項目</strong><span v-if="elementCounts.pending">判定保留：{{ elementCounts.pending }}項目</span><span v-if="elementCounts.contradicted">誤りの条件に一致：{{ elementCounts.contradicted }}項目</span></p>
     <p v-if="result.grading_status === 'invalid'" class="essay-score-summary">字数・指定語の条件を確認してください。参考点は未確定です。</p>
     <p v-else-if="result.score !== null" class="essay-score-summary">ルール採点の参考点：<strong>{{ result.score }} / {{ result.max_points }}点</strong></p>
     <p v-else class="essay-score-summary">確認できた得点：<strong>{{ result.confirmed_points }} / {{ result.max_points }}点</strong><span>残り{{ result.pending_points }}点分は判定保留です。</span></p>

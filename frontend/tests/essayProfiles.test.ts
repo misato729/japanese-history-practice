@@ -4,8 +4,7 @@ import { essayRuleProfiles, getEssayRuleProfile } from '../server/data/essay-rul
 import { gradeEssay, validateEssayProfile } from '../server/services/essay-scoring.ts'
 import { syntheticEssayProfile, essayModelAnswers, essayRuleCases } from './fixtures/essayRuleCases.ts'
 
-test('production starts without subject rules or synthetic test content', () => {
-  assert.deepEqual(essayRuleProfiles, [])
+test('the application catalog does not include synthetic test content', () => {
   assert.equal(getEssayRuleProfile(syntheticEssayProfile.id), undefined)
 })
 
@@ -14,13 +13,14 @@ test('a reviewed synthetic profile has eight points and versioned lookup stays i
   validateEssayProfile(profile)
   assert.equal(profile.elements.reduce((n, item) => n + item.points, 0), 8)
   assert.deepEqual(Object.keys(essayModelAnswers), [profile.id])
+  const original = [...essayRuleProfiles]
   try {
     essayRuleProfiles.push(profile)
     assert.equal(getEssayRuleProfile(profile.id, profile.version), profile)
     assert.equal(getEssayRuleProfile(profile.id, 999), undefined)
     assert.ok(essayRuleCases.length >= 8)
-  } finally { essayRuleProfiles.splice(0, essayRuleProfiles.length) }
-  assert.deepEqual(essayRuleProfiles, [])
+  } finally { essayRuleProfiles.splice(0, essayRuleProfiles.length, ...original) }
+  assert.equal(essayRuleProfiles.length, original.length)
 })
 
 for (const item of essayRuleCases) {

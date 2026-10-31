@@ -3,6 +3,10 @@ export type EssayPattern = {
   sequence: string[][]
   max_gap?: number
   scope?: 'sentence' | 'answer'
+  /** Ignore reading commas only for a single-slot, complete relationship phrase. */
+  ignore_commas?: boolean
+  /** Single-slot equality with the whole sentence/answer selected by scope. */
+  exact?: boolean
 }
 
 export type EssayRuleElement = {
@@ -10,6 +14,8 @@ export type EssayRuleElement = {
   label: string
   points: number
   positive: EssayPattern[]
+  /** OR groups of independent full clauses; every pattern in one group must match. */
+  positive_all?: EssayPattern[][]
   negative?: EssayPattern[]
 }
 
@@ -19,9 +25,13 @@ export type EssayScoringProfile = {
   title: string
   max_characters: number
   required_terms: string[]
+  /** Explicit writing variants of required terms; not general semantic aliases. */
+  required_term_variants?: Record<string, string[]>
   elements: EssayRuleElement[]
   /** Explicitly safe negative constructions, e.g. 「避けられない」. */
   allowed_negation_phrases?: string[]
+  /** Complete, verified assertions also registered as single-slot positives. */
+  allowed_context_phrases?: string[]
   /** Question-specific ambiguity (including unsupported attribution): hold for review. */
   caution_patterns?: EssayPattern[]
 }

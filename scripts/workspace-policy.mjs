@@ -51,7 +51,7 @@ export function isLocalOnlyPath(path, policy = DEFAULT_WORKSPACE_POLICY) {
   if (typeof path !== 'string') return false
   const parts = folded(path).replaceAll('\\', '/').split('/').filter(Boolean)
   // Copyrighted history reference sources stay protected even if optional policy is absent or changed.
-  const requiredSource = parts.some(part => ['past-exam', '分析'].includes(part) || part.startsWith('glossary') || part.startsWith('詳説日本史') || part.startsWith('日本史用語集') || /^歴検.*\.(pdf|zip)$/.test(part))
+  const requiredSource = parts.some(part => ['past-exam', '分析'].includes(part) || part.startsWith('glossary') || part.startsWith('詳説日本史') || part.startsWith('日本史用語集') || part.startsWith('日本史新課程用語') || /^歴検.*\.(pdf|zip)$/.test(part))
   return requiredSource || parts.some(part => policy.local_only.directory_names.some(name => folded(name) === part))
     || policy.local_only.filename_prefixes.some(prefix => (parts.at(-1) ?? '').startsWith(folded(prefix)))
 }

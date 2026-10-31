@@ -1,8 +1,16 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
-import { essayAnswerIssue, essayCharacterCount } from '../app/utils/essayPresentation.ts'
+import { essayAnswerIssue, essayCharacterCount, essayElementCounts } from '../app/utils/essayPresentation.ts'
 import { createEmptyQuestion } from '../app/types/adminQuestion.ts'
 import { normalizeAdminQuestion, prepareAdminQuestion, selectEssayProfile, essayProfileKey } from '../app/utils/adminQuestionForm.ts'
+
+test('element totals keep matched, contradicted and unknown wording separate', () => {
+  assert.deepEqual(essayElementCounts([]), { total: 0, matched: 0, pending: 0, contradicted: 0 })
+  assert.deepEqual(essayElementCounts([{ status: 'matched' }, { status: 'pending' }, { status: 'matched' }, { status: 'contradicted' }]),
+    { total: 4, matched: 2, pending: 1, contradicted: 1 })
+  assert.deepEqual(essayElementCounts([{ status: 'pending' }, { status: 'pending' }]),
+    { total: 2, matched: 0, pending: 2, contradicted: 0 })
+})
 
 test('essay word limits count Unicode characters and punctuation, without whitespace or width conversion', () => {
   assert.equal(essayCharacterCount('人口は\n増加。　'), 6)

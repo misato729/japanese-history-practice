@@ -1,0 +1,95 @@
+{
+  "schema_version": 1,
+  "revision": 35,
+  "state_hash": "aef2d2c65c06cb63d381761ba92566572e90510ccbc3bd2a7a2bf3651caf1076",
+  "recorded_at": "2026-10-30T14:54:52.231Z",
+  "timezone": "UTC",
+  "context": "operations",
+  "task": "register_predicted_mock_sets",
+  "summary": "5セット150問を通常DBに登録し読戻し一致。論述34要素214ケース通過。画面サーバーの安定起動と操作確認を継続中。",
+  "next_action": "監視除外設定での一覧API取得とPC/SPの解答・再読込を確認する。",
+  "missing_local_files": [],
+  "git": {
+    "available": true,
+    "head": "3788743b074303bc090b769119ca4db821c9ca0f",
+    "changes": [
+      {
+        "status": " M",
+        "path": "AGENTS.md"
+      },
+      {
+        "status": " M",
+        "path": "config/exam.json"
+      },
+      {
+        "status": " M",
+        "path": "docs/architecture.md"
+      },
+      {
+        "status": " M",
+        "path": "frontend/app/components/EssayScoringResult.vue"
+      },
+      {
+        "status": " M",
+        "path": "frontend/app/utils/essayPresentation.ts"
+      },
+      {
+        "status": " M",
+        "path": "frontend/nuxt.config.ts"
+      },
+      {
+        "status": " M",
+        "path": "frontend/server/data/essay-rule-profiles.ts"
+      },
+      {
+        "status": " M",
+        "path": "frontend/server/services/essay-scoring.ts"
+      },
+      {
+        "status": " M",
+        "path": "frontend/tests/essayPresentation.test.ts"
+      },
+      {
+        "status": " M",
+        "path": "frontend/tests/essayProfiles.test.ts"
+      },
+      {
+        "status": " M",
+        "path": "frontend/tests/essayScoring.test.ts"
+      },
+      {
+        "status": "??",
+        "path": "frontend/tests/essayCatalog.test.ts"
+      },
+      {
+        "status": "??",
+        "path": "日本史新課程用語.pdf"
+      }
+    ]
+  },
+  "file_hashes": {
+    "AGENTS.md": "57f67e5ae7774dae64fc682ca72720d4fcc9c98c8eb3c7bd0ac4441fd4f30c54",
+    "README.md": "13db1d2c82bfae17e9be7e23d79436a112bae969a92f2ea818f6907fc65594d7",
+    "docs/testing.md": "60ca85668a355f2b4636c032a2ea59aa89d515421cbd1c64fcda187c9dd66bda",
+    "docs/workflow/README.md": "45ae8a20c72aa9c36f17f24c1d5b9fa40f45e5db2e89f44a9e1888e60aeea2fc",
+    "docs/workflow/policy.json": "bb880401e658603e5d2cdea6eb9dd442949cbcb5db6e2837ae9f31c86222bd29",
+    "docs/workflow/task.example.json": "4bf161efce99b7d0a26798e3445d1f142505e512eedd591ea11cfb194d67da9f",
+    "docs/workflow/contexts/product.md": "03e318496e66e0ad2a2c1e2a2ea8186a194a6e9a16fd6f06898e44178649c5b8",
+    "docs/workflow/contexts/development.md": "fc2c06f76ad5cb8162c93e67992e64a20e7aea337ffaf8f0b5e242af3bb12dab",
+    "docs/workflow/contexts/operations.md": "6c4dc1183d9ed6124d3ac681d20a828fbdc0fb9336aa13c803e0641779b3b195",
+    "scripts/context.mjs": "3828c41d1cc5a6977b8444035e094e61e1c9895fcaa9451ecb1919e799ecaffc",
+    "scripts/context.test.mjs": "bc14ad1ba5d331f75d5f34923ac59a2cfe29b5b1c12174b0aa57e6d8ee572923",
+    "scripts/workflow-policy.mjs": "60535f2c9bf42203c059ca39a0b254c168b7cfb2468904a3842725fe3797141e",
+    "scripts/workflow-policy.test.mjs": "394287e7d1e84756a3ac8833918f964ee66f0ef2c34934d121d055fb37af4782",
+    "scripts/workspace-policy.mjs": "df079e33bb373d3aa4852eae68092389a57017e81af2b73efd8ec6826e0c3ed0",
+    "scripts/workspace-policy.test.mjs": "32a554371314d74f1aabc08dc5849ed597b40eb6951f7c3fd8d550cbf9eed8e9",
+    "scripts/check-private-sources.mjs": "1d28447b51b39591d42151f236b837b33d695662168ee5c71500205aa0de96af",
+    "scripts/check-private-sources.test.mjs": "be62774be1c55d0c586d2b3cfdfd530d5a8358c4597d756edcb9625b2419ce4e",
+    ".gitignore": "bd3dbd5fdeaade95db4f4487cbbf8e547eaeed85f120d07b9c5620215b1b896f",
+    ".dockerignore": "062c6260bc9f146c026659bf32e4f113808f2b080b72410f8b695fe3c142facb",
+    ".githooks/pre-push": "3529b300f7a655102ad899ab31fa8b2c404ec37479d1195aa9bcd3efa97bf90c",
+    "config/exam.json": "0eda1b007987b45b64e15a59a26fbe6b674df1dd2083bcdc453855e6f9c5b2d0",
+    "docs/verification.md": "c9232834f12be4380417793aa4bd210e2543f44490fde109d2a1e1d437498d70"
+  },
+  "verification_note": "ハッシュ・Git・記録済み完了条件の確認であり、テストや出典照合の自動再実行ではない。依頼・権限は最新のユーザー指示とAGENTS.mdに従う。"
+}

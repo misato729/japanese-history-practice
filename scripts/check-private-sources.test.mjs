@@ -48,6 +48,7 @@ test('protected source paths are distinguished from public code and documentatio
     'nested/GLOSSARY-data/inner.pdf', 'nested/PAST-EXAM/inner.pdf', 'nested\\past-exam\\scan.png',
     '分析/full-ocr.txt', 'nested/分析/scan.png',
     '歴検1級日本史_2025.pdf', 'nested/歴検1級日本史_解答解説_2008-2012.pdf', '歴検1級日本史_2025.zip',
+    '日本史新課程用語.pdf', 'nested/日本史新課程用語-ocr.txt', 'nested/日本史新課程用語画像/page.png',
   ]) assert.equal(isPrivateSource(path), true, path)
   for (const path of [
     'README.md', 'scripts/check-private-sources.mjs', 'docs/past-exam-notes.md',
@@ -80,13 +81,13 @@ test('forced staging cannot bypass source protection despite ignore rules', t =>
 
 test('committing then deleting a source still fails because earlier history would be uploaded', t => {
   const f = fixture(t)
-  const path = 'past-exam/question.pdf'
-  write(join(f.root, path))
-  f.git(['add', '--force', path]); f.commit('Synthetic source fixture')
-  f.git(['rm', path]); f.commit('Remove synthetic source fixture')
+  const paths = ['past-exam/question.pdf', 'nested/日本史新課程用語.pdf']
+  for (const path of paths) write(join(f.root, path))
+  f.git(['add', '--force', ...paths]); f.commit('Synthetic source fixture')
+  f.git(['rm', ...paths]); f.commit('Remove synthetic source fixture')
   const result = inspect(f.root)
   assert.deepEqual(result.tracked, [])
-  assert(result.history.includes(path))
+  for (const path of paths) assert(result.history.includes(path))
   assert.equal(capture(() => main([], f.root)).code, 1)
 })
 

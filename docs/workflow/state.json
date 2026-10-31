@@ -1,10 +1,10 @@
 {
   "schema_version": 1,
-  "revision": 51,
-  "updated_at": "2026-10-31T00:24:18.621Z",
+  "revision": 52,
+  "updated_at": "2026-10-31T00:30:06.976Z",
   "workspace_relative_to_repo": ".",
-  "active_context": "operations",
-  "last_checkpoint": "docs/workflow/handoffs/2026-10-31T00-24-18-621Z-r51.json",
+  "active_context": "development",
+  "last_checkpoint": "docs/workflow/handoffs/2026-10-31T00-30-06-976Z-r52.json",
   "gate_policy": {
     "version": 1,
     "legacy_task_ids": []
@@ -743,6 +743,159 @@
       }
     },
     {
+      "id": "register_predicted_mock_sets",
+      "context": "operations",
+      "title": "改訂版の予想問題5セットをローカル画面用DBへ登録する",
+      "status": "done",
+      "depends_on": [
+        "refine_source_reading_load"
+      ],
+      "authorization": "requested",
+      "request_ref": "2026-10-30 ユーザー「画面用のDBに登録してください」。ローカル画面に5セット150問を反映する。 同日追加指示：論述は要素ごとに複数の許容文言と一致数を用い、配点は2点×4または2点＋3点＋3点を基本とする。",
+      "next_action": "ローカルで演習可能。今回の変更は未コミット・未push・未公開。追加の依頼を待つ。",
+      "evidence": [
+        "local-only/mock-db-import-20261030/registration-result.json",
+        "local-only/mock-db-import-20261030/verification-summary.json",
+        "local-only/mock-db-import-20261030/normal-db-check.json",
+        "local-only/mock-db-import-20261030/verify-import-result.json",
+        "local-only/mock-db-import-20261030/profile-check.json",
+        "local-only/mock-db-import-20261030/ui-check.json",
+        "local-only/mock-db-import-20261030/catalog-capture-check.json",
+        "local-only/mock-db-import-20261030/ui-third-party-review.json",
+        "local-only/mock-db-import-20261030/post-ui-database-check.json"
+      ],
+      "last_verified_at": "2026-10-30T15:58:14.283Z",
+      "verification_scope": "日本史専用ローカルDBへ5教材・20大問・150問を既存Writerの空DB用取込で登録。保存後の全量exportは入力とSHA256一致、利用者・履歴・お気に入り0件を保持。論述10問34要素は複数許容表現と原典/反例214ケース、2点×4を4問・2+3+3を6問、未知は保留・正誤null。対象検査49件、否定語尾最終19件、独立_test DB28件、一覧概要4件が通過。PCで5セット、PC/SPで選択・語句・論述、3要素と4要素の8点・部分一致保留・本文参照・再読込・横幅を操作確認し、第三者が画像7点を確認。一覧3問合せとlocal-only監視除外を含む。全体型検査・本番ビルドは実行せず、資料外部送信・コミット/push・デプロイは行っていない。",
+      "acceptance": [
+        {
+          "id": "data_checks",
+          "kind": "automated",
+          "description": "5教材・20大問・150問（四択100・語句40・論述10）を保持し、反復で重複せず、対象外を保持する。入力と保存値・出典・参照・論述の保留を照合し回答前非公開を確認する。",
+          "verification": "独立した_test DBと合成データで必要な保存・反復検証。通常DBの前後件数・保全情報と全データ対応を確認する。",
+          "status": "passed",
+          "evidence": [
+            "local-only/mock-db-import-20261030/normal-db-check.json",
+            "local-only/mock-db-import-20261030/verify-import-result.json",
+            "local-only/mock-db-import-20261030/profile-check.json",
+            "local-only/mock-db-import-20261030/post-ui-database-check.json",
+            "local-only/mock-db-import-20261030/catalog-optimization-independent.json"
+          ],
+          "checked_at": "2026-10-30T15:58:14.283Z"
+        },
+        {
+          "id": "ui_review",
+          "kind": "review",
+          "description": "作者以外が変換と保存経路を確認し、PC・スマートフォンで模擬試験の読込・解答形式・再読込を確認する。",
+          "verification": "独立レビュー、ローカル画面操作、保存後再取得で5セットと全形式の表示・参照を検証する。",
+          "status": "passed",
+          "evidence": [
+            "local-only/mock-db-import-20261030/ui-third-party-review.json",
+            "local-only/mock-db-import-20261030/ui-check.json",
+            "local-only/mock-db-import-20261030/catalog-capture-check.json",
+            "local-only/mock-db-import-20261030/implementation-review.json",
+            "local-only/mock-db-import-20261030/implementation-engine-review.json",
+            "local-only/mock-db-import-20261030/profile-root-independent.json",
+            "local-only/mock-db-import-20261030/profile-author-independent.json",
+            "local-only/mock-db-import-20261030/watch-config-independent.json"
+          ],
+          "checked_at": "2026-10-30T15:58:14.283Z",
+          "reviewer": "essay_profiles_1_3 (UI); import_path_review / essay_self_assessment (separate code and profile reviews)"
+        }
+      ],
+      "execution": {
+        "worker": "root",
+        "max_attempts": 3,
+        "attempts": [
+          {
+            "number": 1,
+            "outcome": "passed",
+            "summary": "5セット150問の登録・読戻し一致、論述214反例、PC/SP全回答形式と独立UI確認が通過。",
+            "at": "2026-10-30T15:58:20.292Z",
+            "failed_criteria": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "author_new_curriculum_mocks_6_7",
+      "context": "product",
+      "title": "新課程追加用語の全件照合を基に模試6・7を作成する",
+      "status": "done",
+      "depends_on": [
+        "register_predicted_mock_sets"
+      ],
+      "authorization": "requested",
+      "request_ref": "2026-10-31 ユーザー：日本史新課程用語.pdfの赤字解説の有無に関わらず、全掲載語について日本史用語集原本を参照し、これらを中心とする模試6・7を作成する。",
+      "next_action": "作成した問題・解答解説と照合・検証結果を案内する。DB登録やGit送信は未実施。",
+      "evidence": [
+        "local-only/new-curriculum-mocks-20261031/README.md",
+        "local-only/new-curriculum-mocks-20261031/reviews/final-validation.json",
+        "local-only/new-curriculum-mocks-20261031/reviews/protection-final.json",
+        "local-only/new-curriculum-mocks-20261031/検証結果.md"
+      ],
+      "last_verified_at": "2026-10-30T18:15:59.159Z",
+      "verification_scope": "全361項目の原本参照（個別見出し357・関連見出し4）。新規2セット60問の全肢・短答・論述・最短解法を別担当が確認し、原稿SHAと完成データ・集計の一致を検証。参考配点・採点要素は公式基準ではない。一次史料原文読解の再現、DB登録、公開、Git送信は範囲外。",
+      "acceptance": [
+        {
+          "id": "inventory_sources",
+          "kind": "automated",
+          "description": "一覧の全用語に出典位置・原画像照合状況があり、赤字解説語だけに限定しない。未確認を区別する。",
+          "verification": "全ページ目視確認と用語一覧・用語集見出し照合表の整合確認。",
+          "status": "passed",
+          "evidence": [
+            "local-only/new-curriculum-mocks-20261031/reviews/inventory-audit.json",
+            "local-only/new-curriculum-mocks-20261031/用語照合について.md",
+            "local-only/new-curriculum-mocks-20261031/用語原本照合表.csv"
+          ],
+          "checked_at": "2026-10-30T18:15:59.159Z"
+        },
+        {
+          "id": "mock_structure",
+          "kind": "automated",
+          "description": "模試6・7各30問、形式・唯一解・根拠・論述字数/要素配点・参照・他問からの露出を検査する。",
+          "verification": "ローカル構造検査と全肢根拠、用語を解答に必要とする割合の集計。",
+          "status": "passed",
+          "evidence": [
+            "local-only/new-curriculum-mocks-20261031/reviews/automated-check.json",
+            "local-only/new-curriculum-mocks-20261031/reviews/curriculum-coverage.json",
+            "local-only/new-curriculum-mocks-20261031/reviews/final-validation.json",
+            "local-only/new-curriculum-mocks-20261031/検証結果.md"
+          ],
+          "checked_at": "2026-10-30T18:15:59.159Z"
+        },
+        {
+          "id": "independent_review",
+          "kind": "review",
+          "description": "作者以外が全60問の正答・誤肢・最短解法・論述要素と用語原本照合を確認する。",
+          "verification": "独立レビューと修正後の再判定、過去問ベンチマークとの比較。",
+          "status": "passed",
+          "evidence": [
+            "local-only/new-curriculum-mocks-20261031/reviews/independent-ancient.json",
+            "local-only/new-curriculum-mocks-20261031/reviews/independent-medieval.json",
+            "local-only/new-curriculum-mocks-20261031/reviews/independent-early-modern.json",
+            "local-only/new-curriculum-mocks-20261031/reviews/independent-modern.json",
+            "local-only/new-curriculum-mocks-20261031/reviews/delivery-method-review.json",
+            "local-only/new-curriculum-mocks-20261031/reviews/final-validation.json"
+          ],
+          "checked_at": "2026-10-30T18:15:59.159Z",
+          "reviewer": "essay_self_assessment / essay_profiles_1_3 / import_path_review / root (各大問の作者と別担当)"
+        }
+      ],
+      "execution": {
+        "worker": "root",
+        "max_attempts": 3,
+        "attempts": [
+          {
+            "number": 1,
+            "outcome": "passed",
+            "summary": "全361項目の原本参照と2セット60問の構造・独立レビュー・原稿と生成物の一致を確認。参考採点と資料保護も検証済み。",
+            "at": "2026-10-30T18:16:30.112Z",
+            "failed_criteria": []
+          }
+        ]
+      }
+    },
+    {
       "id": "horizontal_exam_sidebar",
       "context": "development",
       "title": "模擬試験サイドバーを左右に開閉できる形へ変更する",
@@ -914,6 +1067,59 @@
         ]
       },
       "last_verified_at": "2026-10-31T00:24:11.452Z"
+    },
+    {
+      "id": "expand_essay_acceptance_all_mocks",
+      "context": "development",
+      "title": "全模試1〜7の論述許容表現を拡充し自動採点を登録する",
+      "status": "doing",
+      "depends_on": [
+        "register_predicted_mock_sets",
+        "author_new_curriculum_mocks_6_7"
+      ],
+      "authorization": "requested",
+      "request_ref": "2026-10-31 ユーザー：正解の言い換えを誤判定しないため許容文言を十分に用意し、全模試の自動採点登録まで実装する。",
+      "next_action": "許容表現の拡充と汎用判定の改善、独立検証後にカタログ・ローカルDBへ反映する。",
+      "evidence": [
+        "local-only/essay-expansion-20261031/baseline/files.json"
+      ],
+      "last_verified_at": null,
+      "verification_scope": "全7セット14論述。旧版保持、新規版の私的カタログ、原典に沿う多様な許容表現と反例。ID・公開状態・対象外履歴/お気に入りを保ちWriter更新、模試6/7も登録。未知は保留・is_correct=null。外部送信・コミット・push・デプロイは行わない。",
+      "acceptance": [
+        {
+          "id": "semantic_acceptance",
+          "kind": "automated",
+          "description": "14論述すべてに多様な同義表現・語順/助詞/受身の正解例と主客/否定/年代/仮定/併記/別節の反例があり、正解を取りこぼさず誤説明を過大加点しない。",
+          "verification": "原本とrubric照合、合成エンジン回帰と私的例文テスト。",
+          "status": "pending",
+          "evidence": [],
+          "checked_at": null
+        },
+        {
+          "id": "registration_integrity",
+          "kind": "automated",
+          "description": "全7セットの14論述が検証済みの規則版/engine/digestへ紐づき、再読込・反復・対象外保持と回答前非公開を確認する。",
+          "verification": "独立_test DBの合成書込検査、通常DB/サーバー確認、PC/SPの論述操作確認。",
+          "status": "pending",
+          "evidence": [],
+          "checked_at": null
+        },
+        {
+          "id": "independent_review",
+          "kind": "review",
+          "description": "作者と別担当が原典の必要要素・許容例・反例と実装/反映の整合を確認する。",
+          "verification": "規則と例文の交差レビュー、汎用エンジン/登録経路の独立レビュー。",
+          "status": "pending",
+          "evidence": [],
+          "checked_at": null,
+          "reviewer": null
+        }
+      ],
+      "execution": {
+        "worker": "root",
+        "max_attempts": 3,
+        "attempts": []
+      }
     }
   ]
 }
