@@ -1,10 +1,10 @@
 {
   "schema_version": 1,
-  "revision": 49,
-  "updated_at": "2026-10-31T00:19:44.810Z",
+  "revision": 51,
+  "updated_at": "2026-10-31T00:24:18.621Z",
   "workspace_relative_to_repo": ".",
   "active_context": "operations",
-  "last_checkpoint": "docs/workflow/handoffs/2026-10-31T00-19-44-810Z-r49.json",
+  "last_checkpoint": "docs/workflow/handoffs/2026-10-31T00-24-18-621Z-r51.json",
   "gate_policy": {
     "version": 1,
     "legacy_task_ids": []
@@ -863,48 +863,57 @@
       "id": "push_sidebar",
       "context": "operations",
       "title": "サイドバー横開閉と背景調整をコミット・pushする",
-      "status": "doing",
+      "status": "done",
       "depends_on": [
         "horizontal_exam_sidebar",
         "darken_sidebar_background"
       ],
       "authorization": "requested",
       "request_ref": "2026-10-31 ユーザー：OKです。コミット・pushしてください",
-      "next_action": "送信対象のステージ検証と独立レビュー後にcommit/pushし、CI完了と同期を確認する",
+      "next_action": "今回のGit送信結果を案内し、追加依頼を待つ",
       "evidence": [
         "docs/sidebar-delivery.md"
       ],
-      "verification_scope": "サイドバー3ファイル、確認画像8枚と検証・進捗記録に限定。既存dirtyと別作業タスクは保持。配信停止を維持。",
+      "verification_scope": "サイドバー関連22パスだけを明示stage。stateは今回3タスクのみ追加し他タスクを保持。保護検査・対象7件・進捗構造検査とreview_paletteの最終stage/画像確認が成功。ae7ee5dをmainへpushしリモート一致、実装CI 41149705526のharness/verify成功。別作業20ファイルと2タスクを保持、Webhook0/Deployment0/Pages無効を事前確認、[skip netlify]で配信なし。結果の記録コミットも送信して同期/CIを最終確認する。",
       "acceptance": [
         {
           "id": "protected_delivery",
           "kind": "automated",
           "description": "対象だけのステージ・保護検査・検証とpush後のリモート同期/CI成功を確認する",
           "verification": "明示的なstage、資料保護、対象検査、CI完了とリモートOID確認",
-          "status": "pending",
+          "status": "passed",
           "evidence": [
             "docs/sidebar-delivery.md"
           ],
-          "checked_at": "2026-10-31T00:19:44.551Z"
+          "checked_at": "2026-10-31T00:24:11.452Z"
         },
         {
           "id": "scope_review",
           "kind": "review",
           "description": "別担当が送信対象に原資料/問題本文/秘密値や別作業が含まれないことを確認する",
           "verification": "review_paletteのステージ差分・画像・stateタスクID確認",
-          "status": "pending",
+          "status": "passed",
           "evidence": [
             "docs/sidebar-delivery.md"
           ],
           "reviewer": "review_palette",
-          "checked_at": "2026-10-31T00:19:44.552Z"
+          "checked_at": "2026-10-31T00:24:11.452Z"
         }
       ],
       "execution": {
         "worker": "root",
         "max_attempts": 3,
-        "attempts": []
-      }
+        "attempts": [
+          {
+            "number": 1,
+            "outcome": "passed",
+            "summary": "対象22パスと今回3タスクだけをcommit/push。資料保護・対象7件・stage独立レビュー、リモート同期、GitHub CI全ジョブ成功。別作業を保持し配信なし。",
+            "at": "2026-10-31T00:24:11.690Z",
+            "failed_criteria": []
+          }
+        ]
+      },
+      "last_verified_at": "2026-10-31T00:24:11.452Z"
     }
   ]
 }
