@@ -39,3 +39,5 @@ Compose・DB・ポート・Cookieは専用です。他サービスの秘密値�
 同タスクの後続で検証済み改名を8618e16として反映。NetlifyのExposed secrets表示は消失したがdeploying段階でexit2。生成distリンクをローカル保持で追跡解除しignoreを揃え4ba10c4もpushしたが、配信段階の失敗は残る。両コミットのGitHub CIは全成功。詳細ログが画面/公開WebSocket/APIから得られず、同条件の再実行を止め、CD作業は未完了・Netlify詳細診断待ちとする。SQL/DB/検査設定は不変。詳細と問い合わせ用IDは docs/netlify-cd-secret-followup.md。
 
 4ba10c4のNetlify6ae7c63feaba11e4b04d2a38もdeploying段階error、Copy logは空で追加原因なし。8618e16/4ba10c4のGitHub CIは全成功だがCD全体は未完了。総評価2回failedを保持し、同条件再実行は停止。Netlify側の詳細診断結果待ちとしてwaiting_for_materialへ移す。秘密値取得/検査無効化/SQL改変/サポート送信は行わない。
+
+2026-11-02の明示依頼でCD完成作業を再開。Netlify識別下ではNuxt/Nitroがnetlify-staticを自動選択してdistへ生成するが、公開先は.output/publicだった。NITRO_PRESET=staticをNetlify環境だけに明示する修正を検証中。前回failed2件と上限3を保持する。詳細はdocs/netlify-cd-secret-followup.md。

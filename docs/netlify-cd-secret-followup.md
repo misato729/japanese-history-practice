@@ -59,3 +59,19 @@ GitHub Actionsは8618e16の41359953730と4ba10c4の41360550915がともに全ジ
 本番の静的画面は以前のNetlify Drop配信6ae7b7319664bd42cb6a72ffのままで、DB・適用済み001・環境変数・Netlifyの検査/自動公開設定は変更していない。同条件の再実行や推測の除外追加を継続せず、Netlify側で今回のdeploy/buildの詳細エラーを取得する必要がある。CD作業は未完了としてwaiting_for_materialへ移す。今回の2回の評価はfailedのまま履歴へ保持し、総評価上限3は増やさない。
 
 Netlifyへの確認に必要な情報：site 84ebbdc9-aa4f-427b-a353-1beaeb6cd847、旧秘密検出deploy6ae7c05bd64b30ae90370bda、生成名修正後deploy6ae7c49da13f9e7675e9c2d8/build6ae7c49da13f9e7675e9c2d6、生成リンク除外後deploy6ae7c63feaba11e4b04d2a38/build6ae7c63feaba11e4b04d2a36。求めるのはdeploying段階のstderr/command/publish-path等の詳細であり、秘密値そのものではない。本監査からサポートへの送信は行わない。
+
+## Netlify固有の出力先の診断と修正
+
+2026-11-02、ユーザーの「詳細を診断し、自動デプロイができるようにしてください」に基づき再開。前回のfailed評価2件・上限3は保持する。画面と公開metadataは依然として追加のstderrを返さないが、独立担当cd_diagnostics_reviewが実依存のNuxt 4.6.2 / Nitro 2.13.5を調べ、未再現だった環境差を特定した。
+
+nuxt generateはstatic=trueを指定するが、preset未指定時は実行環境を自動識別する。NETLIFY=trueではnetlify-static presetとなり、output.dir/publicDirはdist。通常のDocker静的生成はstatic presetで.output/public。既存netlify.tomlとNetlify画面の公開先はfrontend/.output/publicのため、両環境の生成先が一致していなかった。読取専用のresolvePreset実行でもこの差を確認した。GitHub CIの通常build成功だけでは、この差を検査できていなかった。
+
+修正はnetlify.tomlのbuild.environmentにNITRO_PRESET=staticを指定し、検証済みの.output/publicへ固定する。通常のFly向けbuild、SQL/DB、公開先、API転送、シークレット検査は変更しない。独立した追跡ソース173ファイルのみで、NETLIFY=trueの修正前後の生成と公開物を検証してから、pushによる自動配信を確認する。検証資料はlocal-only/cd-output-diagnosis/に保持する。
+
+修正前の再現結果：NETLIFY=true / preset未指定でnpm run generateは終了コード0、netlify-static、27ルートを生成。distは112ファイルでindex.htmlあり、.output/publicはディレクトリ自体が存在しない。公開先不一致を実際に再現した。before-result.jsonとnetlify-before.logに時点付きの根拠、independent-baseline-review.jsonに独立確認を保存した。
+
+修正後の再現結果：同じ追跡ソースとNETLIFY=trueにNITRO_PRESET=staticを指定し、npm run generateは終了コード0。static presetで27ルート、.output/publicに111ファイルとindex.htmlを生成した。公開用_headers/_redirectsはソースとbyte一致し、既存のAPI転送と検索除外を保持。after-result.jsonとnetlify-after.logに根拠を保存した。アプリ実装/依存/SQLは前回CI成功時から不変で、前回の176テスト・型・DB/API検査は同じ対象の既存結果として継承し、今回は環境差による生成・公開パス整合を追加検査する。
+
+cd_diagnostics_reviewによる独立レビューは指摘0。公開111ファイルの全件比較はbuildIdと生成時刻だけの差で一致、JS/CSS/SVG80ファイルは内容一致、HTML19件とpayload8件は保持。実cache482ファイルとホスト中間生成物489ファイルも長いapi_候補0。サーバーや原資料を公開物へ混入していない。independent-source-review.json、independent-public-output-review.json、independent-generated-prefix-review.jsonに安全な集計を保存した。
+
+送信前の保護/進捗168テストは全成功、check-templateとgit diff --checkも成功。全Git履歴の資料保護検査を通過し、.githooksを維持する。Netlify出力先修正だけを含む設定と作業記録をmainへpushし、今回はskip指定なしで自動公開を検証する。
