@@ -1,10 +1,10 @@
 {
   "schema_version": 1,
-  "revision": 79,
-  "updated_at": "2026-11-01T07:44:00.859Z",
+  "revision": 82,
+  "updated_at": "2026-11-01T08:13:23.736Z",
   "workspace_relative_to_repo": ".",
   "active_context": "operations",
-  "last_checkpoint": "docs/workflow/handoffs/2026-11-01T07-44-00-859Z-r79.json",
+  "last_checkpoint": "docs/workflow/handoffs/2026-11-01T08-13-23-736Z-r82.json",
   "gate_policy": {
     "version": 1,
     "legacy_task_ids": []
@@ -1502,7 +1502,7 @@
       "id": "deliver_learning_updates",
       "context": "operations",
       "title": "分類・出典・解説の変更をコミット・pushしNetlifyへ反映する",
-      "status": "doing",
+      "status": "done",
       "authorization": "requested",
       "request_ref": "2026-11-01 ユーザー「OKです。コミット・pushしてください」、続けて「netlifyはもうデプロイOKです」。",
       "depends_on": [
@@ -1514,35 +1514,59 @@
         "restore_material_table_6_24",
         "hide_authoring_notes"
       ],
-      "next_action": "限定indexの検査と生成物保護を確認してGit送信・Netlify配信を実施する",
-      "evidence": [],
-      "last_verified_at": null,
-      "verification_scope": "未実施。資料/問題データ/採点規則は送信せず、API/本番DB/Git連携/自動配信設定は変更しない。",
+      "next_action": "追加依頼を待つ。完了記録コミットをpushして最終同期とCIを確認する。",
+      "evidence": [
+        "docs/learning-updates-delivery.md"
+      ],
+      "last_verified_at": "2026-11-01T08:13:20.515Z",
+      "verification_scope": "限定40パス+移行検査期待値1行をmainへpush。全履歴保護と独立レビュー、合成176/独立server88/型/静的生成/ハーネス168、修正後CI41286711823成功。Netlify Published・公開HTTP/JS CSS一致・PCSP操作/画像の独立レビュー。本番教材0、教材/採点規則/API/本番DB/自動配信設定変更なし。",
       "acceptance": [
         {
           "id": "checks",
           "kind": "automated",
           "description": "対象差分のみコミット・pushして同期とCI成功、Netlify公開とAPI転送・PC/SPを確認する",
           "verification": "投影index検査・関連検査・保護フック・リモートSHA・CI・生成物保護検査・本番HTTP/PC/SP操作",
-          "status": "pending",
-          "evidence": [],
-          "checked_at": null
+          "status": "passed",
+          "evidence": [
+            "docs/learning-updates-delivery.md"
+          ],
+          "checked_at": "2026-11-01T08:13:20.515Z"
         },
         {
           "id": "review",
           "kind": "review",
           "description": "別担当が送信範囲と生成物の保護・公開結果を確認する",
           "verification": "投影差分/生成物/PCSP画像の独立レビュー",
-          "status": "pending",
-          "evidence": [],
-          "checked_at": null,
-          "reviewer": null
+          "status": "passed",
+          "evidence": [
+            "docs/learning-updates-delivery.md"
+          ],
+          "checked_at": "2026-11-01T08:13:20.515Z",
+          "reviewer": "review_push_scope, inspect_netlify_delivery"
         }
       ],
       "execution": {
         "worker": "root",
         "max_attempts": 3,
-        "attempts": []
+        "attempts": [
+          {
+            "number": 1,
+            "outcome": "failed",
+            "summary": "初回CIで既存の移行検査の期待値に新008が含まれず1件失敗。期待値のみ修正し、Dockerの検査コピーも明示overrideで分離して再評価する。Netlifyの画面Publishedは確認済み。",
+            "at": "2026-11-01T07:55:30.423Z",
+            "failed_criteria": [
+              "checks",
+              "review"
+            ]
+          },
+          {
+            "number": 2,
+            "outcome": "passed",
+            "summary": "移行テスト期待値の修正後、独立検査176+88件/型とCIが成功。Netlify公開・HTTP/生成物一致・PCSP操作と独立レビューを確認。資料と教材DBは送信せず、別作業を保持。",
+            "at": "2026-11-01T08:13:21.843Z",
+            "failed_criteria": []
+          }
+        ]
       }
     }
   ]
