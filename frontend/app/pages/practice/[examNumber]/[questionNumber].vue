@@ -2,7 +2,7 @@
 import type { NitroFetchOptions } from 'nitropack/types'
 import { EXAM_CATALOG, FREE_EXAM_MAX, publishedQuestionNumbers, type ExamCatalogEntry } from '~/utils/examCatalog'
 import type { LearningBlock as ContentBlock, GroupPassage, PassageReference, InputConstraints, SourceReference as StructuredSource } from '../../../../shared/types/learning'
-import { presentSources, shortAnswerIssue } from '~/utils/learningPresentation'
+import { presentExplanationBlocks, presentSources, shortAnswerIssue } from '~/utils/learningPresentation'
 import { essayAnswerIssue, type EssayConstraints } from '~/utils/essayPresentation'
 import type { EssayGrade } from '../../../../shared/types/essay'
 import { canRetainPassageContext, isCurrentPracticeRequest, reconcilePassageContext, type PracticePassageContext, type PracticeRequestTag } from '~/utils/practicePassageState'
@@ -281,6 +281,7 @@ const questionIsFavorite = computed(() => (
   isLoggedIn.value && question.value ? isFavorite(question.value.id) : false
 ))
 const sourceReferences = computed(() => presentSources(answerResult.value?.source_references, answerResult.value?.source_text))
+const explanationBlocks = computed(() => presentExplanationBlocks(answerResult.value?.explanation_blocks))
 const displayedQuestionNumber = computed(() => question.value?.group_question_number ?? (displayedGroup.value ? displayedGroup.value.question_numbers.indexOf(questionNumber.value) + 1 : questionNumber.value))
 const visibleGroupNumbers = computed(() => (displayedGroup.value?.question_numbers ?? []).filter(number => (
   practiceSequence.value.some(position => position.examNumber === examNumber.value && position.questionNumber === number)
@@ -674,7 +675,7 @@ onBeforeUnmount(() => window.removeEventListener('keydown', handleFavoriteModalK
 
           <div class="result-section">
             <h2>解答解説</h2>
-            <QuestionContentBlocks :blocks="answerResult.explanation_blocks" />
+            <QuestionContentBlocks :blocks="explanationBlocks" />
           </div>
 
           <div v-if="sourceReferences.length" class="result-section source-section">

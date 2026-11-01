@@ -1,0 +1,18 @@
+/practice
+  X-Robots-Tag: noindex, nofollow
+/practice/*
+  X-Robots-Tag: noindex, nofollow
+/history
+  X-Robots-Tag: noindex, nofollow
+/favorites
+  X-Robots-Tag: noindex, nofollow
+/account
+  X-Robots-Tag: noindex, nofollow
+/admin/*
+  X-Robots-Tag: noindex, nofollow
+/premium/complete
+  X-Robots-Tag: noindex, nofollow
+/login
+  X-Robots-Tag: noindex, nofollow
+/signup
+  X-Robots-Tag: noindex, nofollow

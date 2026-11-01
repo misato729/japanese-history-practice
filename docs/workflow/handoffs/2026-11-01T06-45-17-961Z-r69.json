@@ -1,0 +1,199 @@
+{
+  "schema_version": 1,
+  "revision": 69,
+  "state_hash": "be9225d71026821365e6a511c27c5e06a015050af9320b8c2c396b0da2758101",
+  "recorded_at": "2026-11-01T06:45:17.961Z",
+  "timezone": "UTC",
+  "context": "development",
+  "task": "correct_source_terms",
+  "summary": "2冊325資料へ確認用語を登録し撮影位置表示を修正。DB反復/保持、単体8件、合成DB、PC/SP実操作と独立レビューを確認。",
+  "next_action": "追加依頼を待つ。今回の変更は未コミット・未push。並行タスクは変更していない。",
+  "missing_local_files": [],
+  "git": {
+    "available": true,
+    "head": "730328a416f398ae103fa9f087526bb7cf6a69eb",
+    "changes": [
+      {
+        "status": " M",
+        "path": "AGENTS.md"
+      },
+      {
+        "status": " M",
+        "path": "config/exam.json"
+      },
+      {
+        "status": " M",
+        "path": "docs/architecture.md"
+      },
+      {
+        "status": " M",
+        "path": "docs/workflow/contexts/development.md"
+      },
+      {
+        "status": " M",
+        "path": "docs/workflow/contexts/operations.md"
+      },
+      {
+        "status": " M",
+        "path": "docs/workflow/contexts/product.md"
+      },
+      {
+        "status": " M",
+        "path": "frontend/app/components/ExamSidebar.vue"
+      },
+      {
+        "status": " M",
+        "path": "frontend/app/pages/exam-overview.vue"
+      },
+      {
+        "status": " M",
+        "path": "frontend/app/pages/favorites.vue"
+      },
+      {
+        "status": " M",
+        "path": "frontend/app/pages/history.vue"
+      },
+      {
+        "status": " M",
+        "path": "frontend/app/pages/login.vue"
+      },
+      {
+        "status": " M",
+        "path": "frontend/app/pages/practice/[examNumber]/[questionNumber].vue"
+      },
+      {
+        "status": " M",
+        "path": "frontend/app/pages/privacy-policy.vue"
+      },
+      {
+        "status": " M",
+        "path": "frontend/app/pages/signup.vue"
+      },
+      {
+        "status": " M",
+        "path": "frontend/app/pages/terms.vue"
+      },
+      {
+        "status": " M",
+        "path": "frontend/app/utils/learningPresentation.ts"
+      },
+      {
+        "status": " M",
+        "path": "frontend/server/services/learning-structure.ts"
+      },
+      {
+        "status": " M",
+        "path": "frontend/tests/groupedLearningPresentation.test.ts"
+      },
+      {
+        "status": " M",
+        "path": "frontend/tests/legalPages.test.ts"
+      },
+      {
+        "status": "??",
+        "path": "docs/admin-exam-query-review.md"
+      },
+      {
+        "status": "??",
+        "path": "docs/cloud-deployment-review.md"
+      },
+      {
+        "status": "??",
+        "path": "docs/cloud-deployment-verification.md"
+      },
+      {
+        "status": "??",
+        "path": "docs/essay-grading-verification.md"
+      },
+      {
+        "status": "??",
+        "path": "docs/question-taxonomy-verification.md"
+      },
+      {
+        "status": "??",
+        "path": "docs/screenshots/cloud-deployment/deployed-home.jpg"
+      },
+      {
+        "status": "??",
+        "path": "docs/screenshots/cloud-deployment/desktop.jpg"
+      },
+      {
+        "status": "??",
+        "path": "docs/screenshots/cloud-deployment/mobile.jpg"
+      },
+      {
+        "status": "??",
+        "path": "docs/source-reference-format.md"
+      },
+      {
+        "status": "??",
+        "path": "docs/source-reference-terms.md"
+      },
+      {
+        "status": "??",
+        "path": "docs/toc-import-verification.md"
+      },
+      {
+        "status": "??",
+        "path": "docs/world-release-copy.md"
+      },
+      {
+        "status": "??",
+        "path": "frontend/public/_headers"
+      },
+      {
+        "status": "??",
+        "path": "frontend/public/_redirects"
+      },
+      {
+        "status": "??",
+        "path": "frontend/scripts/sync-categories.ts"
+      },
+      {
+        "status": "??",
+        "path": "frontend/server-tests/admin-exam-list.test.ts"
+      },
+      {
+        "status": "??",
+        "path": "frontend/server-tests/category-catalog.test.ts"
+      },
+      {
+        "status": "??",
+        "path": "frontend/server/database/migrations/008_category_catalog.sql"
+      },
+      {
+        "status": "??",
+        "path": "frontend/server/operations/categories.ts"
+      },
+      {
+        "status": "??",
+        "path": "netlify.toml"
+      }
+    ]
+  },
+  "file_hashes": {
+    "AGENTS.md": "4c3fbdddeb84171d571fd11fb73f2a578e50408ded488a0c20ba686fa1f9b760",
+    "README.md": "13db1d2c82bfae17e9be7e23d79436a112bae969a92f2ea818f6907fc65594d7",
+    "docs/testing.md": "60ca85668a355f2b4636c032a2ea59aa89d515421cbd1c64fcda187c9dd66bda",
+    "docs/workflow/README.md": "45ae8a20c72aa9c36f17f24c1d5b9fa40f45e5db2e89f44a9e1888e60aeea2fc",
+    "docs/workflow/policy.json": "d21fbb063281b36ef860225f34009c32b37dd2153fbd35138bb872a6f5f947f7",
+    "docs/workflow/task.example.json": "4bf161efce99b7d0a26798e3445d1f142505e512eedd591ea11cfb194d67da9f",
+    "docs/workflow/contexts/product.md": "e86303c51c07895f982cad15d67fa8d949d633395a5e261cdbf2ee4f6bbc9298",
+    "docs/workflow/contexts/development.md": "290e00df0b01c3f1b07c5ae5adf4acc1d9ea17fbfb0eac503f3c7e2de1d50b55",
+    "docs/workflow/contexts/operations.md": "72ca05b907ff2ee7aee042cd4c9815da810116fe0bbfe002109f0b402838eeb6",
+    "scripts/context.mjs": "3828c41d1cc5a6977b8444035e094e61e1c9895fcaa9451ecb1919e799ecaffc",
+    "scripts/context.test.mjs": "bc14ad1ba5d331f75d5f34923ac59a2cfe29b5b1c12174b0aa57e6d8ee572923",
+    "scripts/workflow-policy.mjs": "60535f2c9bf42203c059ca39a0b254c168b7cfb2468904a3842725fe3797141e",
+    "scripts/workflow-policy.test.mjs": "394287e7d1e84756a3ac8833918f964ee66f0ef2c34934d121d055fb37af4782",
+    "scripts/workspace-policy.mjs": "685272056c1fcaba765a5c1529b13a5c703aa9c6708baf13b0d63d0d189d6fcb",
+    "scripts/workspace-policy.test.mjs": "2f5517e76009fd3541cddfab0c7577f60870477a15677f53ec3284bcc434bd21",
+    "scripts/check-private-sources.mjs": "1d28447b51b39591d42151f236b837b33d695662168ee5c71500205aa0de96af",
+    "scripts/check-private-sources.test.mjs": "6e3194bd9dd502d3c40390f101d0313593eb3494e50fb11ea33da769cf615c14",
+    ".gitignore": "90d186e052011e432fbf48bc1e4f8a9f97fe1b8921ccfae965d267645ebab810",
+    ".dockerignore": "aeede9bfd7aef2fecb772184be3c55be741086156af7e5c1f97b6335825b4564",
+    ".githooks/pre-push": "3529b300f7a655102ad899ab31fa8b2c404ec37479d1195aa9bcd3efa97bf90c",
+    "config/exam.json": "4e63e3ca1387f8a72bd261851afacf79d2c98dfb9974e05e877cd1e380bc521c",
+    "docs/verification.md": "c9232834f12be4380417793aa4bd210e2543f44490fde109d2a1e1d437498d70"
+  },
+  "verification_note": "ハッシュ・Git・記録済み完了条件の確認であり、テストや出典照合の自動再実行ではない。依頼・権限は最新のユーザー指示とAGENTS.mdに従う。"
+}

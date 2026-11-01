@@ -1,10 +1,10 @@
 {
   "schema_version": 1,
-  "revision": 52,
-  "updated_at": "2026-10-31T00:30:06.976Z",
+  "revision": 79,
+  "updated_at": "2026-11-01T07:44:00.859Z",
   "workspace_relative_to_repo": ".",
-  "active_context": "development",
-  "last_checkpoint": "docs/workflow/handoffs/2026-10-31T00-30-06-976Z-r52.json",
+  "active_context": "operations",
+  "last_checkpoint": "docs/workflow/handoffs/2026-11-01T07-44-00-859Z-r79.json",
   "gate_policy": {
     "version": 1,
     "legacy_task_ids": []
@@ -1109,6 +1109,430 @@
           "kind": "review",
           "description": "作者と別担当が原典の必要要素・許容例・反例と実装/反映の整合を確認する。",
           "verification": "規則と例文の交差レビュー、汎用エンジン/登録経路の独立レビュー。",
+          "status": "pending",
+          "evidence": [],
+          "checked_at": null,
+          "reviewer": null
+        }
+      ],
+      "execution": {
+        "worker": "root",
+        "max_attempts": 3,
+        "attempts": []
+      }
+    },
+    {
+      "id": "import_textbook_toc",
+      "context": "development",
+      "title": "目次の章節をデータ化しローカルDBへ登録する",
+      "status": "done",
+      "authorization": "requested",
+      "request_ref": "2026-11-01 ユーザー依頼：詳説日本史PDF6〜8ページの目次を大分類・小分類にしDBへ登録",
+      "depends_on": [],
+      "next_action": "追加依頼を待つ。コミット・push・公開は今回行わない。",
+      "evidence": [
+        "docs/toc-import-verification.md"
+      ],
+      "last_verified_at": "2026-11-01T01:48:43.974Z",
+      "verification_scope": "指定PDF原画像の18章51節を独立照合。未分類込み19/52を専用ローカルDBに同期し全行一致。反復・rollback・対象外保持検査、設定検査、既存210問等の前後digest一致。原資料はlocal-only。",
+      "acceptance": [
+        {
+          "id": "checks",
+          "kind": "automated",
+          "description": "章節の整合・反復同期・対象外保持・DB再読込が成功する",
+          "verification": "設定検査、独立_test DBの検査、通常DBの前後digestと再同期",
+          "status": "passed",
+          "evidence": [
+            "docs/toc-import-verification.md"
+          ],
+          "checked_at": "2026-11-01T01:48:43.974Z"
+        },
+        {
+          "id": "review",
+          "kind": "review",
+          "description": "原画像と分類データを別担当が照合する",
+          "verification": "PDF6〜8ページの章・節の表記・順序・件数を照合",
+          "status": "passed",
+          "evidence": [
+            "docs/toc-import-verification.md"
+          ],
+          "checked_at": "2026-11-01T01:43:34Z",
+          "reviewer": "remote_safety_review"
+        }
+      ],
+      "execution": {
+        "worker": "root",
+        "max_attempts": 3,
+        "attempts": [
+          {
+            "number": 1,
+            "outcome": "passed",
+            "summary": "原画像18章51節の独立照合、DB19/52の反復同期と全行一致、既存210問等のdigest保持、検査8件と型検査の成功を確認した。",
+            "at": "2026-11-01T01:48:44.401Z",
+            "failed_criteria": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "classify_existing_questions",
+      "context": "development",
+      "title": "既存210問へ章節分類を設定する",
+      "status": "done",
+      "authorization": "requested",
+      "request_ref": "2026-11-01 ユーザー依頼：既存210問に今回の大分類・小分類を設定",
+      "depends_on": [
+        "import_textbook_toc"
+      ],
+      "next_action": "追加依頼の根拠資料表記を確認する。",
+      "evidence": [
+        "docs/question-taxonomy-verification.md"
+      ],
+      "last_verified_at": "2026-11-01T02:40:25.731Z",
+      "verification_scope": "210問の主分類・関連225リンク完全一致。11問15関連。独立レビュー、Writer合成回帰5件、前後全digestと2回の変更0を確認。本文・履歴等を保持。",
+      "acceptance": [
+        {
+          "id": "checks",
+          "kind": "automated",
+          "description": "210問に有効な分類を設定し、再実行で不変、分類以外と履歴を保持",
+          "verification": "Writer、_testの分類変更回帰検査、前後digest・再読込・反復検査",
+          "status": "passed",
+          "evidence": [
+            "docs/question-taxonomy-verification.md"
+          ],
+          "checked_at": "2026-11-01T02:40:25.731Z"
+        },
+        {
+          "id": "review",
+          "kind": "review",
+          "description": "別担当が主題と章節の対応を個別確認",
+          "verification": "210問の内容・出典・目次と対応表を独立レビュー",
+          "status": "passed",
+          "evidence": [
+            "docs/question-taxonomy-verification.md"
+          ],
+          "checked_at": "2026-11-01T02:30:09.961Z",
+          "reviewer": "taxonomy_independent"
+        }
+      ],
+      "execution": {
+        "worker": "root",
+        "max_attempts": 3,
+        "attempts": [
+          {
+            "number": 1,
+            "outcome": "passed",
+            "summary": "210問と関連225リンクの完全一致、独立レビュー、分類外digest保持、2回の変更0を確認。",
+            "at": "2026-11-01T02:40:26.821Z",
+            "failed_criteria": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "align_source_reference_format",
+      "context": "development",
+      "title": "世界史版を参考に根拠資料の表記を揃える",
+      "status": "done",
+      "authorization": "requested",
+      "request_ref": "2026-11-01 ユーザー依頼：指定の世界史版の根拠資料の書き方を参考にする",
+      "depends_on": [
+        "classify_existing_questions"
+      ],
+      "next_action": "追加依頼を待つ。今回の変更は未コミット・未push・未公開。",
+      "evidence": [
+        "docs/source-reference-format.md"
+      ],
+      "last_verified_at": "2026-11-01T03:48:24.616Z",
+      "verification_scope": "Worldのクエリなし画面を実操作して参照形式を確認。210問を370資料へ整理、1947所在保持・未確認年追加0。Writer更新と反復0・全保持digest、単体7件、PC/SP実操作・回答前秘匿・独立レビューを確認。",
+      "acceptance": [
+        {
+          "id": "checks",
+          "kind": "automated",
+          "description": "出典情報を保全し、表記検査と必要な画面確認が成功する",
+          "verification": "受領例との形式比較、資料表示テスト、PC/SP確認",
+          "status": "passed",
+          "evidence": [
+            "docs/source-reference-format.md"
+          ],
+          "checked_at": "2026-11-01T03:48:24.616Z"
+        },
+        {
+          "id": "review",
+          "kind": "review",
+          "description": "別担当が資料名・章節・ページ・補足の整合と情報保持を確認する",
+          "verification": "参照例と変更後の出典表示を独立照合する",
+          "status": "passed",
+          "evidence": [
+            "docs/source-reference-format.md"
+          ],
+          "checked_at": "2026-11-01T03:48:24.616Z",
+          "reviewer": "remote_safety_review / taxonomy_independent"
+        }
+      ],
+      "execution": {
+        "worker": "root",
+        "max_attempts": 3,
+        "attempts": [
+          {
+            "number": 1,
+            "outcome": "passed",
+            "summary": "指定World画面の回答操作で形式確認し、出典210問を370項目へ整理。所在全保持、単体7件、PC/SP、DB反復と保持、独立レビュー合格。",
+            "at": "2026-11-01T03:48:29.002Z",
+            "failed_criteria": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "correct_source_terms",
+      "context": "development",
+      "title": "根拠資料の撮影PDFページ表示を用語・見出しへ修正する",
+      "status": "done",
+      "authorization": "requested",
+      "request_ref": "2026-11-01 ユーザー指摘：PDFは個人がKindleで撮影したものなので共通のページ番号ではない。用語を示す必要がある。",
+      "depends_on": [
+        "align_source_reference_format"
+      ],
+      "next_action": "追加依頼を待つ。今回の変更は未コミット・未push。並行タスクは変更していない。",
+      "evidence": [
+        "docs/source-reference-terms.md"
+      ],
+      "last_verified_at": "2026-11-01T06:44:36.217Z",
+      "verification_scope": "210問の2冊325資料に確認語を設定。解説994参照と書籍欄の撮影位置非表示、DB反復/全保持/325再読込、単体8件・合成DB・PC/SP実操作と画像独立レビューを確認。",
+      "acceptance": [
+        {
+          "id": "checks",
+          "kind": "automated",
+          "description": "撮影PDFの位置を表示せず、確認済み用語と未確認を区別し、情報・DB保持とPC/SPを確認する",
+          "verification": "出典全件検査・表示検査・必要なDB再読込/反復/保持・PC/SP操作",
+          "status": "passed",
+          "evidence": [
+            "docs/source-reference-terms.md"
+          ],
+          "checked_at": "2026-11-01T06:44:36.217Z"
+        },
+        {
+          "id": "review",
+          "kind": "review",
+          "description": "別担当が撮影位置と教材の用語を分け、根拠のない用語追加がないことを確認する",
+          "verification": "データと表示の独立レビュー",
+          "status": "passed",
+          "evidence": [
+            "docs/source-reference-terms.md"
+          ],
+          "checked_at": "2026-11-01T06:44:36.217Z",
+          "reviewer": "source_terms_review / root independent metadata review"
+        }
+      ],
+      "execution": {
+        "worker": "root",
+        "max_attempts": 3,
+        "attempts": [
+          {
+            "number": 1,
+            "outcome": "passed",
+            "summary": "2冊325資料へ確認用語を登録し撮影位置表示を修正。DB反復/保持、単体8件、合成DB、PC/SP実操作と独立レビューを確認。",
+            "at": "2026-11-01T06:45:16.945Z",
+            "failed_criteria": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "audit_allowed_source_scope",
+      "context": "development",
+      "title": "日本史用語集・詳説日本史の範囲に全問・全選択肢を照合する",
+      "status": "done",
+      "authorization": "requested",
+      "request_ref": "2026-11-01 ユーザー依頼：問題・選択肢は日本史用語集に掲載されたことだけを使用し、詳説日本史も許容する。",
+      "depends_on": [],
+      "next_action": "追加依頼を待つ。この作業の変更は未コミット・未push。並行タスクは保持。",
+      "evidence": [
+        "docs/source-reference-terms.md"
+      ],
+      "last_verified_at": "2026-11-01T06:44:36.217Z",
+      "verification_scope": "210問560肢28大問を許容2冊に照合。既存全肢原画像レビューの継承と追加原画像再読を区別し、3問の内容・個別参照誤記を修正。頁下部/史料確認による除外判断撤回と参照復元を確認、既知未解決0。",
+      "acceptance": [
+        {
+          "id": "checks",
+          "kind": "automated",
+          "description": "現行210問/全選択肢に許容2冊の根拠が対応し、掲載・必要細部・範囲外・未確認を区別する",
+          "verification": "原稿/DB対応digest、各問題・各肢の根拠対応と画像実在、必要時原画像照合・修正検査",
+          "status": "passed",
+          "evidence": [
+            "docs/source-reference-terms.md"
+          ],
+          "checked_at": "2026-11-01T06:44:36.217Z"
+        },
+        {
+          "id": "review",
+          "kind": "review",
+          "description": "別担当が許容資料・全肢・解答に必要な細部の検査範囲と未確認を検証する",
+          "verification": "分担監査および結果の独立レビュー",
+          "status": "passed",
+          "evidence": [
+            "docs/source-reference-terms.md"
+          ],
+          "checked_at": "2026-11-01T06:44:36.217Z",
+          "reviewer": "source_terms_review / source_terms_6_7"
+        }
+      ],
+      "execution": {
+        "worker": "root",
+        "max_attempts": 3,
+        "attempts": [
+          {
+            "number": 1,
+            "outcome": "passed",
+            "summary": "210問560肢を許容2冊で点検し3問の不備を修正。参照誤記と誤除外も訂正し、現行DB対応と独立レビューで既知未解決0を確認。",
+            "at": "2026-11-01T06:45:18.512Z",
+            "failed_criteria": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "restore_material_table_6_24",
+      "context": "development",
+      "title": "模試6問24の資料1を元原稿どおりの表表示へ修正する",
+      "status": "done",
+      "authorization": "requested",
+      "request_ref": "2026-11-01 ユーザー指摘：/practice/6/24がプレーンになっているのは想定どおりか。確認で表構造の取り込み欠落を検出。",
+      "depends_on": [],
+      "next_action": "追加依頼を待つ。ローカルDB反映済み、コミット・push・公開DB変更は未実施。",
+      "evidence": [
+        "docs/material-table-display.md"
+      ],
+      "last_verified_at": "2026-11-01T07:23:25.815Z",
+      "verification_scope": "原稿の9セル/説明文と全32資料比較で対象1のみ。変換4件/独立_test DB4件、資料49のみWriter更新・参照174のみ版更新、元内容/IDs/全履歴/対象外保持・反復0・再読込一致。PC/SP移動と表内スクロール、画像とコードの独立レビュー合格。",
+      "acceptance": [
+        {
+          "id": "checks",
+          "kind": "automated",
+          "description": "表のセル・見出し・ID・参照・対象外内容を保持し、反復とPC/SPの操作を確認する",
+          "verification": "合成表の変換検査、Writerによる1資料更新とDB再読込・反復・保持、PC/SP参照操作",
+          "status": "passed",
+          "evidence": [
+            "docs/material-table-display.md"
+          ],
+          "checked_at": "2026-11-01T07:23:25.815Z"
+        },
+        {
+          "id": "review",
+          "kind": "review",
+          "description": "別担当が元原稿と表構造の対応、変更範囲・既存データ保持を確認する",
+          "verification": "変換規則と実データの独立レビュー",
+          "status": "passed",
+          "evidence": [
+            "docs/material-table-display.md"
+          ],
+          "checked_at": "2026-11-01T07:23:25.815Z",
+          "reviewer": "inspect_plain_174"
+        }
+      ],
+      "execution": {
+        "worker": "root",
+        "max_attempts": 3,
+        "attempts": [
+          {
+            "number": 1,
+            "outcome": "passed",
+            "summary": "資料1のパイプ表を3列2行の構造へ復元。原稿9セル保持、変換4件/合成DB4件、単一資料Writer更新・反復0・全件保持比較、PC/SP操作と独立レビューを確認。",
+            "at": "2026-11-01T07:24:29.053Z",
+            "failed_criteria": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "hide_authoring_notes",
+      "context": "development",
+      "title": "演習の解説から作問用の内部評価と管理表記を外す",
+      "status": "done",
+      "authorization": "requested",
+      "request_ref": "2026-11-01 ユーザー指摘：/practice/1/1の難度再評価・解法評価・資料管理タグは学習者に不要。",
+      "depends_on": [],
+      "next_action": "追加依頼を待つ。ローカル反映のみ。コミット・push・公開環境への反映は未実施。",
+      "evidence": [
+        "docs/learner-explanation-display.md"
+      ],
+      "last_verified_at": "2026-11-01T07:38:52.183Z",
+      "verification_scope": "合成10件、全210問の表示保持・150評価対除外と25資料注記の整理、両変換器210問25注記保持、10テーブル非変更、PC/SP実回答・再読込、コード/全件/画像の独立レビュー。ローカル表示のみ、保存データ・回答履歴・公開環境は変更なし。",
+      "acceptance": [
+        {
+          "id": "checks",
+          "kind": "automated",
+          "description": "内部評価・管理タグを隠し、学習解説・史料注記・出典・DBを保持する",
+          "verification": "合成検査と210問表示前後比較、DBダイジェスト、PC/SPの選択・回答・再読込",
+          "status": "passed",
+          "evidence": [
+            "docs/learner-explanation-display.md"
+          ],
+          "checked_at": "2026-11-01T07:38:52.183Z"
+        },
+        {
+          "id": "review",
+          "kind": "review",
+          "description": "別担当が内部情報の除外と引用注記の保持・画面を確認する",
+          "verification": "コード・実データの境界とPC/SP画像の独立レビュー",
+          "status": "passed",
+          "evidence": [
+            "docs/learner-explanation-display.md"
+          ],
+          "checked_at": "2026-11-01T07:38:52.183Z",
+          "reviewer": "review_internal_notes"
+        }
+      ],
+      "execution": {
+        "worker": "root",
+        "max_attempts": 3,
+        "attempts": [
+          {
+            "number": 1,
+            "outcome": "passed",
+            "summary": "全210問で内部評価150対・管理表記25件を整理し、通常解説と全引用注記を保持。合成10件、両変換器210問、DB10表非変更、PC/SP実回答・再読込と独立レビュー合格。",
+            "at": "2026-11-01T07:38:53.142Z",
+            "failed_criteria": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "deliver_learning_updates",
+      "context": "operations",
+      "title": "分類・出典・解説の変更をコミット・pushしNetlifyへ反映する",
+      "status": "doing",
+      "authorization": "requested",
+      "request_ref": "2026-11-01 ユーザー「OKです。コミット・pushしてください」、続けて「netlifyはもうデプロイOKです」。",
+      "depends_on": [
+        "import_textbook_toc",
+        "classify_existing_questions",
+        "align_source_reference_format",
+        "correct_source_terms",
+        "audit_allowed_source_scope",
+        "restore_material_table_6_24",
+        "hide_authoring_notes"
+      ],
+      "next_action": "限定indexの検査と生成物保護を確認してGit送信・Netlify配信を実施する",
+      "evidence": [],
+      "last_verified_at": null,
+      "verification_scope": "未実施。資料/問題データ/採点規則は送信せず、API/本番DB/Git連携/自動配信設定は変更しない。",
+      "acceptance": [
+        {
+          "id": "checks",
+          "kind": "automated",
+          "description": "対象差分のみコミット・pushして同期とCI成功、Netlify公開とAPI転送・PC/SPを確認する",
+          "verification": "投影index検査・関連検査・保護フック・リモートSHA・CI・生成物保護検査・本番HTTP/PC/SP操作",
+          "status": "pending",
+          "evidence": [],
+          "checked_at": null
+        },
+        {
+          "id": "review",
+          "kind": "review",
+          "description": "別担当が送信範囲と生成物の保護・公開結果を確認する",
+          "verification": "投影差分/生成物/PCSP画像の独立レビュー",
           "status": "pending",
           "evidence": [],
           "checked_at": null,
