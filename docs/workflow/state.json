@@ -2158,6 +2158,112 @@
           }
         ]
       }
+    },
+    {
+      "id": "homepage_refresh_20261102",
+      "context": "development",
+      "title": "世界史版と同じトップページ改善と読み込みスピナー",
+      "status": "done",
+      "depends_on": [],
+      "authorization": "requested",
+      "request_ref": "2026-11-02 ユーザー: 日本史ラボも全く同じ対応",
+      "next_action": "Git送信・配信は未依頼",
+      "evidence": [
+        "docs/homepage-refresh-20261102.md"
+      ],
+      "last_verified_at": "2026-11-01T21:43:11.567Z",
+      "verification_scope": "型検査・テンプレート・差分検査成功。実API PC1440/SP390/320、読込中スピナー、条件指定210→美術史11問、試験概要遷移を確認。独立レビュー合格。DB書込/Git送信/本番配信なし。",
+      "acceptance": [
+        {
+          "id": "checks",
+          "kind": "automated",
+          "description": "依頼された変更範囲の検査が成功する",
+          "verification": "対象に必要な既存検査を選び、結果と根拠を記録する",
+          "status": "passed",
+          "evidence": [
+            "docs/homepage-refresh-20261102.md"
+          ],
+          "checked_at": "2026-11-01T21:43:11.567Z"
+        },
+        {
+          "id": "review",
+          "kind": "review",
+          "description": "実装担当以外が受入条件と成果物を確認する",
+          "verification": "別担当のレビューで未解決の問題がないことを確認する",
+          "status": "passed",
+          "evidence": [
+            "docs/homepage-refresh-20261102.md"
+          ],
+          "checked_at": "2026-11-01T21:43:11.567Z",
+          "reviewer": "homepage_review"
+        }
+      ],
+      "execution": {
+        "worker": "homepage_owner",
+        "max_attempts": 3,
+        "attempts": [
+          {
+            "number": 1,
+            "outcome": "passed",
+            "summary": "同デザインと読込スピナー反映、型検査・PC/SP実操作・独立レビュー成功",
+            "at": "2026-11-01T21:43:13.314Z",
+            "failed_criteria": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "japanese_home_motif_20261102",
+      "context": "development",
+      "title": "トップページの地球を和風の装飾へ変更",
+      "status": "done",
+      "depends_on": [],
+      "authorization": "requested",
+      "request_ref": "2026-11-02 ユーザー: 地球の装飾を削除し日本らしいものへ変更",
+      "next_action": "Git送信・配信は未依頼",
+      "evidence": [
+        "docs/homepage-refresh-20261102.md"
+      ],
+      "last_verified_at": "2026-11-01T21:46:29.411Z",
+      "verification_scope": "装飾SVG/CSSのみ変更。PC1440/SP390実描画、スマホ非表示・横はみ出しなし、差分検査と独立レビュー成功。DB・Git送信・配信なし。",
+      "acceptance": [
+        {
+          "id": "checks",
+          "kind": "automated",
+          "description": "依頼された変更範囲の検査が成功する",
+          "verification": "対象に必要な既存検査を選び、結果と根拠を記録する",
+          "status": "passed",
+          "evidence": [
+            "docs/homepage-refresh-20261102.md"
+          ],
+          "checked_at": "2026-11-01T21:46:29.411Z"
+        },
+        {
+          "id": "review",
+          "kind": "review",
+          "description": "実装担当以外が受入条件と成果物を確認する",
+          "verification": "別担当のレビューで未解決の問題がないことを確認する",
+          "status": "passed",
+          "evidence": [
+            "docs/homepage-refresh-20261102.md"
+          ],
+          "checked_at": "2026-11-01T21:46:29.411Z",
+          "reviewer": "homepage_review"
+        }
+      ],
+      "execution": {
+        "worker": "homepage_owner",
+        "max_attempts": 3,
+        "attempts": [
+          {
+            "number": 1,
+            "outcome": "passed",
+            "summary": "日輪と青海波に置換、PC/SP描画・差分検査・独立レビュー合格",
+            "at": "2026-11-01T21:46:30.717Z",
+            "failed_criteria": []
+          }
+        ]
+      }
     }
   ]
 }
