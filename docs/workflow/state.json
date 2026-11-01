@@ -1,10 +1,10 @@
 {
   "schema_version": 1,
-  "revision": 96,
-  "updated_at": "2026-11-01T12:05:16.118Z",
+  "revision": 98,
+  "updated_at": "2026-11-01T12:22:15.156Z",
   "workspace_relative_to_repo": ".",
   "active_context": "operations",
-  "last_checkpoint": "docs/workflow/handoffs/2026-11-01T12-05-16-118Z-r96.json",
+  "last_checkpoint": "docs/workflow/handoffs/2026-11-01T12-22-15-156Z-r98.json",
   "gate_policy": {
     "version": 1,
     "legacy_task_ids": []
@@ -2030,7 +2030,7 @@
       "id": "push_mobile_sidebar",
       "context": "operations",
       "title": "サイドバー・本番反映記録と既存変更を整合させてコミット・pushする",
-      "status": "doing",
+      "status": "done",
       "authorization": "requested",
       "request_ref": "2026-11-01 ユーザー「OKです。今回のサイドバー変更と本番反映の記録をコミット・pushしてください。」 追加指示「既存の未コミット分も適宜実装と整合性を合わせてコミットしてください」",
       "depends_on": [
@@ -2042,46 +2042,64 @@
         "publish_210_questions",
         "expand_essay_acceptance_all_mocks"
       ],
-      "next_action": "隔離したステージ実体の全frontend/型/server検査とPCSP案内確認、独立レビュー後にmainへcommit/pushする。",
+      "next_action": "追加依頼を待つ。完了記録のdocsコミットを送信し最終同期/CIを確認する。",
       "evidence": [
-        "docs/sidebar-git-delivery.md"
+        "docs/sidebar-git-delivery.md",
+        "local-only/sidebar-git-delivery/final-delivery-review.json"
       ],
-      "last_verified_at": null,
-      "verification_scope": "追加承認で範囲を拡大。既存の実装/設定/文言/規約/SQL/配信記録/進捗を整合確認中。原典/実教材/規則/秘密/生成物は送信しない。追加本番配信は行わない。",
+      "last_verified_at": "2026-11-01T12:22:01.416Z",
+      "verification_scope": "追加承認分を含む完成済み55ファイルをbdbe9c7でmainへpushし同期0/0。独立コピーのharness168/frontend176/server90と型/構造/保護検査、試験概要PCSPと全差分独立レビュー合格。CI41305587449 harness/verify成功。残りは生成dist symlinkのみ。原典/実教材/規則/秘密を送信せず本番追加配信なし。",
       "acceptance": [
         {
           "id": "checks",
           "kind": "automated",
           "description": "完成済みの既存変更と実装・記録の整合を確認し、保護対象/生成物を除外して送信する",
           "verification": "分担レビュー、試験概要の案内修正とPCSP確認、ステージ実体の全frontend/隔離_test server/型検査・template/context/harness・資料保護・差分検査",
-          "status": "pending",
-          "evidence": [],
-          "checked_at": null
+          "status": "passed",
+          "evidence": [
+            "docs/sidebar-git-delivery.md",
+            "local-only/sidebar-git-delivery/local-checks.json"
+          ],
+          "checked_at": "2026-11-01T12:22:01.416Z"
         },
         {
           "id": "remote",
           "kind": "automated",
           "description": "mainへの送信とリモート同期・CI成功を確認する",
           "verification": "commit/push、origin/mainとHEAD一致/差分0、GitHub Actions完了、Netlify追加配信なし",
-          "status": "pending",
-          "evidence": [],
-          "checked_at": null
+          "status": "passed",
+          "evidence": [
+            "docs/sidebar-git-delivery.md",
+            "local-only/sidebar-git-delivery/implementation-ci.json"
+          ],
+          "checked_at": "2026-11-01T12:22:01.416Z"
         },
         {
           "id": "review",
           "kind": "review",
           "description": "別担当がステージ範囲・保持・記録の整合と送信結果を確認する",
           "verification": "index実体/全対象タスクと記録の整合/原典秘密除外/生成物とローカル資料の保持を独立レビュー",
-          "status": "pending",
-          "evidence": [],
-          "checked_at": null,
-          "reviewer": null
+          "status": "passed",
+          "evidence": [
+            "docs/sidebar-git-delivery.md",
+            "local-only/sidebar-git-delivery/final-delivery-review.json"
+          ],
+          "checked_at": "2026-11-01T12:22:01.416Z",
+          "reviewer": "review_scoped_sidebar_push"
         }
       ],
       "execution": {
         "worker": "root",
         "max_attempts": 3,
-        "attempts": []
+        "attempts": [
+          {
+            "number": 1,
+            "outcome": "passed",
+            "summary": "追加承認分を含む55ファイルの整合・独立レビューと168/176/90検査・型検査合格。bdbe9c7をmainへpushし同期0/0、CI41305587449成功。原典秘密を保護し追加配信なし。",
+            "at": "2026-11-01T12:22:05.561Z",
+            "failed_criteria": []
+          }
+        ]
       }
     }
   ]
