@@ -1,10 +1,10 @@
 {
   "schema_version": 1,
-  "revision": 123,
-  "updated_at": "2026-11-01T23:05:26.682Z",
+  "revision": 125,
+  "updated_at": "2026-11-01T23:13:57.847Z",
   "workspace_relative_to_repo": ".",
   "active_context": "operations",
-  "last_checkpoint": "docs/workflow/handoffs/2026-11-01T23-03-01-001Z-r123.json",
+  "last_checkpoint": "docs/workflow/handoffs/2026-11-01T23-13-57-847Z-r125.json",
   "gate_policy": {
     "version": 1,
     "legacy_task_ids": []
@@ -2688,35 +2688,41 @@
       "id": "fix_nuxt_generated_secret_candidate",
       "context": "operations",
       "title": "CDのキーに似た生成識別子と生成リンクの混入を修正する",
-      "status": "doing",
+      "status": "waiting_for_material",
       "depends_on": [
         "audit_cd_repeated_secret_failures"
       ],
       "authorization": "requested",
       "request_ref": "同チャットのデプロイ・コミット/push依頼と自動デプロイ相談の継続。2026-11-02ユーザーが3回の失敗とSQLの疑いを報告。検証済みプラグイン改名で対応する。",
-      "next_action": "生成distリンクを実体保持で追跡対象から外し、除外を整合して次のCD結果を1回確認する",
-      "evidence": [],
-      "last_verified_at": null,
-      "verification_scope": "プラグイン改名/test importと生成distリンクの送信除外。適用済みSQL/DB/CD環境変数・検査設定を保持。初回修正後のCDでExposed secrets表示は消失したが配信段階errorを確認。",
+      "next_action": "同条件の再試行をせずNetlifyの詳細stderr/command/publish-path等を取得する",
+      "evidence": [
+        "docs/netlify-cd-secret-followup.md"
+      ],
+      "last_verified_at": "2026-11-01T23:13:56.406Z",
+      "verification_scope": "8618e16でNuxt生成47文字候補を除去し、Netlify一覧のExposed secrets表示消失・deploying段階への進行を確認。4ba10c4で生成リンクも送信除外したがCD配信失敗継続。両GitHubCIは全成功、unit176/type/generateと公開保持/独立レビュー成功。Netlifyの詳細ログ欠落で原因未特定、自動配信未完了。",
       "acceptance": [
         {
           "id": "checks",
           "kind": "automated",
           "description": "独立コピーと本体修正が一致し176テスト/型/静的生成と公開内容保持を確認、Git送信/同期とCD結果を記録する",
           "verification": "対象に必要な既存検査を選び、結果と根拠を記録する",
-          "status": "pending",
-          "evidence": [],
-          "checked_at": null
+          "status": "failed",
+          "evidence": [
+            "docs/netlify-cd-secret-followup.md"
+          ],
+          "checked_at": "2026-11-01T23:13:56.406Z"
         },
         {
           "id": "review",
           "kind": "review",
           "description": "別担当が生成名の除去と公開内容保持、送信差分とCD結果を確認する",
           "verification": "別担当のレビューで未解決の問題がないことを確認する",
-          "status": "pending",
-          "evidence": [],
-          "checked_at": null,
-          "reviewer": null
+          "status": "passed",
+          "evidence": [
+            "docs/netlify-cd-secret-followup.md"
+          ],
+          "checked_at": "2026-11-01T23:13:56.406Z",
+          "reviewer": "cd_local_candidates"
         }
       ],
       "execution": {
@@ -2728,6 +2734,16 @@
             "outcome": "failed",
             "summary": "8618e16のCD6ae7c49da13f9e7675e9c2d8がerror。生成名除去だけでのCD成功は未達。詳細確認中。",
             "at": "2026-11-01T23:03:01.001Z",
+            "failed_criteria": [
+              "checks",
+              "review"
+            ]
+          },
+          {
+            "number": 2,
+            "outcome": "failed",
+            "summary": "4ba10c4のCD6ae7c63feaba11e4b04d2a38も配信段階でexit2。詳細ログ不足のため直接原因未特定。",
+            "at": "2026-11-01T23:11:25.063Z",
             "failed_criteria": [
               "checks",
               "review"

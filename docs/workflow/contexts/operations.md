@@ -35,3 +35,7 @@ Compose・DB・ポート・Cookieは専用です。他サービスの秘密値�
 2026-11-02 CD比較監査 audit_netlify_cd_secret_detection：現在はGitHub連携/main自動公開が有効、Base/Build/Publishは正本と一致、UI追加環境変数なし。失敗はNetlifyのシークレット検査api_***で、実行ログは位置情報なし。手動配信/CIには同じSmart detectionが含まれず、api_候補は追跡ソース内の識別子9箇所、検証済み公開物では0件。マスク値の同定・誤検知や実キー流出の断定・設定変更・再配信なし。詳細は docs/netlify-cd-security-comparison.md。
 
 2026-11-02 CD再失敗監査 audit_cd_repeated_secret_failures：前回の検索で索引名内のapi_一致を漏らし、正しくは3ファイル10箇所/4識別子。別途Nuxtのapi.ts由来47文字生成名を中間mapに確認した。独立コピーのhttp-client.ts改名案で176テスト・型・generate成功、依存volume内の実Nuxtcacheも長いapi_候補0。除外変数のProduction/Builds適用をUI確認したが値全文とNetlify検出対象は未特定。実装/適用済みSQL/設定/本番/送信は変更せず、記録は docs/netlify-cd-secret-followup.md。
+
+同タスクの後続で検証済み改名を8618e16として反映。NetlifyのExposed secrets表示は消失したがdeploying段階でexit2。生成distリンクをローカル保持で追跡解除しignoreを揃え4ba10c4もpushしたが、配信段階の失敗は残る。両コミットのGitHub CIは全成功。詳細ログが画面/公開WebSocket/APIから得られず、同条件の再実行を止め、CD作業は未完了・Netlify詳細診断待ちとする。SQL/DB/検査設定は不変。詳細と問い合わせ用IDは docs/netlify-cd-secret-followup.md。
+
+4ba10c4のNetlify6ae7c63feaba11e4b04d2a38もdeploying段階error、Copy logは空で追加原因なし。8618e16/4ba10c4のGitHub CIは全成功だがCD全体は未完了。総評価2回failedを保持し、同条件再実行は停止。Netlify側の詳細診断結果待ちとしてwaiting_for_materialへ移す。秘密値取得/検査無効化/SQL改変/サポート送信は行わない。
