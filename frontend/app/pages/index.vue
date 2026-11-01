@@ -567,7 +567,7 @@ watch(availableExamNumbers, (examNumbers, previousExamNumbers) => {
   background: linear-gradient(115deg, #fff 38%, var(--surface-tint) 100%);
 }
 .overview-copy { max-width: 680px; }
-.overview-copy h1 { margin: 0; font-size: clamp(2rem, 3vw, 3rem); font-weight: 800; letter-spacing: .025em; line-height: 1.4; }
+.overview-copy h1 { margin: 0; font-size: 3rem; font-weight: 800; letter-spacing: .025em; line-height: 1.4; }
 .overview-copy > p { margin: 16px 0 0; color: var(--text-secondary); font-size: 1rem; line-height: 1.95; }
 .overview-copy > .overview-tagline { margin-top: 20px; color: var(--teal-dark); font-size: 1.0625rem; font-weight: 700; }
 .overview-actions { margin-top: 22px; }

@@ -1,10 +1,10 @@
 {
   "schema_version": 1,
-  "revision": 99,
-  "updated_at": "2026-11-01T15:05:13.627Z",
+  "revision": 116,
+  "updated_at": "2026-11-01T22:10:44.431Z",
   "workspace_relative_to_repo": ".",
-  "active_context": "development",
-  "last_checkpoint": "docs/workflow/handoffs/2026-11-01T15-05-13-627Z-r99.json",
+  "active_context": "operations",
+  "last_checkpoint": "docs/workflow/handoffs/2026-11-01T22-10-18-365Z-r116.json",
   "gate_policy": {
     "version": 1,
     "legacy_task_ids": []
@@ -2263,6 +2263,166 @@
             "failed_criteria": []
           }
         ]
+      }
+    },
+    {
+      "id": "fix_homepage_typography_ci",
+      "context": "development",
+      "title": "トップページ見出しを既存の文字サイズ方針へ揃えCI失敗を修正する",
+      "status": "done",
+      "depends_on": [],
+      "authorization": "requested",
+      "request_ref": "2026-11-02 ユーザー依頼：既存の方針に合わせて修正して、テストが通るか確認してください",
+      "next_action": "追加依頼を待つ。コミット・push・配信なし。",
+      "evidence": [
+        "docs/homepage-refresh-20261102.md"
+      ],
+      "last_verified_at": "2026-11-01T21:56:26.010Z",
+      "verification_scope": "2026-11-02: security:check・フロント176件・型検査・ビルド・ハーネス168件・資料保護全履歴・テンプレート・差分検査成功。Chrome1440/761/390/320幅・PC/SPリンク遷移・独立レビュー成功。DB/APIは同Actions実行の成功結果を参照し今回再実行なし。未コミット・未push・未配信。",
+      "acceptance": [
+        {
+          "id": "checks",
+          "kind": "automated",
+          "description": "既存文字サイズ規則、フロント全テスト、型検査、ビルドとPC/SP実操作が成功する",
+          "verification": "対象に必要な既存検査を選び、結果と根拠を記録する",
+          "status": "passed",
+          "evidence": [
+            "docs/homepage-refresh-20261102.md"
+          ],
+          "checked_at": "2026-11-01T21:56:26.010Z"
+        },
+        {
+          "id": "review",
+          "kind": "review",
+          "description": "別担当が文字サイズ規則と変更範囲を独立に確認する",
+          "verification": "別担当のレビューで未解決の問題がないことを確認する",
+          "status": "passed",
+          "evidence": [
+            "docs/homepage-refresh-20261102.md"
+          ],
+          "checked_at": "2026-11-01T21:56:26.010Z",
+          "reviewer": "typography_review"
+        }
+      ],
+      "execution": {
+        "worker": "root",
+        "max_attempts": 3,
+        "attempts": [
+          {
+            "number": 1,
+            "outcome": "passed",
+            "summary": "見出しをremへ統一しフロント176・型検査・ビルド・ハーネス168・PC/SP操作と独立レビュー成功",
+            "at": "2026-11-01T21:56:26.402Z",
+            "failed_criteria": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "deploy_homepage_20261102",
+      "context": "operations",
+      "title": "トップページ改善と文字サイズ修正を日本史Netlify本番へ配信する",
+      "status": "done",
+      "depends_on": [
+        "fix_homepage_typography_ci"
+      ],
+      "authorization": "requested",
+      "request_ref": "2026-11-02 ユーザー依頼：デプロイまでしてください",
+      "next_action": "後続の明示依頼により今回の修正と記録をコミット・pushする",
+      "evidence": [
+        "docs/homepage-production-20261102.md"
+      ],
+      "last_verified_at": "2026-11-01T22:10:12.181Z",
+      "verification_scope": "静的生成・公開111ファイル/ZIP監査・秘密/教材/規則混入0・Netlify Published・公開トップHTMLと90assets一致・6URL200/7セット210問・公開PC1440スクロール/SP390リンク遷移と独立最終レビュー成功。補助のDOM再測定とPCリンク未完了は文書で区別。Git送信なし。",
+      "acceptance": [
+        {
+          "id": "checks",
+          "kind": "automated",
+          "description": "静的生成・公開物保護・公開HTTP/CSS一致・PC/SP実操作とPublishedを確認",
+          "verification": "対象に必要な既存検査を選び、結果と根拠を記録する",
+          "status": "passed",
+          "evidence": [
+            "docs/homepage-production-20261102.md"
+          ],
+          "checked_at": "2026-11-01T22:10:12.181Z"
+        },
+        {
+          "id": "review",
+          "kind": "review",
+          "description": "独立担当が生成物と公開結果を監査し指摘なし",
+          "verification": "別担当のレビューで未解決の問題がないことを確認する",
+          "status": "passed",
+          "evidence": [
+            "docs/homepage-production-20261102.md"
+          ],
+          "checked_at": "2026-11-01T22:10:12.181Z",
+          "reviewer": "homepage_deploy_review"
+        }
+      ],
+      "execution": {
+        "worker": "root",
+        "max_attempts": 3,
+        "attempts": [
+          {
+            "number": 1,
+            "outcome": "failed",
+            "summary": "初回のオフライン生成で小アイコン2種の定義欠落を独立監査が検出。未送信。",
+            "at": "2026-11-01T22:01:17.963Z",
+            "failed_criteria": [
+              "checks",
+              "review"
+            ]
+          },
+          {
+            "number": 2,
+            "outcome": "passed",
+            "summary": "再生成・公開監査とPublished、HTTP一致、PC/SP操作、最終独立レビュー合格",
+            "at": "2026-11-01T22:10:13.779Z",
+            "failed_criteria": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "push_homepage_typography_20261102",
+      "context": "operations",
+      "title": "文字サイズ修正とトップページ本番反映記録をコミット・pushする",
+      "status": "doing",
+      "depends_on": [
+        "fix_homepage_typography_ci",
+        "deploy_homepage_20261102"
+      ],
+      "authorization": "requested",
+      "request_ref": "2026-11-02 ユーザー依頼：コミット・pushしてください",
+      "next_action": "今回分のみをステージし独立レビュー・資料保護・同期・CIを確認する",
+      "evidence": [],
+      "last_verified_at": null,
+      "verification_scope": "文字サイズ修正と今回の記録だけ。旧overview配信記録・生成物等は保持し送信しない。",
+      "acceptance": [
+        {
+          "id": "checks",
+          "kind": "automated",
+          "description": "送信差分限定・資料保護・既存検証の適合・同期とGitHub CIを確認",
+          "verification": "対象に必要な既存検査を選び、結果と根拠を記録する",
+          "status": "pending",
+          "evidence": [],
+          "checked_at": null
+        },
+        {
+          "id": "review",
+          "kind": "review",
+          "description": "独立担当がステージ内容を読み送信範囲と保護を確認",
+          "verification": "別担当のレビューで未解決の問題がないことを確認する",
+          "status": "pending",
+          "evidence": [],
+          "checked_at": null,
+          "reviewer": null
+        }
+      ],
+      "execution": {
+        "worker": "root",
+        "max_attempts": 3,
+        "attempts": []
       }
     }
   ]
