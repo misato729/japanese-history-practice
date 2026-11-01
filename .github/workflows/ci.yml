@@ -44,3 +44,21 @@ jobs:
       - name: Stop isolated services
         if: always()
         run: docker compose down
+  netlify-static:
+    needs: verify
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check static build regression guards
+        run: python3 -B -m unittest discover -s scripts -p 'test_netlify_build.py'
+      - name: Read Node version from Netlify configuration
+        id: netlify
+        run: |
+          netlify_node_version=$(python3 scripts/check-netlify-build.py --node-version)
+          echo "node-version=$netlify_node_version" >> "$GITHUB_OUTPUT"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ steps.netlify.outputs.node-version }}
+      - name: Generate and verify the Netlify publish directory
+        run: python3 scripts/check-netlify-build.py
