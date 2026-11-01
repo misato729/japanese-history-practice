@@ -1,10 +1,10 @@
 {
   "schema_version": 1,
-  "revision": 118,
-  "updated_at": "2026-11-01T22:16:26.972Z",
+  "revision": 120,
+  "updated_at": "2026-11-01T22:34:38.769Z",
   "workspace_relative_to_repo": ".",
   "active_context": "operations",
-  "last_checkpoint": "docs/workflow/handoffs/2026-11-01T22-16-26-972Z-r118.json",
+  "last_checkpoint": "docs/workflow/handoffs/2026-11-01T22-34-38-769Z-r120.json",
   "gate_policy": {
     "version": 1,
     "legacy_task_ids": []
@@ -2103,6 +2103,84 @@
       }
     },
     {
+      "id": "deploy_overview_guidance",
+      "context": "operations",
+      "title": "試験概要の分類案内1文を日本史Netlify本番へ反映する",
+      "status": "done",
+      "authorization": "requested",
+      "request_ref": "2026-11-01 ユーザー「試験概要の案内文の修正も本番に反映してください。」",
+      "depends_on": [
+        "push_mobile_sidebar",
+        "deploy_mobile_sidebar"
+      ],
+      "next_action": "追加依頼を待つ。配信記録は未コミットで保持する。",
+      "evidence": [
+        "docs/overview-production.md",
+        "local-only/overview-production/package-check.json",
+        "local-only/overview-production/deployment-result.json",
+        "local-only/overview-production/public-after.json",
+        "local-only/overview-production/ui-after.json",
+        "local-only/overview-production/final-review.json"
+      ],
+      "last_verified_at": "2026-11-01T13:59:50.654Z",
+      "verification_scope": "日本史Netlifyの静的111ファイルを配信しdeploy 6ae743e8f1ef15458da8b941のPublishedを確認。対象1文だけの変更・生成物保護・ZIP一致、公開HTTP6経路と新JS/CSS byte一致、PC1440/SP390の実スクロールとSP縦開き保持、7セット210問を確認。別担当が候補・配信記録・3画像を独立確認し未解決0。Fly/DB・Git設定変更なし。記録は未コミット。",
+      "acceptance": [
+        {
+          "id": "artifact",
+          "kind": "automated",
+          "description": "試験概要1文以外の公開内容を保持した安全な静的生成物だけを作成する",
+          "verification": "独立generate、旧19HTMLの対象文だけの差・他本文/規約/hosting directives保持・payload空・保護/秘密検査・ZIP全件一致",
+          "status": "passed",
+          "evidence": [
+            "docs/overview-production.md",
+            "local-only/overview-production/package-check.json",
+            "local-only/overview-production/artifact-review.json"
+          ],
+          "checked_at": "2026-11-01T13:06:44.000Z"
+        },
+        {
+          "id": "production",
+          "kind": "automated",
+          "description": "本番で新案内が表示され旧文がなくPCSP表示と7セット210問を保持する",
+          "verification": "Netlify published ID、公開HTML/asset hash/API、1440/390の実スクロールと画像・検索除外とサイドバー保持",
+          "status": "passed",
+          "evidence": [
+            "docs/overview-production.md",
+            "local-only/overview-production/deployment-result.json",
+            "local-only/overview-production/public-after.json",
+            "local-only/overview-production/ui-after.json"
+          ],
+          "checked_at": "2026-11-01T13:54:40.170Z"
+        },
+        {
+          "id": "review",
+          "kind": "review",
+          "description": "別担当が候補差分/保護/公開画像と記録を確認する",
+          "verification": "静的artifactとZIP、公開PCSP画像・結果の独立レビュー",
+          "status": "passed",
+          "evidence": [
+            "docs/overview-production.md",
+            "local-only/overview-production/final-review.json"
+          ],
+          "checked_at": "2026-11-01T13:59:50.654Z",
+          "reviewer": "review_overview_deployment"
+        }
+      ],
+      "execution": {
+        "worker": "root",
+        "max_attempts": 3,
+        "attempts": [
+          {
+            "number": 1,
+            "outcome": "passed",
+            "summary": "既存日本史Netlifyへ案内1文を配信。新Published・公開HTTP6経路・7セット210問・新asset一致・PCSP実操作・独立レビュー未解決0を確認した。",
+            "at": "2026-11-01T14:01:01.365Z",
+            "failed_criteria": []
+          }
+        ]
+      }
+    },
+    {
       "id": "integrate_work_policy",
       "context": "development",
       "title": "振り返りとトークン節約方針を日本史版・汎用テンプレートへ反映する",
@@ -2110,7 +2188,7 @@
       "authorization": "requested",
       "request_ref": "2026-11-01 ユーザー：今回の振り返りとトークン節約の方針をAGENTS.mdへ反映し、汎用テンプレート https://github.com/misato729/exam-practice-template にも反映する。",
       "depends_on": [],
-      "next_action": "後続の承認済みGit送信を行い、同期とCI結果を別途確認する。",
+      "next_action": "追加依頼を待つ。両repoの変更は未コミットで保持する。",
       "evidence": [
         "docs/work-policy-update.md",
         "local-only/work-policy-update/checks.json",
@@ -2154,6 +2232,65 @@
             "outcome": "passed",
             "summary": "両AGENTSへ基準合わせ・節約方針を統合。既存節と11保持パス・template空stateを保持し、両repo差分/保護検査と独立レビュー合格。",
             "at": "2026-11-01T14:53:50.592Z",
+            "failed_criteria": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "push_work_policy",
+      "context": "development",
+      "title": "方針変更を日本史版・汎用テンプレートでコミット・pushする",
+      "status": "done",
+      "authorization": "requested",
+      "request_ref": "ユーザー：今回の変更を日本史版・汎用テンプレートの両方でコミット・pushしてください。",
+      "depends_on": [
+        "integrate_work_policy"
+      ],
+      "next_action": "追加依頼を待つ。既存の配信記録・記事とローカル全進捗は未コミットで保持する。",
+      "evidence": [
+        "docs/work-policy-update.md",
+        "local-only/policy-git-delivery/delivery-result.json",
+        "local-only/policy-git-delivery/delivery-review.json"
+      ],
+      "last_verified_at": "2026-11-01T15:11:31.535Z",
+      "verification_scope": "日本史main be28988（方針と限定進捗の5ファイル）、template main d150e56（AGENTSのみ）をpushしremote HEAD一致0/0。両pre-push保護とCI全job成功。既存11パスを保持し、対象AGENTSは前回レビューhashと同一。日本史の前回配信記録・template既存記事は未コミット保持。送信用stateはHEAD98由来の限定rev99、ローカル全作業は別世代で保持。今回の送信控えはローカルのみ。",
+      "acceptance": [
+        {
+          "id": "checks",
+          "kind": "automated",
+          "description": "両repoの今回分だけをmainへ送信し同期・CI成功を確認する",
+          "verification": "明示path/hunk・既存保持hash・資料保護hook・送信後head一致・GitHub Actions",
+          "status": "passed",
+          "evidence": [
+            "docs/work-policy-update.md",
+            "local-only/policy-git-delivery/delivery-result.json"
+          ],
+          "checked_at": "2026-11-01T15:11:31.535Z"
+        },
+        {
+          "id": "review",
+          "kind": "review",
+          "description": "独立担当が限定進捗の整合と対象外保持を確認する",
+          "verification": "送信候補とstate/historyの読取レビュー",
+          "status": "passed",
+          "evidence": [
+            "docs/work-policy-update.md",
+            "local-only/policy-git-delivery/delivery-review.json"
+          ],
+          "checked_at": "2026-11-01T15:11:31.535Z",
+          "reviewer": "review_policy_delivery"
+        }
+      ],
+      "execution": {
+        "worker": "root",
+        "max_attempts": 3,
+        "attempts": [
+          {
+            "number": 1,
+            "outcome": "passed",
+            "summary": "日本史5ファイルとtemplate AGENTSをmainへpushし同期0/0。両保護hookと全CI job成功、限定state独立レビューと既存11パス保持を確認。",
+            "at": "2026-11-01T15:11:31.824Z",
             "failed_criteria": []
           }
         ]
@@ -2434,6 +2571,59 @@
             "outcome": "passed",
             "summary": "限定11ファイルの独立レビュー・資料保護・push・同期とGitHub CI全成功",
             "at": "2026-11-01T22:16:24.835Z",
+            "failed_criteria": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "audit_netlify_cd_secret_detection",
+      "context": "operations",
+      "title": "Netlify CDと検証済み環境のシークレット検査差を確認する",
+      "status": "done",
+      "depends_on": [],
+      "authorization": "requested",
+      "request_ref": "2026-11-02 ユーザー依頼：NetlifyのCD環境と、検証済み環境との設定差を確認してください",
+      "next_action": "追加依頼を待つ。設定変更・除外・再配信・Git送信なし。",
+      "evidence": [
+        "docs/netlify-cd-security-comparison.md"
+      ],
+      "last_verified_at": "2026-11-01T22:34:32.662Z",
+      "verification_scope": "Netlify CDの現在設定/環境変数無し/Exposed secrets表示を読取。設定・既存Compose/CIと比較しapi_候補9箇所3ソース/公開111ファイル0を独立再検証。14条件の独立レビュー合格。マスク値・CD実Node patch/依存状態は未確認。コード/設定変更・Git送信・再配信なし。",
+      "acceptance": [
+        {
+          "id": "checks",
+          "kind": "automated",
+          "description": "CD UIと正本設定・既存生成検査を比較し、api_接頭辞を値非表示で照合する",
+          "verification": "対象に必要な既存検査を選び、結果と根拠を記録する",
+          "status": "passed",
+          "evidence": [
+            "docs/netlify-cd-security-comparison.md"
+          ],
+          "checked_at": "2026-11-01T22:34:32.662Z"
+        },
+        {
+          "id": "review",
+          "kind": "review",
+          "description": "独立担当が照合結果と結論/未確認範囲の整合を確認する",
+          "verification": "別担当のレビューで未解決の問題がないことを確認する",
+          "status": "passed",
+          "evidence": [
+            "docs/netlify-cd-security-comparison.md"
+          ],
+          "checked_at": "2026-11-01T22:34:32.662Z",
+          "reviewer": "homepage_deploy_review"
+        }
+      ],
+      "execution": {
+        "worker": "root",
+        "max_attempts": 2,
+        "attempts": [
+          {
+            "number": 1,
+            "outcome": "passed",
+            "summary": "CD設定の一致とNetlify固有検査差を確認、識別子候補照合と独立レビュー14条件合格",
+            "at": "2026-11-01T22:34:33.943Z",
             "failed_criteria": []
           }
         ]

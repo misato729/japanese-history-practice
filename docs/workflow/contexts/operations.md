@@ -26,4 +26,10 @@ Compose・DB・ポート・Cookieは専用です。他サービスの秘密値�
 
 同依頼の実装・記録55ファイルは `bdbe9c7` でmainへpushし同期0/0、CI `41305587449` のharness/verify成功を確認。原典と実教材を含まない独立コピーで画面176・server90・保護/進捗168と型検査も成功。試験概要の新しい1文はGitへ反映済み、本番の追加配信は行っていない。生成symlinkだけを未追跡のまま保持した。
 
+後続の試験概要案内文の本番反映依頼は `deploy_overview_guidance`。HEAD `03f7902` から静的111ファイルと配信用ZIPを生成し、前回公開との19HTML比較・対象1文だけの変更・保護検査と独立レビューを完了した。Chromeのタブ接続とファイル選択操作が応答せず、アップロード開始と本番更新は未確認。画面操作の復旧回答待ちで、候補と検証結果は保持している。詳細は `docs/overview-production.md`。新しいGit送信やFly/DB更新は行っていない。
+
+同依頼は操作可能の回答後、認証済みIABのfilechooserから日本史Netlifyへ配信した。deploy `6ae743e8f1ef15458da8b941` のCurrently publishedと新案内の表示、旧文消失を公開HTTP・PC1440/SP390の実スクロールで確認した。7セット210問・API転送・検索除外とスマホ縦開き一覧を保持。新JS/CSSは監査済み候補とbyte一致。詳細とローカル証跡は `docs/overview-production.md`。追加コミット/pushは行っていない。
+
 2026-11-02の本番反映依頼 deploy_homepage_20261102：トップページ改善とrem修正を独立ソースから静的生成し、日本史Netlifyへ配信。deploy 6ae7b7319664bd42cb6a72ff のPublished、トップHTMLと90静的資産のbyte一致、7セット210問、PC1440/SP390実画面を確認。Fly/DB・Git連携/自動配信設定・コミット/pushなし。生成時のアイコン欠落は公開前に環境調整と再監査で解消。詳細と未完了の補助操作は docs/homepage-production-20261102.md。
+
+2026-11-02 CD比較監査 audit_netlify_cd_secret_detection：現在はGitHub連携/main自動公開が有効、Base/Build/Publishは正本と一致、UI追加環境変数なし。失敗はNetlifyのシークレット検査api_***で、実行ログは位置情報なし。手動配信/CIには同じSmart detectionが含まれず、api_候補は追跡ソース内の識別子9箇所、検証済み公開物では0件。マスク値の同定・誤検知や実キー流出の断定・設定変更・再配信なし。詳細は docs/netlify-cd-security-comparison.md。
