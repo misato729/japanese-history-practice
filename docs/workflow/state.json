@@ -1,10 +1,10 @@
 {
   "schema_version": 1,
-  "revision": 98,
-  "updated_at": "2026-11-01T12:22:15.156Z",
+  "revision": 99,
+  "updated_at": "2026-11-01T15:05:13.627Z",
   "workspace_relative_to_repo": ".",
-  "active_context": "operations",
-  "last_checkpoint": "docs/workflow/handoffs/2026-11-01T12-22-15-156Z-r98.json",
+  "active_context": "development",
+  "last_checkpoint": "docs/workflow/handoffs/2026-11-01T15-05-13-627Z-r99.json",
   "gate_policy": {
     "version": 1,
     "legacy_task_ids": []
@@ -2097,6 +2097,63 @@
             "outcome": "passed",
             "summary": "追加承認分を含む55ファイルの整合・独立レビューと168/176/90検査・型検査合格。bdbe9c7をmainへpushし同期0/0、CI41305587449成功。原典秘密を保護し追加配信なし。",
             "at": "2026-11-01T12:22:05.561Z",
+            "failed_criteria": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "integrate_work_policy",
+      "context": "development",
+      "title": "振り返りとトークン節約方針を日本史版・汎用テンプレートへ反映する",
+      "status": "done",
+      "authorization": "requested",
+      "request_ref": "2026-11-01 ユーザー：今回の振り返りとトークン節約の方針をAGENTS.mdへ反映し、汎用テンプレート https://github.com/misato729/exam-practice-template にも反映する。",
+      "depends_on": [],
+      "next_action": "後続の承認済みGit送信を行い、同期とCI結果を別途確認する。",
+      "evidence": [
+        "docs/work-policy-update.md",
+        "local-only/work-policy-update/checks.json",
+        "local-only/work-policy-update/review.json"
+      ],
+      "last_verified_at": "2026-11-01T14:53:50.240Z",
+      "verification_scope": "両AGENTSへ共通6項目、汎用テンプレートへ教材用4項目を追加。既存全節保持、共通節一致、固有値混入なし、既存差分等11パスhashとtemplate世代0保持を確認。両repoのdiff-check・資料保護成功、独立レビュー合格。文書のみ、アプリ実行・DB・UI・Git送信・配信なし。",
+      "acceptance": [
+        {
+          "id": "checks",
+          "kind": "automated",
+          "description": "両方のAGENTS.mdへ共通方針を統合し、固有構成・既存差分・保護を維持する",
+          "verification": "両repoのdiff-check/資料保護、共通節一致・既存節保持・固有語混入なし・テンプレートstateと既存dirtyのhash保持",
+          "status": "passed",
+          "evidence": [
+            "docs/work-policy-update.md",
+            "local-only/work-policy-update/checks.json"
+          ],
+          "checked_at": "2026-11-01T14:52:59.443Z"
+        },
+        {
+          "id": "review",
+          "kind": "review",
+          "description": "別担当が節約と品質の両立・不要な承認追加なし・汎用化を確認する",
+          "verification": "両AGENTS差分を独立読取レビュー",
+          "status": "passed",
+          "evidence": [
+            "docs/work-policy-update.md",
+            "local-only/work-policy-update/review.json"
+          ],
+          "checked_at": "2026-11-01T14:53:50.240Z",
+          "reviewer": "review_work_policy"
+        }
+      ],
+      "execution": {
+        "worker": "root",
+        "max_attempts": 3,
+        "attempts": [
+          {
+            "number": 1,
+            "outcome": "passed",
+            "summary": "両AGENTSへ基準合わせ・節約方針を統合。既存節と11保持パス・template空stateを保持し、両repo差分/保護検査と独立レビュー合格。",
+            "at": "2026-11-01T14:53:50.592Z",
             "failed_criteria": []
           }
         ]

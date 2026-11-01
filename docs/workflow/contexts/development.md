@@ -25,3 +25,7 @@ Nuxt / Nitro / pg / 番号付きSQL / PostgreSQLを優先し、既存差分を�
 模試6問24の資料1の表復元は `restore_material_table_6_24`。元原稿・DBの全セル保持、単一資料更新、PC/SP操作と変更ファイルは `docs/material-table-display.md` を参照する。
 
 解答解説の作問用内部評価・資料種別タグの非表示は `hide_authoring_notes`。通常解説・引用注記の保持、全210問照合・DB非変更・PC/SP操作と変更ファイルは `docs/learner-explanation-display.md` を参照する。
+
+振り返りとトークン節約方針の共通化は `integrate_work_policy`。日本史版・ユーザー指定の汎用テンプレートのAGENTS.mdへ代表例での基準合わせ、適合条件付き検証継承、必要範囲の読取、担当重複と失敗反復の削減を統合した。両版の既存ルール・既存差分とテンプレートの空stateを保持し、文書検査・独立レビューに合格。詳細は `docs/work-policy-update.md`。コミット・push・配信は行っていない。
+
+後続の明示依頼により、両版の方針変更をコミット・pushする。日本史版の送信用進捗はHEAD由来の今回分だけに限定し、前回の試験概要配信記録とテンプレート記事はローカルに保持する。送信範囲と検証継承の条件は同記録を参照する。
