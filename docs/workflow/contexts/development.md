@@ -12,6 +12,14 @@ Nuxt / Nitro / pg / 番号付きSQL / PostgreSQLを優先し、既存差分を�
 
 追加の背景色調整は `darken_sidebar_background` で管理し、同じ検証記録の追加依頼欄を参照します。
 
+全模試の論述許容表現拡充・採点登録は `expand_essay_acceptance_all_mocks` で管理します。実装・DB保持・PC/SP確認の範囲は `docs/essay-grading-verification.md`、実教材の許容文言表と反例は `local-only/essay-expansion-20261031/` を参照します。
+
+世界史版との文言統一と規約・ポリシーの反映は `align_world_release_copy`、確認範囲・変更ファイルは `docs/world-release-copy.md` を参照します。最新版の参照先はユーザー指定の世界史ローカル画面です。
+
+スマホの模擬試験一覧を縦開きへ変更する依頼は `mobile_sidebar_vertical`。公開世界史版のヘッダー直下・2列・内部縦スクロールへ合わせた。コードと既存7検査・型検査、Mac解除後の390/320/760/761/1440幅の開閉・大問移動・内部スクロール・フォーカスとPC幅同期を確認した。結果と範囲は `docs/mobile-sidebar-vertical.md`、ローカル専用の検査・レビュー・画像は `local-only/mobile-sidebar-vertical/` を参照する。本番反映やGit送信は今回の対象外。
+
+管理教材一覧のSQL99件の修正は `fix_admin_exam_query_count`。一覧本体を4回の一括読込へ変更し、既存の全返却値を保持しました。認証込み99→5はローカル7教材と合成検査、本番は教材未登録で一覧本体2件をREAD ONLY計測。分離候補をFlyへ再配信し、Netlify経由の稼働を確認。検査と配信範囲は `docs/admin-exam-query-verification.md` を参照します。
+
 根拠資料の撮影位置を確認用語へ修正する作業は `correct_source_terms`、日本史用語集・詳説日本史の範囲に全問全肢を照合する作業は `audit_allowed_source_scope`。最終325資料、3問の内容修正、旧除外判断の撤回、DB保持・PC/SPの範囲は `docs/source-reference-terms.md` を参照する。
 
 模試6問24の資料1の表復元は `restore_material_table_6_24`。元原稿・DBの全セル保持、単一資料更新、PC/SP操作と変更ファイルは `docs/material-table-display.md` を参照する。

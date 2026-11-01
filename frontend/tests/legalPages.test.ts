@@ -4,12 +4,16 @@ import test from 'node:test'
 
 const source = (name: string) => readFileSync(new URL(`../app/pages/${name}.vue`, import.meta.url), 'utf8')
 
-test('legal drafts are accessible without application login and identify customization needs', () => {
+test('legal pages are accessible without application login and use the current site identity', () => {
   for (const name of ['terms', 'privacy-policy', 'commercial-disclosure']) {
     const page = source(name)
     assert.doesNotMatch(page, /middleware\s*:\s*['"](?:auth|admin)/)
     assert.doesNotMatch(page, /(?:authenticate|ensureCurrentUser|authHeaders)/)
-    assert.match(page, /テンプレートの草案/)
+    if (name === 'commercial-disclosure') assert.match(page, /テンプレートの草案/)
+    else {
+      assert.doesNotMatch(page, /テンプレートの草案|公開前に.*設定してください/)
+      assert.match(page, /制定日：2026年11月1日/)
+    }
     assert.match(page, /SITE.name/)
     assert.doesNotMatch(page, /情報教認|高等学校|Netlify|Sentry|2026年10月21日/)
   }

@@ -26,8 +26,9 @@ test('horizontal sidebar controls start expanded on desktop and closed on mobile
   assert.match(sidebar, /id="exam-sidebar-content"/)
   assert.match(sidebar, /:aria-expanded="openExam === exam.exam_number"/)
   assert.match(sidebar, /:inert="isMobile \? !mobileOpen : collapsed"/)
-  assert.match(sidebar, /\.mobile-open \.sidebar-content\s*\{ transform: translateX\(0\); visibility: visible; transition-delay: 0s; \}/)
-  assert.match(sidebar, /:aria-modal="isMobile && mobileOpen \? true : undefined"/)
+  assert.match(sidebar, /\.mobile-open \.sidebar-content\s*\{ display: block; \}/)
+  assert.match(sidebar, /mobileOpen \? 'i-lucide-chevron-up' : 'i-lucide-chevron-down'/)
+  assert.doesNotMatch(sidebar, /aria-modal|role="dialog"/)
 })
 
 test('navigation closes the mobile list and shares the published catalog', () => {
@@ -35,8 +36,7 @@ test('navigation closes the mobile list and shares the published catalog', () =>
   assert.equal(sidebar.match(/@click="closeMobileList"/g)?.length, 2)
   assert.match(sidebar, /@keydown.esc.prevent="closeMobilePanel"/)
   assert.match(sidebar, /mobileToggle.value\?\.focus\(\)/)
-  assert.match(sidebar, /@keydown.tab="keepMobileFocus"/)
-  assert.match(sidebar, /class="sidebar-backdrop"/)
+  assert.doesNotMatch(sidebar, /keepMobileFocus|sidebar-backdrop|document.body.style.overflow/)
   assert.match(sidebar, /mobileQuery\?\.removeEventListener\('change', updateViewport\)/)
   assert.match(sidebar, /usePublicExamCatalog\(\)/)
   assert.doesNotMatch(sidebar, /\b(?:useFetch|useApi|\$fetch)\s*\(/)
@@ -66,15 +66,15 @@ test('home anchor leaves room for both mobile header rows', () => {
   assert.match(source('pages/index.vue'), /scroll-margin-top: calc\(var\(--site-navigation-height, var\(--header-height\)\) \+ 20px\)/)
 })
 
-test('mobile exams open from the left in a full-height single-column panel', () => {
+test('mobile exams open below the header in a scrollable two-column accordion', () => {
   const mobileStyles = sidebar.split('@media (max-width: 760px)')[1]
   assert.ok(mobileStyles)
   assert.match(sidebar, /v-else class="exam-groups"/)
-  assert.match(mobileStyles, /\.exam-groups\s*\{[^}]*grid-template-columns: minmax\(0, 1fr\)/)
-  assert.match(mobileStyles, /\.sidebar-content\s*\{[^}]*position: fixed;[^}]*inset: 0 auto 0 0;/)
-  assert.match(mobileStyles, /height: 100dvh/)
-  assert.match(mobileStyles, /transform: translateX\(-100%\)/)
-  assert.doesNotMatch(mobileStyles, /width: calc\(200%|margin-left: calc\(-100%/)
+  assert.match(mobileStyles, /\.exam-groups\s*\{[^}]*grid-template-columns: repeat\(2, minmax\(0, 1fr\)\)/)
+  assert.match(mobileStyles, /\.sidebar-content\s*\{[^}]*display: none;[^}]*position: absolute;[^}]*inset: 100% 0 auto;/)
+  assert.match(mobileStyles, /max-height: min\([^;]*100dvh/)
+  assert.doesNotMatch(mobileStyles, /position: fixed|translateX/)
+  assert.match(mobileStyles, /\.exam-group:nth-child\(even\) \.group-list\s*\{[^}]*margin-left: calc\(-100% - var\(--exam-grid-gap\)\)/)
   assert.match(mobileStyles, /\.group-list\s*\{[^}]*grid-template-columns: minmax\(0, 1fr\)/)
   assert.match(mobileStyles, /overflow-y: auto/)
 })

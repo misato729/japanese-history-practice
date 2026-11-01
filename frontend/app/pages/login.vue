@@ -28,7 +28,7 @@ const submit = async () => {
 
 <template>
   <div class="page-wrap auth-page">
-    <header class="page-intro"><h1>ログイン</h1><p>解答履歴を保存できます。お気に入りはプレミアム会員向けです。</p></header>
+    <header class="page-intro"><h1>ログイン</h1><p>{{ PAYMENTS_ENABLED ? '解答履歴を保存できます。お気に入りはプレミアム会員向けです。' : '解答履歴とお気に入りを保存できます。' }}</p></header>
     <form class="content-panel auth-form" @submit.prevent="submit">
       <div class="field"><label for="email">メールアドレス</label><input id="email" v-model="email" autocomplete="email" type="email" required></div>
       <div class="field"><label for="password">パスワード</label><input id="password" v-model="password" autocomplete="current-password" type="password" minlength="8" required></div>

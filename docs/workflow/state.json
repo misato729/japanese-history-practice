@@ -1,10 +1,10 @@
 {
   "schema_version": 1,
-  "revision": 82,
-  "updated_at": "2026-11-01T08:13:23.736Z",
+  "revision": 96,
+  "updated_at": "2026-11-01T12:05:16.118Z",
   "workspace_relative_to_repo": ".",
   "active_context": "operations",
-  "last_checkpoint": "docs/workflow/handoffs/2026-11-01T08-13-23-736Z-r82.json",
+  "last_checkpoint": "docs/workflow/handoffs/2026-11-01T12-05-16-118Z-r96.json",
   "gate_policy": {
     "version": 1,
     "legacy_task_ids": []
@@ -1072,53 +1072,167 @@
       "id": "expand_essay_acceptance_all_mocks",
       "context": "development",
       "title": "全模試1〜7の論述許容表現を拡充し自動採点を登録する",
-      "status": "doing",
+      "status": "done",
       "depends_on": [
         "register_predicted_mock_sets",
         "author_new_curriculum_mocks_6_7"
       ],
       "authorization": "requested",
       "request_ref": "2026-10-31 ユーザー：正解の言い換えを誤判定しないため許容文言を十分に用意し、全模試の自動採点登録まで実装する。",
-      "next_action": "許容表現の拡充と汎用判定の改善、独立検証後にカタログ・ローカルDBへ反映する。",
+      "next_action": "追加依頼を待つ。今回の成果物はローカルのみ、コミット・push・デプロイなし。",
       "evidence": [
-        "local-only/essay-expansion-20261031/baseline/files.json"
+        "docs/essay-grading-verification.md",
+        "local-only/essay-expansion-20261031/README.md",
+        "local-only/essay-expansion-20261031/論述採点・許容文言一覧.md",
+        "local-only/essay-expansion-20261031/変更ファイル一覧.md",
+        "local-only/essay-expansion-20261031/reviews/rule-check-s01-s03-s04-s07.json",
+        "local-only/essay-expansion-20261031/reviews/automated-tests.json",
+        "local-only/essay-expansion-20261031/reviews/registration-verified.json",
+        "frontend/local-only/essay-expansion-20261031/registration-synthetic-check.json",
+        "local-only/essay-expansion-20261031/reviews/ui-check.json",
+        "local-only/essay-expansion-20261031/reviews/valid-pending-ui.json",
+        "local-only/essay-expansion-20261031/reviews/ui-visual-review.json",
+        "local-only/essay-expansion-20261031/reviews/review-s01-s03-final.json",
+        "local-only/essay-expansion-20261031/reviews/review-s04-s07-final.json",
+        "local-only/essay-expansion-20261031/reviews/engine-implementation-review.json",
+        "local-only/essay-expansion-20261031/reviews/registration-review.json"
       ],
-      "last_verified_at": null,
-      "verification_scope": "全7セット14論述。旧版保持、新規版の私的カタログ、原典に沿う多様な許容表現と反例。ID・公開状態・対象外履歴/お気に入りを保ちWriter更新、模試6/7も登録。未知は保留・is_correct=null。外部送信・コミット・push・デプロイは行わない。",
+      "last_verified_at": "2026-10-31T13:17:52.232Z",
+      "verification_scope": "模試1〜7の14論述48要素、584許容文言。970統合ケースと原モデル14件、独立反例290件、原本32画像、単体172/サーバー87/リポジトリ168検査と型検査合格。ローカルDB7セット210問、Writerで旧10論述を新版digestへ、新規6/7を60問追加。旧140非論述の行・旧ID/公開状態・対象外保持、再登録変更0。PC/SP全14論述と有効な未知答案の保留・非公開を確認。無限の自然言語網羅や公式採点は保証しない。外部公開・コミット・push・デプロイなし。",
       "acceptance": [
         {
           "id": "semantic_acceptance",
           "kind": "automated",
           "description": "14論述すべてに多様な同義表現・語順/助詞/受身の正解例と主客/否定/年代/仮定/併記/別節の反例があり、正解を取りこぼさず誤説明を過大加点しない。",
           "verification": "原本とrubric照合、合成エンジン回帰と私的例文テスト。",
-          "status": "pending",
-          "evidence": [],
-          "checked_at": null
+          "status": "passed",
+          "evidence": [
+            "local-only/essay-expansion-20261031/reviews/rule-check-s01-s03-s04-s07.json",
+            "local-only/essay-expansion-20261031/reviews/automated-tests.json"
+          ],
+          "checked_at": "2026-10-31T13:17:52.232Z"
         },
         {
           "id": "registration_integrity",
           "kind": "automated",
           "description": "全7セットの14論述が検証済みの規則版/engine/digestへ紐づき、再読込・反復・対象外保持と回答前非公開を確認する。",
           "verification": "独立_test DBの合成書込検査、通常DB/サーバー確認、PC/SPの論述操作確認。",
-          "status": "pending",
-          "evidence": [],
-          "checked_at": null
+          "status": "passed",
+          "evidence": [
+            "local-only/essay-expansion-20261031/reviews/registration-verified.json",
+            "frontend/local-only/essay-expansion-20261031/registration-synthetic-check.json",
+            "local-only/essay-expansion-20261031/reviews/ui-check.json",
+            "local-only/essay-expansion-20261031/reviews/valid-pending-ui.json",
+            "local-only/essay-expansion-20261031/reviews/ui-visual-review.json"
+          ],
+          "checked_at": "2026-10-31T13:17:52.232Z"
         },
         {
           "id": "independent_review",
           "kind": "review",
           "description": "作者と別担当が原典の必要要素・許容例・反例と実装/反映の整合を確認する。",
           "verification": "規則と例文の交差レビュー、汎用エンジン/登録経路の独立レビュー。",
-          "status": "pending",
-          "evidence": [],
-          "checked_at": null,
-          "reviewer": null
+          "status": "passed",
+          "evidence": [
+            "local-only/essay-expansion-20261031/reviews/review-s01-s03-final.json",
+            "local-only/essay-expansion-20261031/reviews/review-s04-s07-final.json",
+            "local-only/essay-expansion-20261031/reviews/engine-implementation-review.json",
+            "local-only/essay-expansion-20261031/reviews/registration-review.json"
+          ],
+          "checked_at": "2026-10-31T13:17:52.232Z",
+          "reviewer": "review_rules_1_3 / finish_rules_4_7"
         }
       ],
       "execution": {
         "worker": "root",
         "max_attempts": 3,
-        "attempts": []
+        "attempts": [
+          {
+            "number": 1,
+            "outcome": "passed",
+            "summary": "14論述48要素584許容文言を登録。970例・独立反例290例、原本32画像、単体172・サーバー87・型検査とPC/SP全14論述合格。7セット210問と対象外保持・再登録変更0を確認。",
+            "at": "2026-10-31T13:17:52.990Z",
+            "failed_criteria": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "align_world_release_copy",
+      "context": "development",
+      "title": "公開世界史版に日本史版の案内と共通文言を揃える",
+      "status": "done",
+      "depends_on": [
+        "expand_essay_acceptance_all_mocks"
+      ],
+      "authorization": "requested",
+      "request_ref": "2026-11-01 ユーザー：世界史版をリリースした。https://world-history-practice.netlify.app/ に文言など極力合わせる。 2026-11-01追加：世界史側で利用規約とプライバシーポリシーを変更。参照先をhttp://127.0.0.1:3200/へ訂正。開発用Docker起動と画面確認は明示承認済み。",
+      "next_action": "追加依頼を待つ。コミット・push・デプロイは今回実施していない。",
+      "evidence": [
+        "docs/world-release-copy.md",
+        "local-only/world-copy-alignment-20261101/変更ファイル一覧.md",
+        "local-only/world-copy-alignment-20261101/reviews/checks.json",
+        "local-only/world-copy-alignment-20261101/reference-comparison.json",
+        "local-only/world-copy-alignment-20261101/reviews/ui-check.json",
+        "local-only/world-copy-alignment-20261101/reviews/visual-review.json",
+        "local-only/world-copy-alignment-20261101/reviews/independent-review.json",
+        "local-only/world-copy-alignment-20261101/reviews/legal-review.json",
+        "local-only/world-copy-alignment-20261101/reviews/legal-comparison.json"
+      ],
+      "last_verified_at": "2026-11-01T00:48:21.044Z",
+      "verification_scope": "世界史公開版とユーザー訂正のローカル版をブラウザ参照。9UIファイルの共通文言と利用規約18条・ポリシー14条を更新、日本史7/210・80字論述・未分類・無料運用を維持。未確認クラウド名は断定せず調整。単体172・最終規約2・Vue2ページ変換・資料保護・差分検査合格。PC/SP各6ページの実操作・画像・重なり/横はみ出し/リンク確認、別担当の内容差分レビュー合格。実会員データ/教材/採点/DB/料金は変更せず、既存dirty保持。法務監査・クラウド運用監査・会員画面の実操作は対象外。未コミット・未push・未デプロイ。",
+      "acceptance": [
+        {
+          "id": "copy_fidelity",
+          "kind": "automated",
+          "description": "公開画面との対応と日本史固有の7セット210問・論述・参照資料・未分類の事実が一致し、既存内容を保持する。",
+          "verification": "差分・設定の整合・既存の関連単体検査。",
+          "status": "passed",
+          "evidence": [
+            "local-only/world-copy-alignment-20261101/reviews/checks.json",
+            "local-only/world-copy-alignment-20261101/reference-comparison.json"
+          ],
+          "checked_at": "2026-11-01T00:48:21.044Z"
+        },
+        {
+          "id": "responsive_ui",
+          "kind": "automated",
+          "description": "PC/SPでホーム・概要・会員案内・共通メニューを実操作し、重なり・はみ出し・リンク移動を確認する。",
+          "verification": "ブラウザ操作と保存画像。",
+          "status": "passed",
+          "evidence": [
+            "local-only/world-copy-alignment-20261101/reviews/ui-check.json",
+            "local-only/world-copy-alignment-20261101/reviews/visual-review.json"
+          ],
+          "checked_at": "2026-11-01T00:48:21.044Z"
+        },
+        {
+          "id": "independent_review",
+          "kind": "review",
+          "description": "別担当が文言の対応・差分範囲・日本史固有の事実と既存差分保持を確認する。",
+          "verification": "文言対応表・差分の独立レビュー。",
+          "status": "passed",
+          "evidence": [
+            "local-only/world-copy-alignment-20261101/reviews/independent-review.json",
+            "local-only/world-copy-alignment-20261101/reviews/legal-review.json",
+            "local-only/world-copy-alignment-20261101/reviews/legal-comparison.json"
+          ],
+          "checked_at": "2026-11-01T00:48:21.044Z",
+          "reviewer": "review_copy_alignment"
+        }
+      ],
+      "execution": {
+        "worker": "root",
+        "max_attempts": 3,
+        "attempts": [
+          {
+            "number": 1,
+            "outcome": "passed",
+            "summary": "世界史版の共通文言と最新版規約18条・ポリシー14条を日本史向けに反映。単体172・規約2・Vue変換・資料保護合格、PC/SP各6ページと独立レビューを確認。既存変更・教材・DB保持。",
+            "at": "2026-11-01T00:48:23.764Z",
+            "failed_criteria": []
+          }
+        ]
       }
     },
     {
@@ -1393,6 +1507,125 @@
       }
     },
     {
+      "id": "deploy_netlify_verify_cloud",
+      "context": "operations",
+      "title": "最新版をNetlifyへ配信しFly.ioとNeonの設定を確認する",
+      "status": "done",
+      "authorization": "requested",
+      "request_ref": "2026-11-01 ユーザー依頼：現時点の最新版をNetlifyへデプロイし、昨日手動設定したFly.ioとNeonを確認する。追加承認：Secretsは変数名・設定状態のみ、Neonは構造・移行番号・教材件数のSELECTのみ。共有IPv4割当を明示承認。",
+      "depends_on": [],
+      "next_action": "認証鍵・教材登録・API/008更新は追加作業の範囲を確認する。コミットとpushは未実施。",
+      "evidence": [
+        "docs/cloud-deployment-verification.md",
+        "docs/cloud-deployment-review.md"
+      ],
+      "last_verified_at": "2026-11-01T06:29:47.986Z",
+      "verification_scope": "未コミットの最新画面から単体174件・型検査・静的生成と資料保護を通過した111ファイルをNetlifyへ直接配信し一般公開。認証なしのHTML/JSON200、API no-store、noindex、CSS一致、1440/390px操作を確認。Fly公開IPの不足は追加承認で修正。NeonはPG16.15/007/教材0件をSELECTで確認。SECRET_KEY_BASE未設定、教材/採点規則本番登録・API更新/008適用は未実施。既存dirty保持、Git操作・自動配信接続なし。",
+      "acceptance": [
+        {
+          "id": "checks",
+          "kind": "automated",
+          "description": "最新版の画面を検査し保護資料を含まない生成物をNetlifyへ配信できる",
+          "verification": "単体・型・静的生成、送信内容と資料保護、配信URLとAPI応答を確認",
+          "status": "passed",
+          "evidence": [
+            "docs/cloud-deployment-verification.md"
+          ],
+          "checked_at": "2026-11-01T06:29:47.986Z"
+        },
+        {
+          "id": "review",
+          "kind": "review",
+          "description": "別担当が配信物・接続先・検証範囲と残課題を確認する",
+          "verification": "独立した差分・生成物レビュー",
+          "status": "passed",
+          "evidence": [
+            "docs/cloud-deployment-review.md"
+          ],
+          "checked_at": "2026-11-01T06:30:15.443Z",
+          "reviewer": "review_cloud_deploy"
+        }
+      ],
+      "execution": {
+        "worker": "root",
+        "max_attempts": 3,
+        "attempts": [
+          {
+            "number": 1,
+            "outcome": "passed",
+            "summary": "最新画面のNetlify一般公開とFly.io/Neon設定監査を実施。174件・型・生成・保護・PC/SP・公開HTTP・独立レビュー合格。教材0/認証鍵未設定/APIと008未更新を残課題として記録。",
+            "at": "2026-11-01T06:30:16.046Z",
+            "failed_criteria": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "fix_admin_exam_query_count",
+      "context": "development",
+      "title": "管理教材一覧のSQL99件を一括取得へ修正しAPIを再配信する",
+      "status": "done",
+      "authorization": "requested",
+      "request_ref": "2026-11-01 ユーザー：管理画面の教材一覧でSQL99件実行される問題を修正して再デプロイする。",
+      "depends_on": [],
+      "next_action": "追加依頼を待つ。今回の変更は未コミット・未push。",
+      "evidence": [
+        "docs/admin-exam-query-verification.md",
+        "docs/admin-exam-query-review.md"
+      ],
+      "last_verified_at": "2026-11-01T07:02:42.496Z",
+      "verification_scope": "既存API全返却を保持し7教材28大問で98→4SQL、認証込み99→5。分離候補server89件・型・本番/Docker build・独立レビュー合格。Fly既存2台をadmin-list-sql-20261101へ更新し、source/bundle一致とREAD ONLY本番空一覧2SQL・従来5枠/007/問題0を確認。Fly/Netlifyhealth200、exams200、未認証admin401/no-store。教材・採点規則・key・ローカル7枠/008・Git操作は対象外。既存dirtyを保持。",
+      "acceptance": [
+        {
+          "id": "checks",
+          "kind": "automated",
+          "description": "教材・大問数に比例するSQL発行を廃止し既存返却内容とデータを保持する",
+          "verification": "独立_test DBの合成データで固定SQL件数・従来詳細との同値・未登録枠・順序・対象外保持、型・回帰・本番buildを順に検証する",
+          "status": "passed",
+          "evidence": [
+            "docs/admin-exam-query-verification.md"
+          ],
+          "checked_at": "2026-11-01T07:02:42.496Z"
+        },
+        {
+          "id": "review",
+          "kind": "review",
+          "description": "別担当が互換性・保護・配信範囲を独立確認する",
+          "verification": "差分と合成検査と配信記録の独立レビュー",
+          "status": "passed",
+          "evidence": [
+            "docs/admin-exam-query-review.md"
+          ],
+          "checked_at": "2026-11-01T07:02:42.496Z",
+          "reviewer": "review_cloud_deploy"
+        },
+        {
+          "id": "deployment",
+          "kind": "automated",
+          "description": "修正APIを日本史専用Fly.ioへ反映しNetlify経由の応答を確認する",
+          "verification": "保護資料を含まないbuild/releaseと稼働health、公開API、可能な範囲の管理APIを確認する",
+          "status": "passed",
+          "evidence": [
+            "docs/admin-exam-query-verification.md"
+          ],
+          "checked_at": "2026-11-01T07:02:42.496Z"
+        }
+      ],
+      "execution": {
+        "worker": "root",
+        "max_attempts": 3,
+        "attempts": [
+          {
+            "number": 1,
+            "outcome": "passed",
+            "summary": "SQL99→5を全返却値同値で確認し89件・型・本番build・独立レビュー通過。分離した修正APIをFly2台へ配信し本番空一覧2SQLとNetlify経由200/未認証401を確認。",
+            "at": "2026-11-01T07:02:42.652Z",
+            "failed_criteria": []
+          }
+        ]
+      }
+    },
+    {
       "id": "restore_material_table_6_24",
       "context": "development",
       "title": "模試6問24の資料1を元原稿どおりの表表示へ修正する",
@@ -1567,6 +1800,288 @@
             "failed_criteria": []
           }
         ]
+      }
+    },
+    {
+      "id": "publish_210_questions",
+      "context": "operations",
+      "title": "本番DBへ210問を登録し公開サイトの演習を有効にする",
+      "status": "done",
+      "authorization": "requested",
+      "request_ref": "2026-11-01 ユーザー「本番DBにも210問を登録して、公開サイトで演習できるようにしてください。」",
+      "depends_on": [
+        "deliver_learning_updates"
+      ],
+      "next_action": "追加依頼を待つ。新規コミット/push、自動配信開始、追加の本番変更は未依頼。",
+      "evidence": [
+        "docs/production-publication.md",
+        "local-only/production-publication/final-independent-review.json"
+      ],
+      "last_verified_at": "2026-11-01T10:44:10.984Z",
+      "verification_scope": "本番7教材・210問を共通Writerで登録し全件export SHA一致、再実行変更0。公開210GET/40POST・14論述8点・回答前非公開・PCSP実操作・6/24表横スクロール/再読込を確認。両VMの14規則/008と利用者等7テーブル保持、独立レビュー/最終13ログ0検出。Netlify既存配信維持、原典/全文OCR/利用者情報転送なし。",
+      "acceptance": [
+        {
+          "id": "data",
+          "kind": "automated",
+          "description": "本番対象と既存データを確認し、210問・関連分類・資料・採点規則を保持して再実行可能に登録する",
+          "verification": "target確認/バックアップ、現行DBからの検査済みarchive、独立_testでimport保持と反復、本番前後件数/digest/版/公開とprofile照合",
+          "status": "passed",
+          "evidence": [
+            "docs/production-publication.md",
+            "local-only/production-publication/registration-result.json",
+            "local-only/production-publication/registration-repeat.json",
+            "local-only/production-publication/final-machine-8.json",
+            "local-only/production-publication/final-machine-865.json"
+          ],
+          "checked_at": "2026-11-01T10:44:10.984Z"
+        },
+        {
+          "id": "practice",
+          "kind": "automated",
+          "description": "公開サイトのPC/SPで実際の選択・語句記述・論述を解答でき、回答前の秘密保持と対象外保持を確認する",
+          "verification": "匿名HTTPの一覧/問題/採点、before-answer非公開項目、PCSP操作/再読込と画像、管理API未認証401",
+          "status": "passed",
+          "evidence": [
+            "docs/production-publication.md",
+            "local-only/production-publication/public-verification.json",
+            "local-only/production-publication/ui-resume-verification.json"
+          ],
+          "checked_at": "2026-11-01T10:44:10.984Z"
+        },
+        {
+          "id": "review",
+          "kind": "review",
+          "description": "別担当が送信する教材/採点規則と変更範囲、登録結果、公開画面を確認する",
+          "verification": "限定転送物/登録計画/全件保持/PCSP画像の独立レビュー",
+          "status": "passed",
+          "evidence": [
+            "docs/production-publication.md",
+            "local-only/production-publication/final-independent-review.json",
+            "local-only/production-publication/final-cli-log-rescan.json"
+          ],
+          "checked_at": "2026-11-01T10:43:36.901Z",
+          "reviewer": "publication_final_review"
+        }
+      ],
+      "execution": {
+        "worker": "root",
+        "max_attempts": 3,
+        "attempts": [
+          {
+            "number": 1,
+            "outcome": "failed",
+            "summary": "登録前レビューで教材メタデータだけがある対象を拒否するガード不足を検出。ガード1行を追加し_testで拒否・rollbackを検査、修正後再レビューは合格。本番登録前に保持条件を強化。",
+            "at": "2026-11-01T09:02:02.004Z",
+            "failed_criteria": [
+              "data",
+              "practice",
+              "review"
+            ]
+          },
+          {
+            "number": 2,
+            "outcome": "passed",
+            "summary": "本番210問の登録公開・全件照合と反復変更0・全一般APIと3形式PCSP操作・6/24表/再読込・両VM保持を確認。独立最終レビュー合格、未解決0。",
+            "at": "2026-11-01T10:44:19.509Z",
+            "failed_criteria": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "mobile_sidebar_vertical",
+      "context": "development",
+      "title": "スマートフォンの模擬試験一覧を世界史版と同じ縦開きへ変更する",
+      "status": "done",
+      "authorization": "requested",
+      "request_ref": "2026-11-01 ユーザー「スマホ版のサイドバーのアコーディオンは縦開きにしてください、世界史版と同じ感じで」",
+      "depends_on": [],
+      "next_action": "追加依頼を待つ。変更は未コミット・本番未反映。",
+      "evidence": [
+        "docs/mobile-sidebar-vertical.md",
+        "local-only/mobile-sidebar-vertical/final-review.json"
+      ],
+      "last_verified_at": "2026-11-01T11:30:31.445Z",
+      "verification_scope": "世界史公開版と同じSP縦開き/2列へ修正。既存7検査とコンテナ型検査、差分/保護検査成功。390/320/760/761/1440幅で14操作成功、PCSP6画像＋参照1画像を独立レビューし未解決0。既存PC文言/260-64幅/認証catalog保持。DB教材変更・本番反映・Git送信なし。",
+      "acceptance": [
+        {
+          "id": "checks",
+          "kind": "automated",
+          "description": "縦開き・非モーダル・既存の公開教材/権限/PC開閉を維持する",
+          "verification": "既存sidebarレイアウト検査と型検査、差分・保護検査",
+          "status": "passed",
+          "evidence": [
+            "docs/mobile-sidebar-vertical.md",
+            "local-only/mobile-sidebar-vertical/checks.json"
+          ],
+          "checked_at": "2026-11-01T11:30:31.445Z"
+        },
+        {
+          "id": "ui",
+          "kind": "automated",
+          "description": "PC/SPで開閉・教材/大問選択・移動・狭幅と境界表示を実操作で確認する",
+          "verification": "390/320/760/761/1440幅、内部縦scroll・リンク移動と閉鎖・Escape/focus・PC開閉・画像記録",
+          "status": "passed",
+          "evidence": [
+            "docs/mobile-sidebar-vertical.md",
+            "local-only/mobile-sidebar-vertical/ui-results.json"
+          ],
+          "checked_at": "2026-11-01T11:30:31.445Z"
+        },
+        {
+          "id": "review",
+          "kind": "review",
+          "description": "別担当が差分とPC/SP表示を確認し未解決指摘がない",
+          "verification": "既存変更保持・モーダル状態残留なし・7教材/大問の表示と実操作画像の独立レビュー",
+          "status": "passed",
+          "evidence": [
+            "docs/mobile-sidebar-vertical.md",
+            "local-only/mobile-sidebar-vertical/final-review.json"
+          ],
+          "checked_at": "2026-11-01T11:30:31.445Z",
+          "reviewer": "final_mobile_ui_review"
+        }
+      ],
+      "execution": {
+        "worker": "root",
+        "max_attempts": 3,
+        "attempts": [
+          {
+            "number": 1,
+            "outcome": "passed",
+            "summary": "SP縦開き/2列へ修正し、既存7検査・型検査・差分/保護検査、14PCSP操作、6画像と独立レビューを確認。既存PC文言と幅/カタログを保持。",
+            "at": "2026-11-01T11:30:31.971Z",
+            "failed_criteria": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "deploy_mobile_sidebar",
+      "context": "operations",
+      "title": "スマホ縦開きサイドバーを日本史Netlify本番へ反映する",
+      "status": "done",
+      "authorization": "requested",
+      "request_ref": "2026-11-01 ユーザー「本番反映してください」：直前に確認済みのスマホサイドバー縦開き変更",
+      "depends_on": [
+        "mobile_sidebar_vertical"
+      ],
+      "next_action": "追加依頼を待つ。Gitコミット/pushは未実施、既存の他作業差分を保持。",
+      "evidence": [
+        "docs/mobile-sidebar-production.md",
+        "local-only/mobile-sidebar-production/final-review.json"
+      ],
+      "last_verified_at": "2026-11-01T11:54:01.388Z",
+      "verification_scope": "Netlify deploy6ae726f33106d3d071996821公開。独立172source/静的111files監査、旧19HTML本文/規約/routing保持、payload空/原典秘密規則混入0、ZIP全件一致。本番390/320/1440の8操作・3画像・新JS/CSS byte一致・7セット210問、独立最終レビュー合格。Fly/DB/Git送信/自動ビルド設定の変更なし。",
+      "acceptance": [
+        {
+          "id": "artifact",
+          "kind": "automated",
+          "description": "前回公開文言とroutingを保持した静的画面だけを生成し保護資料/秘密/教材を含めない",
+          "verification": "隔離コピーgenerate、旧zipのmain文言/headers/redirects比較、全ファイル/payload/原典/規則/秘密の検査とZIP一致",
+          "status": "passed",
+          "evidence": [
+            "docs/mobile-sidebar-production.md",
+            "local-only/mobile-sidebar-production/artifact-review.json"
+          ],
+          "checked_at": "2026-11-01T11:54:01.388Z"
+        },
+        {
+          "id": "production",
+          "kind": "automated",
+          "description": "日本史Netlifyへ配信しPCSPの縦開きと大問移動・PC開閉を公開サイトで確認する",
+          "verification": "Published deploy ID、HTML/APIとasset hash、390/320/1440実操作と画像、7教材とデータ利用の確認",
+          "status": "passed",
+          "evidence": [
+            "docs/mobile-sidebar-production.md",
+            "local-only/mobile-sidebar-production/public-ui.json"
+          ],
+          "checked_at": "2026-11-01T11:54:01.388Z"
+        },
+        {
+          "id": "review",
+          "kind": "review",
+          "description": "別担当が公開候補/送信範囲/本番画像を確認する",
+          "verification": "前回保持と静的artifact安全性、公開操作画像の独立レビュー",
+          "status": "passed",
+          "evidence": [
+            "docs/mobile-sidebar-production.md",
+            "local-only/mobile-sidebar-production/final-review.json"
+          ],
+          "checked_at": "2026-11-01T11:54:01.388Z",
+          "reviewer": "review_mobile_release"
+        }
+      ],
+      "execution": {
+        "worker": "root",
+        "max_attempts": 3,
+        "attempts": [
+          {
+            "number": 1,
+            "outcome": "passed",
+            "summary": "Netlifyへ静的111ファイルを配信し公開を確認。旧本文/規約とrouting保持、秘密/教材非混入、ZIP/公開JS CSS一致、PCSP8操作と独立最終レビュー合格。",
+            "at": "2026-11-01T11:54:04.392Z",
+            "failed_criteria": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "push_mobile_sidebar",
+      "context": "operations",
+      "title": "サイドバー・本番反映記録と既存変更を整合させてコミット・pushする",
+      "status": "doing",
+      "authorization": "requested",
+      "request_ref": "2026-11-01 ユーザー「OKです。今回のサイドバー変更と本番反映の記録をコミット・pushしてください。」 追加指示「既存の未コミット分も適宜実装と整合性を合わせてコミットしてください」",
+      "depends_on": [
+        "mobile_sidebar_vertical",
+        "deploy_mobile_sidebar",
+        "align_world_release_copy",
+        "deploy_netlify_verify_cloud",
+        "fix_admin_exam_query_count",
+        "publish_210_questions",
+        "expand_essay_acceptance_all_mocks"
+      ],
+      "next_action": "隔離したステージ実体の全frontend/型/server検査とPCSP案内確認、独立レビュー後にmainへcommit/pushする。",
+      "evidence": [
+        "docs/sidebar-git-delivery.md"
+      ],
+      "last_verified_at": null,
+      "verification_scope": "追加承認で範囲を拡大。既存の実装/設定/文言/規約/SQL/配信記録/進捗を整合確認中。原典/実教材/規則/秘密/生成物は送信しない。追加本番配信は行わない。",
+      "acceptance": [
+        {
+          "id": "checks",
+          "kind": "automated",
+          "description": "完成済みの既存変更と実装・記録の整合を確認し、保護対象/生成物を除外して送信する",
+          "verification": "分担レビュー、試験概要の案内修正とPCSP確認、ステージ実体の全frontend/隔離_test server/型検査・template/context/harness・資料保護・差分検査",
+          "status": "pending",
+          "evidence": [],
+          "checked_at": null
+        },
+        {
+          "id": "remote",
+          "kind": "automated",
+          "description": "mainへの送信とリモート同期・CI成功を確認する",
+          "verification": "commit/push、origin/mainとHEAD一致/差分0、GitHub Actions完了、Netlify追加配信なし",
+          "status": "pending",
+          "evidence": [],
+          "checked_at": null
+        },
+        {
+          "id": "review",
+          "kind": "review",
+          "description": "別担当がステージ範囲・保持・記録の整合と送信結果を確認する",
+          "verification": "index実体/全対象タスクと記録の整合/原典秘密除外/生成物とローカル資料の保持を独立レビュー",
+          "status": "pending",
+          "evidence": [],
+          "checked_at": null,
+          "reviewer": null
+        }
+      ],
+      "execution": {
+        "worker": "root",
+        "max_attempts": 3,
+        "attempts": []
       }
     }
   ]

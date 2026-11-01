@@ -1,0 +1,75 @@
+{
+  "schema_version": 1,
+  "revision": 53,
+  "state_hash": "15d1cd929c7892a4948cdb8e5fbf4335350bac6e4b6e3acba2a294a4b7491997",
+  "recorded_at": "2026-10-31T13:17:52.990Z",
+  "timezone": "UTC",
+  "context": "development",
+  "task": "expand_essay_acceptance_all_mocks",
+  "summary": "14論述48要素584許容文言を登録。970例・独立反例290例、原本32画像、単体172・サーバー87・型検査とPC/SP全14論述合格。7セット210問と対象外保持・再登録変更0を確認。",
+  "next_action": "完了の引き継ぎを記録する。外部送信・Git配信なし。",
+  "missing_local_files": [],
+  "git": {
+    "available": true,
+    "head": "730328a416f398ae103fa9f087526bb7cf6a69eb",
+    "changes": [
+      {
+        "status": " M",
+        "path": "AGENTS.md"
+      },
+      {
+        "status": " M",
+        "path": "config/exam.json"
+      },
+      {
+        "status": " M",
+        "path": "docs/architecture.md"
+      },
+      {
+        "status": " M",
+        "path": "docs/workflow/contexts/development.md"
+      },
+      {
+        "status": " M",
+        "path": "docs/workflow/contexts/operations.md"
+      },
+      {
+        "status": " M",
+        "path": "docs/workflow/contexts/product.md"
+      },
+      {
+        "status": "??",
+        "path": "docs/essay-grading-verification.md"
+      }
+    ]
+  },
+  "file_hashes": {
+    "AGENTS.md": "0234cd3264e365dcc50ca8e9cd560e64389e70b19b848ddec767f1b0ff784097",
+    "README.md": "13db1d2c82bfae17e9be7e23d79436a112bae969a92f2ea818f6907fc65594d7",
+    "docs/testing.md": "60ca85668a355f2b4636c032a2ea59aa89d515421cbd1c64fcda187c9dd66bda",
+    "docs/workflow/README.md": "45ae8a20c72aa9c36f17f24c1d5b9fa40f45e5db2e89f44a9e1888e60aeea2fc",
+    "docs/workflow/policy.json": "d21fbb063281b36ef860225f34009c32b37dd2153fbd35138bb872a6f5f947f7",
+    "docs/workflow/task.example.json": "4bf161efce99b7d0a26798e3445d1f142505e512eedd591ea11cfb194d67da9f",
+    "docs/workflow/contexts/product.md": "e86303c51c07895f982cad15d67fa8d949d633395a5e261cdbf2ee4f6bbc9298",
+    "docs/workflow/contexts/development.md": "6d89f29bc9e8e3548197c3ee22714470ed4b9d242cfacc14e367a029817f8a8e",
+    "docs/workflow/contexts/operations.md": "a64b416d22d2c4c69f66aad8c1cba5adedd9dcaee1acc0f8f07a1649207f6da4",
+    "scripts/context.mjs": "3828c41d1cc5a6977b8444035e094e61e1c9895fcaa9451ecb1919e799ecaffc",
+    "scripts/context.test.mjs": "bc14ad1ba5d331f75d5f34923ac59a2cfe29b5b1c12174b0aa57e6d8ee572923",
+    "scripts/workflow-policy.mjs": "60535f2c9bf42203c059ca39a0b254c168b7cfb2468904a3842725fe3797141e",
+    "scripts/workflow-policy.test.mjs": "394287e7d1e84756a3ac8833918f964ee66f0ef2c34934d121d055fb37af4782",
+    "scripts/workspace-policy.mjs": "685272056c1fcaba765a5c1529b13a5c703aa9c6708baf13b0d63d0d189d6fcb",
+    "scripts/workspace-policy.test.mjs": "2f5517e76009fd3541cddfab0c7577f60870477a15677f53ec3284bcc434bd21",
+    "scripts/check-private-sources.mjs": "1d28447b51b39591d42151f236b837b33d695662168ee5c71500205aa0de96af",
+    "scripts/check-private-sources.test.mjs": "6e3194bd9dd502d3c40390f101d0313593eb3494e50fb11ea33da769cf615c14",
+    ".gitignore": "90d186e052011e432fbf48bc1e4f8a9f97fe1b8921ccfae965d267645ebab810",
+    ".dockerignore": "aeede9bfd7aef2fecb772184be3c55be741086156af7e5c1f97b6335825b4564",
+    ".githooks/pre-push": "3529b300f7a655102ad899ab31fa8b2c404ec37479d1195aa9bcd3efa97bf90c",
+    "config/exam.json": "1f599fc71d7d867680b449918c8e15e0b462f08e1e7b8212c7c7c655a302b481",
+    "docs/verification.md": "c9232834f12be4380417793aa4bd210e2543f44490fde109d2a1e1d437498d70"
+  },
+  "attempt": {
+    "outcome": "passed",
+    "number": 1
+  },
+  "verification_note": "ハッシュ・Git・記録済み完了条件の確認であり、テストや出典照合の自動再実行ではない。依頼・権限は最新のユーザー指示とAGENTS.mdに従う。"
+}

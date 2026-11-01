@@ -7,8 +7,6 @@ const openExam = ref<number | null>(null)
 const mobileOpen = ref(false)
 const isMobile = ref(false)
 const mobileToggle = ref<HTMLButtonElement | null>(null)
-const mobileClose = ref<HTMLButtonElement | null>(null)
-const sidebarContent = ref<HTMLDivElement | null>(null)
 const { user, accessToken, ensureCurrentUser } = useAuth()
 const { data: publicCatalog, status: catalogStatus, error: catalogError, refresh: refreshCatalog } = await usePublicExamCatalog()
 const accessStatus = ref<'ready' | 'pending' | 'error'>(
@@ -73,40 +71,6 @@ const closeMobilePanel = () => {
   void nextTick(() => mobileToggle.value?.focus())
 }
 
-const keepMobileFocus = (event: KeyboardEvent) => {
-  if (!isMobile.value || !mobileOpen.value) return
-  const controls = Array.from(sidebarContent.value?.querySelectorAll<HTMLElement>('a[href], button:not(:disabled)') ?? [])
-    .filter(control => control.getClientRects().length > 0)
-  const first = controls[0]
-  const last = controls.at(-1)
-  if (!first || !last) return
-  if (event.shiftKey && document.activeElement === first) {
-    event.preventDefault()
-    last.focus()
-  }
-  else if (!event.shiftKey && document.activeElement === last) {
-    event.preventDefault()
-    first.focus()
-  }
-}
-
-let previousOverflow: string | null = null
-const unlockPage = () => {
-  if (previousOverflow === null) return
-  document.body.style.overflow = previousOverflow
-  previousOverflow = null
-}
-
-watch(mobileOpen, async (open) => {
-  if (open && isMobile.value) {
-    previousOverflow = document.body.style.overflow
-    document.body.style.overflow = 'hidden'
-    await nextTick()
-    if (mobileOpen.value) mobileClose.value?.focus()
-  }
-  else unlockPage()
-})
-
 let mobileQuery: MediaQueryList | undefined
 const updateViewport = () => {
   isMobile.value = Boolean(mobileQuery?.matches)
@@ -119,7 +83,6 @@ onMounted(() => {
 })
 onBeforeUnmount(() => {
   mobileQuery?.removeEventListener('change', updateViewport)
-  unlockPage()
 })
 
 watch(() => route.fullPath, closeMobileList)
@@ -146,8 +109,8 @@ const examTarget = (exam: ExamCatalogEntry) => (
         type="button"
         :aria-expanded="!collapsed"
         aria-controls="exam-sidebar-content"
-        :aria-label="collapsed ? '模擬試験サイドバーを開く' : '模擬試験サイドバーを閉じる'"
-        :title="collapsed ? '模擬試験サイドバーを開く' : '模擬試験サイドバーを閉じる'"
+        :aria-label="collapsed ? 'サイドバーを開く' : 'サイドバーを閉じる'"
+        :title="collapsed ? 'サイドバーを開く' : 'サイドバーを閉じる'"
         @click="collapsed = !collapsed"
       >
         <UIcon :name="collapsed ? 'i-lucide-chevron-right' : 'i-lucide-chevron-left'" />
@@ -165,34 +128,14 @@ const examTarget = (exam: ExamCatalogEntry) => (
     >
       <UIcon name="i-lucide-files" />
       <span>模擬試験</span>
-      <UIcon :name="mobileOpen ? 'i-lucide-chevron-left' : 'i-lucide-chevron-right'" />
+      <UIcon :name="mobileOpen ? 'i-lucide-chevron-up' : 'i-lucide-chevron-down'" />
     </button>
-
-    <button
-      v-if="mobileOpen"
-      class="sidebar-backdrop"
-      type="button"
-      aria-label="模擬試験を閉じる"
-      tabindex="-1"
-      @click="closeMobilePanel"
-    />
 
     <div
       id="exam-sidebar-content"
-      ref="sidebarContent"
       class="sidebar-content"
       :inert="isMobile ? !mobileOpen : collapsed"
-      :role="isMobile ? 'dialog' : undefined"
-      :aria-modal="isMobile && mobileOpen ? true : undefined"
-      :aria-labelledby="isMobile ? 'exam-sidebar-title' : undefined"
-      @keydown.tab="keepMobileFocus"
     >
-      <div class="mobile-sidebar-heading">
-        <strong id="exam-sidebar-title">模擬試験</strong>
-        <button ref="mobileClose" type="button" aria-label="模擬試験を閉じる" @click="closeMobilePanel">
-          <UIcon name="i-lucide-x" />
-        </button>
-      </div>
       <div v-if="isLoading" class="sidebar-loading" role="status" aria-live="polite">
         <UIcon class="loading-spinner" name="i-lucide-loader-circle" />
         <span>模擬試験を読み込んでいます</span>
@@ -285,13 +228,10 @@ const examTarget = (exam: ExamCatalogEntry) => (
 
 .sidebar-heading-label { flex: 1; white-space: nowrap; }
 .sidebar-heading-icon { flex: 0 0 20px; width: 20px; height: 20px; }
-.desktop-sidebar-toggle,
-.mobile-sidebar-heading button { width: 44px; height: 44px; flex: 0 0 44px; display: grid; place-items: center; padding: 0; border: 1px solid var(--line-strong); border-radius: 5px; background: var(--surface); color: var(--teal-dark); cursor: pointer; }
-.desktop-sidebar-toggle:hover,
-.mobile-sidebar-heading button:hover { background: var(--surface-selected); }
-.desktop-sidebar-toggle :deep(svg),
-.mobile-sidebar-heading button :deep(svg) { width: 20px; height: 20px; }
-.mobile-exam-toggle, .mobile-sidebar-heading, .sidebar-backdrop { display: none; }
+.desktop-sidebar-toggle { width: 44px; height: 44px; flex: 0 0 44px; display: grid; place-items: center; padding: 0; border: 1px solid var(--line-strong); border-radius: 5px; background: var(--surface); color: var(--teal-dark); cursor: pointer; }
+.desktop-sidebar-toggle:hover { background: var(--surface-selected); }
+.desktop-sidebar-toggle :deep(svg) { width: 20px; height: 20px; }
+.mobile-exam-toggle { display: none; }
 
 .sidebar-loading {
   min-height: 120px;
@@ -491,37 +431,35 @@ const examTarget = (exam: ExamCatalogEntry) => (
   .mobile-exam-toggle > :first-child,
   .mobile-exam-toggle > :last-child { width: 20px; height: 20px; }
 
-  .sidebar-backdrop { position: fixed; inset: 0; z-index: 1; display: block; width: 100%; height: 100%; border: 0; background: rgba(var(--shadow-color), .42); }
-
   .sidebar-content {
-    position: fixed;
-    inset: 0 auto 0 0;
-    z-index: 2;
-    width: min(320px, calc(100vw - 48px));
-    height: 100vh;
-    height: 100dvh;
-    padding: 16px;
+    --exam-row-height: 56px;
+    --exam-grid-gap: 8px;
+    display: none;
+    position: absolute;
+    inset: 100% 0 auto;
+    max-height: min(calc(var(--exam-row-height) * 3 + var(--exam-grid-gap) * 2 + 25px), calc(100vh - var(--site-navigation-height) - 12px));
+    max-height: min(calc(var(--exam-row-height) * 3 + var(--exam-grid-gap) * 2 + 25px), calc(100dvh - var(--site-navigation-height) - 12px));
+    padding: 12px;
     overflow-y: auto;
     overflow-x: hidden;
+    scrollbar-gutter: stable;
     overscroll-behavior-y: contain;
-    border-right: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
     background: var(--exam-sidebar-background);
-    box-shadow: 12px 0 36px rgba(var(--shadow-color), .18);
-    transform: translateX(-100%);
-    visibility: hidden;
-    transition: transform 180ms ease, visibility 0s linear 180ms;
+    box-shadow: 0 10px 16px rgba(var(--shadow-color), .12);
   }
 
-  .mobile-open .sidebar-content { transform: translateX(0); visibility: visible; transition-delay: 0s; }
-  .mobile-sidebar-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-bottom: 16px; }
-  .mobile-sidebar-heading strong { font-size: 1.125rem; }
+  .mobile-open .sidebar-content { display: block; }
 
   .exam-groups {
     display: grid;
-    grid-template-columns: minmax(0, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     align-items: start;
-    gap: 10px;
+    gap: var(--exam-grid-gap);
   }
+
+  .exam-groups.single-set { grid-template-columns: minmax(0, 1fr); }
+  .exam-groups.single-set .group-list { width: 100%; }
 
   .exam-group + .exam-group { margin-top: 0; }
   .exam-group { min-width: 0; }
@@ -531,7 +469,8 @@ const examTarget = (exam: ExamCatalogEntry) => (
   }
 
   .exam-row {
-    min-height: 56px;
+    height: var(--exam-row-height);
+    min-height: var(--exam-row-height);
     gap: 4px;
     padding: 5px 6px;
   }
@@ -545,8 +484,12 @@ const examTarget = (exam: ExamCatalogEntry) => (
   }
 
   .group-list {
-    width: 100%;
+    width: calc(200% + var(--exam-grid-gap));
     grid-template-columns: minmax(0, 1fr);
+  }
+
+  .exam-group:nth-child(even) .group-list {
+    margin-left: calc(-100% - var(--exam-grid-gap));
   }
 }
 
