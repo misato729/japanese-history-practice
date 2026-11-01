@@ -305,7 +305,7 @@ test('essay migration preserves all pre-existing fields and adds strict nullable
   await query('INSERT INTO favorites(user_id,question_id,created_at,updated_at) SELECT $1,id,NOW(),NOW() FROM questions', [owner.id], db)
   const tables = ['questions','question_choices','users','answer_histories','favorites'] as const
   const before = Object.fromEntries(await Promise.all(tables.map(async table => [table, await query(`SELECT * FROM ${table} ORDER BY id`, [], db)])))
-  assert.deepEqual(await migrate(db), { applied: ['007_essay_rule_scoring.sql'] })
+  assert.deepEqual(await migrate(db), { applied: ['007_essay_rule_scoring.sql', '008_category_catalog.sql'] })
   for (const table of tables) {
     const rows = await query(`SELECT * FROM ${table} ORDER BY id`, [], db)
     const keys = Object.keys(before[table][0]!)
