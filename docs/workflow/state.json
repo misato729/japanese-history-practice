@@ -1,10 +1,10 @@
 {
   "schema_version": 1,
-  "revision": 116,
-  "updated_at": "2026-11-01T22:10:44.431Z",
+  "revision": 118,
+  "updated_at": "2026-11-01T22:16:26.972Z",
   "workspace_relative_to_repo": ".",
   "active_context": "operations",
-  "last_checkpoint": "docs/workflow/handoffs/2026-11-01T22-10-18-365Z-r116.json",
+  "last_checkpoint": "docs/workflow/handoffs/2026-11-01T22-16-26-972Z-r118.json",
   "gate_policy": {
     "version": 1,
     "legacy_task_ids": []
@@ -2387,42 +2387,56 @@
       "id": "push_homepage_typography_20261102",
       "context": "operations",
       "title": "文字サイズ修正とトップページ本番反映記録をコミット・pushする",
-      "status": "doing",
+      "status": "done",
       "depends_on": [
         "fix_homepage_typography_ci",
         "deploy_homepage_20261102"
       ],
       "authorization": "requested",
       "request_ref": "2026-11-02 ユーザー依頼：コミット・pushしてください",
-      "next_action": "今回分のみをステージし独立レビュー・資料保護・同期・CIを確認する",
-      "evidence": [],
-      "last_verified_at": null,
-      "verification_scope": "文字サイズ修正と今回の記録だけ。旧overview配信記録・生成物等は保持し送信しない。",
+      "next_action": "完了記録をコミット・pushし最終同期を確認する",
+      "evidence": [
+        "docs/homepage-production-20261102.md"
+      ],
+      "last_verified_at": "2026-11-01T22:16:24.210Z",
+      "verification_scope": "今回11ファイルの独立送信レビュー・資料保護・フック・main同期0/0、コミットc557888のpush、Actions41356094900のharness/verify全成功を確認。Netlify Current repository: Not linkedを再確認し[skip netlify]を付与。旧overviewタスク/文書/旧handoff/生成物は保持。",
       "acceptance": [
         {
           "id": "checks",
           "kind": "automated",
           "description": "送信差分限定・資料保護・既存検証の適合・同期とGitHub CIを確認",
           "verification": "対象に必要な既存検査を選び、結果と根拠を記録する",
-          "status": "pending",
-          "evidence": [],
-          "checked_at": null
+          "status": "passed",
+          "evidence": [
+            "docs/homepage-production-20261102.md"
+          ],
+          "checked_at": "2026-11-01T22:16:24.210Z"
         },
         {
           "id": "review",
           "kind": "review",
           "description": "独立担当がステージ内容を読み送信範囲と保護を確認",
           "verification": "別担当のレビューで未解決の問題がないことを確認する",
-          "status": "pending",
-          "evidence": [],
-          "checked_at": null,
-          "reviewer": null
+          "status": "passed",
+          "evidence": [
+            "docs/homepage-production-20261102.md"
+          ],
+          "checked_at": "2026-11-01T22:16:24.210Z",
+          "reviewer": "homepage_deploy_review"
         }
       ],
       "execution": {
         "worker": "root",
         "max_attempts": 3,
-        "attempts": []
+        "attempts": [
+          {
+            "number": 1,
+            "outcome": "passed",
+            "summary": "限定11ファイルの独立レビュー・資料保護・push・同期とGitHub CI全成功",
+            "at": "2026-11-01T22:16:24.835Z",
+            "failed_criteria": []
+          }
+        ]
       }
     }
   ]

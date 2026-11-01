@@ -39,3 +39,5 @@ Chromeの新規タブ作成や一部CDP操作がタイムアウトしたため�
 2026-11-02の「コミット・pushしてください」により、文字サイズ1指定の修正と今回の検証・本番反映・進捗記録を送信する。以前の未送信overview配信記録と関連タスク・旧handoffは今回に含めず作業ツリーへ保持する。生成物・原典・実教材・規則・秘密値は送信しない。新たな配信は行わず、[skip netlify]を付けて現在の手動配信を維持する。
 
 送信前にNetlify Developer settingsでCurrent repository: Not linkedを再確認。設定は変更せず、コミットへ[skip netlify]を付ける。
+
+今回の11ファイルをc557888（Fix homepage typography and record production verification [skip netlify]）としてmainへpushし、origin/mainとの同期0/0を確認。送信前の独立レビューは15条件合格・指摘0。ステージした内容そのものの独立コピーでも進捗・根拠検査に成功。GitHub Actions 41356094900（https://github.com/misato729/japanese-history-practice/actions/runs/41356094900）はharness/verifyとも成功し、元の失敗箇所を含むフロント・型検査・ビルドとDB/API検査が完了した。実装・設定・依存関係に追加変更はない。この成功結果と完了進捗だけを後続の記録コミットとして送信する。
