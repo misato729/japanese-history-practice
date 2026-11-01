@@ -13,23 +13,50 @@ const examNumberValid=(n:number,c:ExamConfiguration)=>{if(!Number.isSafeInteger(
 export async function ensureExamSet(examNumber:number,db:Database,published=false){
  await query("INSERT INTO exam_sets(exam_number,title,publication_status) VALUES($1,$2,$3) ON CONFLICT DO NOTHING",[examNumber,`教材 ${examNumber}`,published?'published':'draft'],db)
 }
-export async function loadQuestionGroup(id:number,db:Database):Promise<QuestionGroup & {affected_history_count:number;question_numbers:number[]}> {
- const [g]=await query<any>('SELECT * FROM question_groups WHERE id=$1',[id],db);if(!g)return notFound()
- const passages=await query<GroupPassage>('SELECT * FROM group_passages WHERE group_id=$1 ORDER BY display_order,id',[id],db)
- const questions=await query<any>(`SELECT q.*,
+const groupQuestionsSelect=`SELECT q.*,
  COALESCE((SELECT jsonb_agg(c ORDER BY c.display_order) FROM question_choices c WHERE c.question_id=q.id),'[]'::jsonb) AS choices,
  COALESCE((SELECT jsonb_agg(jsonb_build_object('major_category_code',t.major_category_code,'category_code',t.category_code)) FROM question_topic_links t WHERE t.question_id=q.id AND (t.major_category_code<>q.major_category_code OR t.category_code<>q.category_code)),'[]'::jsonb) AS related_topics,
  COALESCE((SELECT jsonb_agg(jsonb_build_object('passage_id',r.passage_id,'anchor_id',r.anchor_id)) FROM question_passage_references r WHERE r.question_id=q.id),'[]'::jsonb) AS passage_references,
  (SELECT count(*)::integer FROM answer_histories h WHERE h.question_id=q.id) AS answer_history_count
- FROM questions q WHERE q.group_id=$1 ORDER BY q.group_question_number,q.id`,[id],db)
+ FROM questions q`
+function groupDetails(g:any,passages:GroupPassage[],questions:any[]):QuestionGroup & {affected_history_count:number;question_numbers:number[]} {
  return {...g,id:Number(g.id),exam_number:Number(g.exam_number),group_number:Number(g.group_number),planned_question_count:Number(g.planned_question_count),lock_version:Number(g.lock_version),passages,questions,question_numbers:questions.map(q=>Number(q.question_number)),affected_history_count:questions.reduce((s,q)=>s+q.answer_history_count,0)}
+}
+export async function loadQuestionGroup(id:number,db:Database):Promise<QuestionGroup & {affected_history_count:number;question_numbers:number[]}> {
+ const [g]=await query<any>('SELECT * FROM question_groups WHERE id=$1',[id],db);if(!g)return notFound()
+ const passages=await query<GroupPassage>('SELECT * FROM group_passages WHERE group_id=$1 ORDER BY display_order,id',[id],db)
+ const questions=await query<any>(`${groupQuestionsSelect} WHERE q.group_id=$1 ORDER BY q.group_question_number,q.id`,[id],db)
+ return groupDetails(g,passages,questions)
 }
 export async function loadExamSet(examNumber:number,db:Database):Promise<ExamSet>{
  const [e]=await query<any>('SELECT * FROM exam_sets WHERE exam_number=$1',[examNumber],db)
  const groups=await query<{id:number}>('SELECT id FROM question_groups WHERE exam_number=$1 ORDER BY group_number,id',[examNumber],db)
  return {...(e??{exam_number:examNumber,title:`教材 ${examNumber}`,format_code:'legacy_practice',publication_status:'draft',lock_version:1}),groups:await Promise.all(groups.map(g=>loadQuestionGroup(g.id,db)))}
 }
-export async function listExamSets(db:Database,config=configuration){const rows:ExamSet[]=[];for(let n=1;n<=config.exam.set_count;n++)rows.push(await loadExamSet(n,db));return rows}
+export async function listExamSets(db:Database,config=configuration):Promise<ExamSet[]> {
+ // Keep the existing detailed response, but read each level once for the list.
+ const sets=await query<any>('SELECT * FROM exam_sets WHERE exam_number BETWEEN 1 AND $1 ORDER BY exam_number',[config.exam.set_count],db)
+ const groups=await query<any>('SELECT * FROM question_groups WHERE exam_number BETWEEN 1 AND $1 ORDER BY exam_number,group_number,id',[config.exam.set_count],db)
+ const groupIds=groups.map(g=>Number(g.id))
+ const passages=groupIds.length?await query<GroupPassage>('SELECT * FROM group_passages WHERE group_id=ANY($1::bigint[]) ORDER BY group_id,display_order,id',[groupIds],db):[]
+ const questions=groupIds.length?await query<any>(`${groupQuestionsSelect} WHERE q.group_id=ANY($1::bigint[]) ORDER BY q.group_id,q.group_question_number,q.id`,[groupIds],db):[]
+ const byGroup=<T extends {group_id?:number}>(rows:T[])=>{
+  const result=new Map<number,T[]>()
+  for(const row of rows){const id=Number(row.group_id);const bucket=result.get(id)??[];bucket.push(row);result.set(id,bucket)}
+  return result
+ }
+ const passagesByGroup=byGroup(passages),questionsByGroup=byGroup(questions)
+ const groupsByExam=new Map<number,QuestionGroup[]>()
+ for(const group of groups){
+  const n=Number(group.exam_number),id=Number(group.id),bucket=groupsByExam.get(n)??[]
+  bucket.push(groupDetails(group,passagesByGroup.get(id)??[],questionsByGroup.get(id)??[]));groupsByExam.set(n,bucket)
+ }
+ const setsByNumber=new Map(sets.map(set=>[Number(set.exam_number),set]))
+ return Array.from({length:config.exam.set_count},(_,i)=>{
+  const n=i+1
+  return {...(setsByNumber.get(n)??{exam_number:n,title:`教材 ${n}`,format_code:'legacy_practice',publication_status:'draft',lock_version:1}),groups:groupsByExam.get(n)??[]}
+ })
+}
 export async function assertQuestionReferences(groupId:number|null,examNumber:number,refs:PassageReference[],db:Database,published=false){
  if(groupId===null){if(refs.length)invalid('大問未所属の小問は共通本文を参照できません');return}
  const [group]=await query<any>('SELECT * FROM question_groups WHERE id=$1 AND exam_number=$2',[groupId,examNumber],db)
