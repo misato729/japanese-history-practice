@@ -41,3 +41,11 @@ local-only/cd-secret-retry/sourceへ追跡ソース173ファイルのみを複�
 独立担当cd_local_candidatesはmanifest173ファイルの一致と2変更だけであること、実cacheの旧47文字候補/旧api.ts参照消失とhttp-client.ts参照への変化、公開111ファイル/19HTML/8payloadの保持を確認した。JS/CSS/SVG計80ファイルは内容multiset完全一致、HTMLの差はbuildId/生成日時だけ、_headers/_redirectsはbyte一致。記録はindependent-source-review.json、independent-cache-review.json、independent-public-output-review.json。指摘0。
 
 適用済みSQL、DB、Netlifyの環境変数/検査/公開設定は変更しない。ユーザーが追加したfrontend/dist symlinkも保持する。今回はmainへのpushによる自動配信を確認するため、コミットへskip指定を付けない。推測の除外値追加や検査無効化は行わず、1回のCD結果を確認する。
+
+## 1回目のCD結果と次の配信差分
+
+8618e16をmainへpushし同期0/0を確認。Netlify6ae7c49da13f9e7675e9c2d8はerrorで、公開は更新されていない。ただし実UIの当該一覧行からExposed secrets detectedが消え、失敗sectionは以前のbuildingからdeployingへ進んだ。別担当cd_log_retrievalも公開WebSocketでsection=deploying/exitCode=2を独立確認し、secret記載なし・詳細理由の追加なしを確認した。生成名除去だけで全体の成功とはしていないが、検査での停止状態には変化があった。
+
+続く差分として、ユーザーの57d7512が追跡へ追加したfrontend/distを確認した。リンク先は/workspace/frontend/.output/publicで、Dockerでは有効でもNetlifyのcheckoutにはその絶対パスが存在しない。検証済みの安全なソースコピーではこの生成リンクを明示除外していたため、実CDとの差だった。ただしこのリンクが今回のdeploying失敗の原因であるとの直接のエラー証拠はない。
+
+次の最小変更は生成リンクのGit追跡解除と.gitignore/.dockerignoreへの専用パターン追加のみ。git rm --cachedを使い、ローカルのリンク実体とリンク先文字列が変更されていないことを確認した。公開先.output/publicは維持し、SQL・DB・Netlify検査/環境変数には変更なし。アプリソースと依存は前回の176テスト・型・generate成功時から不変で、安全なコピーと同様に生成リンクを送信対象外とする。

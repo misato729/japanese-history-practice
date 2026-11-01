@@ -26,3 +26,6 @@
 **/[lL][oO][cC][aA][lL]-[oO][nN][lL][yY]/
 /docs/workflow/.context.lock/
 /docs/workflow/state.json.*.tmp
+
+# Nuxt static-generation compatibility link; not a source file.
+/frontend/dist
