@@ -1,6 +1,6 @@
 # CDの再失敗とSQL・Nuxt生成識別子の追跡
 
-2026-11-02、ユーザーがmain@57d7512とmain@5510045の3回のExposed secrets失敗、および001_preserve_rails_schema.sqlの疑いを報告したことに基づく。本監査は設定の読み取りと独立コピーの実験のみ。本体実装・適用済みSQL・本番・Netlify設定・Git送信は変更しない。
+2026-11-02、ユーザーがmain@57d7512とmain@5510045の3回のExposed secrets失敗、および001_preserve_rails_schema.sqlの疑いを報告したことに基づく。当初は設定の読み取りと独立コピーの実験のみとし、後続の明示依頼で最小修正と実CD検証へ進んだ。各段階の変更範囲と最新の完了結果は以下に区別して記録する。
 
 ## 最新状態と前回の確認漏れ
 
@@ -75,3 +75,26 @@ nuxt generateはstatic=trueを指定するが、preset未指定時は実行環�
 cd_diagnostics_reviewによる独立レビューは指摘0。公開111ファイルの全件比較はbuildIdと生成時刻だけの差で一致、JS/CSS/SVG80ファイルは内容一致、HTML19件とpayload8件は保持。実cache482ファイルとホスト中間生成物489ファイルも長いapi_候補0。サーバーや原資料を公開物へ混入していない。independent-source-review.json、independent-public-output-review.json、independent-generated-prefix-review.jsonに安全な集計を保存した。
 
 送信前の保護/進捗168テストは全成功、check-templateとgit diff --checkも成功。全Git履歴の資料保護検査を通過し、.githooksを維持する。Netlify出力先修正だけを含む設定と作業記録をmainへpushし、今回はskip指定なしで自動公開を検証する。
+
+## 実CD成功と本番確認
+
+9f7711dc9d3137ab4bfdf19d5cc54364d6a3c499をmainへpushし同期0/0を確認。Netlifyが自動でdeploy6ae7cc9c23f7ddbc4ad14e5fを開始し、2026-11-01T23:35:24.568Z（日本時間11月2日8:35）に公開、state=readyとなった。実画面もPublished deploy / Production main@9f7711dと自動公開有効を示し、2redirects・9headersの処理成功を確認した。検査を無効化せず、GitHub連携からの自動公開を達成した。
+
+GitHub Actions 41362797715はharness/verifyともsuccess。今回の設定修正を含むコミットで保護・進捗、DB/API、フロント、型検査、production buildが成功した。本番HTTPの6経路、7セット210問の一覧とno-store、login/practiceのnoindexを確認。ブラウザでも7セットの一覧表示・API正常・ホームから試験概要への遷移・console error 0を確認した。アプリ実装は変更していないため、画面配置のPC/SP確認は前回同一実装の結果を継承する。
+
+本番資産確認では最初、Docker生成物のhash付きファイル名がCDでも全一致することを仮定した検査が不合格になった。69/80資産はbyte一致、11件はローカル側だけのJS名で、公開サイトが参照しているファイルの404を示すものではない。実際の公開HTMLとimport先を起点に、CDで生成された資産を別途確認する。生成環境間の名称差をアプリの破損や111件すべての本番byte一致と報告しない。詳細はlocal-only/cd-output-diagnosis/public-after.jsonと独立確認結果。
+
+独立担当が実際の公開HTMLとJS依存をたどり、88資産（JS55/CSS24/JSON8/SVG1）すべてHTTP200・適切なContent-Type、壊れた参照0を確認した。旧名11件は新hash名へ置き換わり、HTML/JSも新名を参照している。CDとDockerでJS全文がbyte同一であるとはしていないが、実参照とブラウザ動作は正常。証跡independent-production-asset-review.jsonにより、最初の比較失敗を配信不良とは区別して解消した。Netlify公開・GitHub CI・本番HTTP/UI・独立レビューの受入条件を満たし、総評価3回目をpassedとして完了する。
+
+今後はmainへの通常pushで同じNetlify CDが実行される。Base=frontend、Build=npm run generate、Publish=.output/public、NITRO_PRESET=staticを維持する。完了記録だけの後続pushには[skip netlify]を付け、確認済み本番を不要に再配信しない。SQL/DB/シークレット検査設定への変更はない。
+
+今回の変更ファイル：
+
+- `netlify.toml`：NetlifyだけNITRO_PRESET=staticを明示。
+- `docs/netlify-cd-secret-followup.md`：再現条件・修正・本番/CI検証と制限を記録。
+- `docs/workflow/contexts/operations.md`：自動配信の完了と今後の運用を追記。
+- `docs/workflow/state.json`：失敗履歴を保持し、3回目の評価合格・doneを記録。
+- `docs/workflow/handoffs/2026-11-01T23-22-13-769Z-r126.json`：明示依頼による再開。
+- `docs/workflow/handoffs/2026-11-01T23-34-24-583Z-r127.json`：再現/修正/送信前検証。
+- `docs/workflow/handoffs/2026-11-01T23-40-48-956Z-r128.json`：本番公開を含む合格評価。
+- `docs/workflow/handoffs/2026-11-01T23-40-56-173Z-r129.json`：完了引き継ぎ。

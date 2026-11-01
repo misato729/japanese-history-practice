@@ -1,10 +1,10 @@
 {
   "schema_version": 1,
-  "revision": 127,
-  "updated_at": "2026-11-01T23:34:24.583Z",
+  "revision": 129,
+  "updated_at": "2026-11-01T23:40:56.173Z",
   "workspace_relative_to_repo": ".",
   "active_context": "operations",
-  "last_checkpoint": "docs/workflow/handoffs/2026-11-01T23-34-24-583Z-r127.json",
+  "last_checkpoint": "docs/workflow/handoffs/2026-11-01T23-40-56-173Z-r129.json",
   "gate_policy": {
     "version": 1,
     "legacy_task_ids": []
@@ -2688,29 +2688,29 @@
       "id": "fix_nuxt_generated_secret_candidate",
       "context": "operations",
       "title": "Netlify CDのシークレット検出と公開先不一致を修正する",
-      "status": "doing",
+      "status": "done",
       "depends_on": [
         "audit_cd_repeated_secret_failures"
       ],
       "authorization": "requested",
       "request_ref": "同チャットのデプロイ・コミット/push依頼と自動デプロイ相談の継続。2026-11-02ユーザーが3回の失敗とSQLの疑いを報告。検証済みプラグイン改名で対応する。 2026-11-02の明示依頼「詳細を診断し、自動デプロイができるようにしてください」で再開。Netlify固有のpreset/出力先差を修正して自動公開を検証する。",
-      "next_action": "保護検査後にmainへpushし実CDとGitHub CIを確認する",
+      "next_action": "完了記録だけをskip netlify指定でpushし、今後の通常pushで自動配信を利用する",
       "evidence": [
         "docs/netlify-cd-secret-followup.md"
       ],
-      "last_verified_at": "2026-11-01T23:13:56.406Z",
-      "verification_scope": "8618e16でNuxt生成47文字候補を除去し、Netlify一覧のExposed secrets表示消失・deploying段階への進行を確認。4ba10c4で生成リンクも送信除外したがCD配信失敗継続。両GitHubCIは全成功、unit176/type/generateと公開保持/独立レビュー成功。Netlifyの詳細ログ欠落で原因未特定、自動配信未完了。",
+      "last_verified_at": "2026-11-01T23:40:46.295Z",
+      "verification_scope": "Netlify識別下のdist/.output/public不一致を再現し、NITRO_PRESET=staticで修正。27routes/111filesと独立内容保持、保護進捗168検査成功。9f7711dのGitHub CI全成功、Netlify6ae7cc9c23f7ddbc4ad14e5fが自動公開。HTTP6経路と7sets210questions、noindex/API転送、実ブラウザ遷移、独立88assets正常を確認。CD/DockerのJS全文byte一致は主張せず、実参照の破損0を検証。SQL/DB/秘密検査設定不変。",
       "acceptance": [
         {
           "id": "checks",
           "kind": "automated",
           "description": "独立コピーと本体修正が一致し176テスト/型/静的生成と公開内容保持を確認、Git送信/同期とCD結果を記録する",
           "verification": "対象に必要な既存検査を選び、結果と根拠を記録する",
-          "status": "failed",
+          "status": "passed",
           "evidence": [
             "docs/netlify-cd-secret-followup.md"
           ],
-          "checked_at": "2026-11-01T23:13:56.406Z"
+          "checked_at": "2026-11-01T23:40:46.295Z"
         },
         {
           "id": "review",
@@ -2721,8 +2721,8 @@
           "evidence": [
             "docs/netlify-cd-secret-followup.md"
           ],
-          "checked_at": "2026-11-01T23:13:56.406Z",
-          "reviewer": "cd_local_candidates"
+          "checked_at": "2026-11-01T23:40:46.295Z",
+          "reviewer": "cd_diagnostics_review"
         }
       ],
       "execution": {
@@ -2748,6 +2748,13 @@
               "checks",
               "review"
             ]
+          },
+          {
+            "number": 3,
+            "outcome": "passed",
+            "summary": "Netlify固有の出力先不一致を修正し9f7711dの自動公開・GitHub CI・本番HTTP/UI・独立資産検査を全て確認。",
+            "at": "2026-11-01T23:40:48.956Z",
+            "failed_criteria": []
           }
         ]
       }
