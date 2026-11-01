@@ -1,0 +1,43 @@
+# CDの再失敗とSQL・Nuxt生成識別子の追跡
+
+2026-11-02、ユーザーがmain@57d7512とmain@5510045の3回のExposed secrets失敗、および001_preserve_rails_schema.sqlの疑いを報告したことに基づく。本監査は設定の読み取りと独立コピーの実験のみ。本体実装・適用済みSQL・本番・Netlify設定・Git送信は変更しない。
+
+## 最新状態と前回の確認漏れ
+
+最新deployは6ae7c05bd64b30ae90370bda（main@57d7512）。Netlify一覧で自動公開有効・3件の同種失敗・以前のNetlify Drop公開が維持されていることを確認した。
+
+SECRETS_SCAN_SMART_DETECTION_OMIT_VALUESは存在し、Buildsを含むscopeとProductionを含む全5contextへ登録されている。値はSecret扱いでProductionの全文は読めず、末尾だけ表示される。設定キー/適用範囲は確認したが、登録値の完全一致を確認済みとは扱わない。秘密扱いの解除・上書き・読出しは行わない。
+
+前回のapi_接頭辞検索は直前が単語文字の箇所を除外したため、SQL索引名内の一致を漏らしていた。独立再検索では3ファイル・10箇所・4識別子。追加候補はfrontend/server/database/migrations/001_preserve_rails_schema.sql:95のindex_api_rate_limit_buckets_on_expires_at内のapi_rate_limit_buckets_on_expires_at（36文字、sha256先頭94da054884e1ccdc）。既存の3候補には含まれない。これはCREATE INDEXの識別子であってAPIキーの値ではない。SQLの実体はPostgreSQLの定義で、ファイル名がRails由来でもRailsを実行する処理ではない。適用済みの001を推測で編集・削除しない。
+
+## Nuxtが生成する別の候補
+
+独立担当cd_local_candidatesが、Nuxtの中間sourcemapでapi_に43文字が続く生成シンボルを検出（計47文字、sha256先頭28d84d159f73221d）。source mapの位置情報はvirtualなplugins.server.mjs:15を示す。元のfrontend/app/plugins/api.tsを登録する際のNuxt生成名に対応し、原本の秘密値を示す根拠はない。
+
+前回の安全な静的生成コピーでも、.nuxt/dist/server/server.mjs.mapと.jsonにこの生成名が残っていた。一方、公開用.output/publicには含まれない。前回の公開物だけの走査では.nuxtを検査しておらず、公開ZIPに存在しないことだけでCD全体の検出候補を除外できない。
+
+実CDの検出値はapi_***のみで、SQL索引と生成シンボルのどちらとも同定できていない。Netlifyの公式CLIと同じWebSocket replayを認証値なしで旧失敗deployへ試したところ、開始通知と終了コード2の2件だけで追加詳細は取得できなかった。秘密値や認証値は取得/表示していない。
+
+## 独立コピーによる修正案の実験
+
+local-only/cd-secret-retry/sourceへ追跡ソース173ファイルのみを複製し、plugins/api.tsをplugins/http-client.tsへ改名、apiStatus.test.tsのimportを追従させる実験を行う。プラグインの本文とprovide.apiは保持し、Nuxtのファイル名由来の生成名だけを変える。今回プラグインは1件で、明示参照も当該テストの1件だけ。Netlifyの検査は変更/無効化しない。
+
+ユーザーが57d7512で追跡へ追加したfrontend/distは/workspace/frontend/.output/publicへの絶対symlink。既存作業を保持し、実験コピーでは生成物として明示除外した。Netlifyのpublish指定は.output/publicであり、このsymlinkを直接使用する設定ではない。今回の検出原因とは断定しない。
+
+今回の変更記録は本書、docs/workflow/contexts/operations.md、docs/workflow/state.json、新しいhandoff。実験ソース・ログ・安全な検査結果はlocal-only/cd-secret-retry/内に限定し送信しない。
+
+## 実験結果
+
+独立コピーでnpm testは176/176成功、npm run typecheckとnpm run generateも終了コード0。本文を変えないプラグイン改名とテストimportの追従だけで成功した。まずコピー内で可視の.nuxt163ファイルと公開用111ファイルを走査し、長いapi_候補は0だったが、前回のdist/server mapがその場所になかったため、それだけでは消失の証明としなかった。
+
+追加で依存volume内の実cache node_modules/.cache/nuxt/.nuxtを走査し、長いapi_候補0を確認した。以前の候補が存在したdist/server/server.mjs/.map/.map.jsonも個別に取得した。安全な走査結果はsource/frontend/local-only/cache-inspection/inspection.json。生成コードの変更で1候補を確実に除去できることは確認したが、実際のNetlify検出値との一致・実CD成功は未確認である。
+
+元ワークツリーにはplugins/api.tsを保持し、適用済みSQLを含むアプリ実装を一切変更していない。SQL/生成物の候補をNetlifyの検出値と同定したわけではないため、無関係な初回SQLの削除や検査無効化・推測の除外追加は行っていない。
+
+## 後続の最小修正とCD確認
+
+前節までの「本体不変」は読取調査/独立実験の時点。先行する同チャットのデプロイ・コミット/push依頼と自動デプロイ相談の継続として、検証済みの2ファイル変更を本体にも反映する。対象はfrontend/app/plugins/api.tsからfrontend/app/plugins/http-client.tsへの改名と、frontend/tests/apiStatus.test.tsのimport追従のみ。プラグイン本文とprovide.apiは不変で、独立コピーの検査対象とbyte一致を確認した。
+
+独立担当cd_local_candidatesはmanifest173ファイルの一致と2変更だけであること、実cacheの旧47文字候補/旧api.ts参照消失とhttp-client.ts参照への変化、公開111ファイル/19HTML/8payloadの保持を確認した。JS/CSS/SVG計80ファイルは内容multiset完全一致、HTMLの差はbuildId/生成日時だけ、_headers/_redirectsはbyte一致。記録はindependent-source-review.json、independent-cache-review.json、independent-public-output-review.json。指摘0。
+
+適用済みSQL、DB、Netlifyの環境変数/検査/公開設定は変更しない。ユーザーが追加したfrontend/dist symlinkも保持する。今回はmainへのpushによる自動配信を確認するため、コミットへskip指定を付けない。推測の除外値追加や検査無効化は行わず、1回のCD結果を確認する。

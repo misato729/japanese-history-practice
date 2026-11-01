@@ -1,10 +1,10 @@
 {
   "schema_version": 1,
-  "revision": 120,
-  "updated_at": "2026-11-01T22:34:38.769Z",
+  "revision": 122,
+  "updated_at": "2026-11-01T22:59:00.981Z",
   "workspace_relative_to_repo": ".",
   "active_context": "operations",
-  "last_checkpoint": "docs/workflow/handoffs/2026-11-01T22-34-38-769Z-r120.json",
+  "last_checkpoint": "docs/workflow/handoffs/2026-11-01T22-58-59-959Z-r122.json",
   "gate_policy": {
     "version": 1,
     "legacy_task_ids": []
@@ -2627,6 +2627,102 @@
             "failed_criteria": []
           }
         ]
+      }
+    },
+    {
+      "id": "audit_cd_repeated_secret_failures",
+      "context": "operations",
+      "title": "CDの再失敗とSQL・Nuxt生成識別子の候補を照合する",
+      "status": "done",
+      "depends_on": [
+        "audit_netlify_cd_secret_detection"
+      ],
+      "authorization": "requested",
+      "request_ref": "2026-11-02 ユーザーが3回のExposed secrets失敗と001_preserve_rails_schema.sqlの疑いを報告",
+      "next_action": "先行するpush/配信依頼の継続として最小の生成名修正とCD確認を行う",
+      "evidence": [
+        "docs/netlify-cd-secret-followup.md"
+      ],
+      "last_verified_at": "2026-11-01T22:58:53.485Z",
+      "verification_scope": "最新CD/除外scope確認、SQL候補検索漏れを訂正、Nuxt生成47文字識別子を追跡。独立コピーの176テスト・型・generate成功。実cache候補0、公開内容保持と独立レビュー合格。実CD対象の同定は未確認。",
+      "acceptance": [
+        {
+          "id": "checks",
+          "kind": "automated",
+          "description": "最新コミット/CD設定・候補検索の漏れ・生成識別子を確認し独立コピーのテスト/型/静的生成を検証",
+          "verification": "対象に必要な既存検査を選び、結果と根拠を記録する",
+          "status": "passed",
+          "evidence": [
+            "docs/netlify-cd-secret-followup.md"
+          ],
+          "checked_at": "2026-11-01T22:58:53.485Z"
+        },
+        {
+          "id": "review",
+          "kind": "review",
+          "description": "別担当が新候補・実験の差分/生成物と未確認範囲を確認する",
+          "verification": "別担当のレビューで未解決の問題がないことを確認する",
+          "status": "passed",
+          "evidence": [
+            "docs/netlify-cd-secret-followup.md"
+          ],
+          "checked_at": "2026-11-01T22:58:53.485Z",
+          "reviewer": "cd_local_candidates"
+        }
+      ],
+      "execution": {
+        "worker": "root",
+        "max_attempts": 3,
+        "attempts": [
+          {
+            "number": 1,
+            "outcome": "passed",
+            "summary": "SQL追加候補とNuxt生成名を照合し改名実験の全検証と独立レビュー成功",
+            "at": "2026-11-01T22:58:55.401Z",
+            "failed_criteria": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "fix_nuxt_generated_secret_candidate",
+      "context": "operations",
+      "title": "秘密値に似たNuxt生成名を避ける改名を反映しCDを確認する",
+      "status": "doing",
+      "depends_on": [
+        "audit_cd_repeated_secret_failures"
+      ],
+      "authorization": "requested",
+      "request_ref": "同チャットのデプロイ・コミット/push依頼と自動デプロイ相談の継続。2026-11-02ユーザーが3回の失敗とSQLの疑いを報告。検証済みプラグイン改名で対応する。",
+      "next_action": "検証済み2ファイル変更と記録をpushし、検査を維持したCDを1回確認する",
+      "evidence": [],
+      "last_verified_at": null,
+      "verification_scope": "プラグインの改名とテストimportのみ。適用済みSQL/DB/CD環境変数・検査設定は変更しない。",
+      "acceptance": [
+        {
+          "id": "checks",
+          "kind": "automated",
+          "description": "独立コピーと本体修正が一致し176テスト/型/静的生成と公開内容保持を確認、Git送信/同期とCD結果を記録する",
+          "verification": "対象に必要な既存検査を選び、結果と根拠を記録する",
+          "status": "pending",
+          "evidence": [],
+          "checked_at": null
+        },
+        {
+          "id": "review",
+          "kind": "review",
+          "description": "別担当が生成名の除去と公開内容保持、送信差分とCD結果を確認する",
+          "verification": "別担当のレビューで未解決の問題がないことを確認する",
+          "status": "pending",
+          "evidence": [],
+          "checked_at": null,
+          "reviewer": null
+        }
+      ],
+      "execution": {
+        "worker": "root",
+        "max_attempts": 3,
+        "attempts": []
       }
     }
   ]

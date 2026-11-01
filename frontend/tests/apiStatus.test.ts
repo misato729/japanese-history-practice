@@ -10,7 +10,7 @@ globals.defineNuxtPlugin = (setup: unknown) => setup
 globals.useApiStatus = useApiStatus
 globals.useRuntimeConfig = () => ({ public: { apiBase: 'https://api.example.invalid' } })
 globals.useRoute = () => ({ fullPath: '/favorites', meta: { middleware: 'auth' } })
-const { default: setupApi } = await import('../app/plugins/api.ts')
+const { default: setupApi } = await import('../app/plugins/http-client.ts')
 
 const createClient = (fetch: typeof globalThis.fetch) => {
   const states = new Map()
