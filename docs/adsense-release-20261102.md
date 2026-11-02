@@ -44,3 +44,19 @@ Netlify管理画面で自動公開ON、Published main @2736051、デプロイ6ae
 ## 追加承認：ポリシーのGit送信と本番反映
 
 2026-11-02、両サイトのコミット・push・本番反映をユーザーが明示承認。本文修正とその検証/文脈/進捗/引き継ぎを対象限定で送信し、CI全ジョブとNetlifyの自動配信、本番本文を確認する。送信前の原資料全履歴・差分・実装完了gateを再確認した。Fly手動配信・DB変更は対象外。配信と最終確認は進行中。
+
+## ポリシー配信の確認結果
+
+本文配信コミット3b995872ac9e68110c25dabd3ff0df66989aca3bをmainへpushし、資料保護hook成功。GitHub CI41433887667はharness/verify/netlify-staticの全ジョブsuccess。Netlify管理画面で自動公開ON、Published main @3b99587、デプロイ6ae86e5595ed73232037998b（28秒）を確認。手動デプロイや配信設定の変更はしていない。
+
+本番privacy-policy/はHTTP200、共通headのAdSense scriptは1件。生HTMLにも本文が含まれていた。別サイト（世界史）のクライアント描画用HTMLで初回の本文検査が止まったため、両サイトの確認範囲を分け、実Chromeで描画後のDOMを検査し、14条・広告目的・AdSense・URL/IP等の外部送信・無効化後の処理の説明・4リンク/属性・制定日/最終改定日・旧未使用記載の除去を確認した。
+
+実本番のPC1440x1000/SP390x844で横はみ出しなし、広告リンクの画面内折返し、Google設定リンクからTabでWebChoicesへの移動、読み込み後head script1件を確認。各表示を目視し、viewportを復元。既存会員や回答への書込、Fly手動配信/DB変更、Google側設定/CMP変更は行っていない。
+
+- CI: https://github.com/misato729/japanese-history-practice/actions/runs/41433887667
+- Netlify: https://app.netlify.com/projects/japanese-history-practice/deploys/6ae86e5595ed73232037998b
+- 公開ポリシー: https://japanese-history-practice.netlify.app/privacy-policy/
+
+完了記録だけをskip netlify/skip ci指定で追送し、検証済み本文配信SHAを維持する。独立した配信レビューを完了記録へ反映する。
+
+独立最終配信レビューad_privacy_reviewはPASS。対象差分・CIの全job/対象SHA・保存HTMLを独立確認し、Netlifyと描画後DOM/PCSPは親担当の実確認を根拠とした。

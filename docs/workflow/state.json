@@ -1,10 +1,10 @@
 {
   "schema_version": 1,
-  "revision": 149,
-  "updated_at": "2026-11-02T10:56:07.570Z",
+  "revision": 151,
+  "updated_at": "2026-11-02T11:13:57.529Z",
   "workspace_relative_to_repo": ".",
   "active_context": "operations",
-  "last_checkpoint": "docs/workflow/handoffs/2026-11-02T10-56-07-570Z-r149.json",
+  "last_checkpoint": "docs/workflow/handoffs/2026-11-02T11-13-57-529Z-r151.json",
   "gate_policy": {
     "version": 1,
     "legacy_task_ids": []
@@ -3192,52 +3192,66 @@
       "id": "adsense_privacy_release_20261102",
       "context": "operations",
       "title": "広告用プライバシーポリシーを送信し本番反映を確認",
-      "status": "doing",
+      "status": "done",
       "depends_on": [
         "adsense_privacy_20261102"
       ],
       "authorization": "requested",
       "request_ref": "2026-11-02 ユーザー: コミット・push・本番反映してください（両サイトのポリシー変更）",
-      "next_action": "対象6ファイルを送信し同SHAのCI/Netlifyと本番本文を確認",
+      "next_action": "完了文書追送のみ。本文配信SHAを維持し追加依頼待ち",
       "evidence": [
         "docs/adsense-release-20261102.md"
       ],
-      "last_verified_at": null,
-      "verification_scope": "送信前。本文修正の既存検査/原資料保護/gate成功を確認。Fly/DB変更は対象外",
+      "last_verified_at": "2026-11-02T11:13:45.037Z",
+      "verification_scope": "3b99587 main送信/資料保護hook、CI41433887667全harness/verify/netlify-static成功、Netlify同SHA自動Published、本番HTTP200と描画後DOM14条/4リンク/広告説明/改定日/旧記載除去、PC1440/SP390の表示/Tab操作/head一件、独立最終PASS。Fly/DB非変更",
       "acceptance": [
         {
           "id": "release",
           "kind": "automated",
           "description": "対象限定Git送信とCI・Netlify自動配信成功",
           "verification": "保護hook/remote同期、同SHAのCI全job/Netlify Published",
-          "status": "pending",
-          "evidence": [],
-          "checked_at": null
+          "status": "passed",
+          "evidence": [
+            "docs/adsense-release-20261102.md"
+          ],
+          "checked_at": "2026-11-02T11:13:45.037Z"
         },
         {
           "id": "public",
           "kind": "automated",
           "description": "公開ポリシーへ広告説明と改定日が反映",
           "verification": "本番HTTP200/本文・設定リンク/旧未使用記載の除去、PCSP実ブラウザ確認",
-          "status": "pending",
-          "evidence": [],
-          "checked_at": null
+          "status": "passed",
+          "evidence": [
+            "docs/adsense-release-20261102.md"
+          ],
+          "checked_at": "2026-11-02T11:13:45.037Z"
         },
         {
           "id": "review",
           "kind": "review",
           "description": "独立した配信確認",
           "verification": "送信差分とCI/本番根拠のレビュー",
-          "status": "pending",
-          "evidence": [],
-          "checked_at": null,
-          "reviewer": null
+          "status": "passed",
+          "evidence": [
+            "docs/adsense-release-20261102.md"
+          ],
+          "checked_at": "2026-11-02T11:13:45.037Z",
+          "reviewer": "ad_privacy_review"
         }
       ],
       "execution": {
         "worker": "privacy_release_owner",
         "max_attempts": 3,
-        "attempts": []
+        "attempts": [
+          {
+            "number": 1,
+            "outcome": "passed",
+            "summary": "対象限定送信・CI全job・Netlify同SHA・本番本文とPCSPを独立評価PASS",
+            "at": "2026-11-02T11:13:56.596Z",
+            "failed_criteria": []
+          }
+        ]
       }
     }
   ]
