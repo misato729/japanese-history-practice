@@ -3255,6 +3255,249 @@
       }
     },
     {
+      "id": "swap_mock_sets_4_6_5_7",
+      "context": "operations",
+      "title": "模試4と6・5と7を本番・ローカルで入替",
+      "status": "done",
+      "depends_on": [],
+      "authorization": "requested",
+      "request_ref": "2026-11-02 模試6,7を4,5、4,5を6,7へ。公開サイトとローカル両方と明示回答。",
+      "next_action": "追加依頼を待つ。現在番号と原作成時の内部IDを区別して扱う。",
+      "evidence": [
+        "docs/mock-number-swap-20261102.md",
+        "local-only/mock-reorder-20261102/verification.json",
+        "local-only/mock-reorder-20261102/api-check.json",
+        "local-only/mock-reorder-20261102/ui-check.json",
+        "local-only/mock-reorder-20261102/review.json",
+        "local-only/mock-reorder-20261102/production-apply.json",
+        "local-only/mock-reorder-20261102/production-repeat.json",
+        "frontend/local-only/mock-reorder-20261102/result.json",
+        "frontend/local-only/mock-reorder-20261102/repeat.json"
+      ],
+      "last_verified_at": "2026-11-02T11:34:32.767Z",
+      "verification_scope": "公開サイトとローカルで4↔6、5↔7の120問を入替。全210問/大問/資料ID、内容/採点/内容version、履歴/お気に入りを保持。対象外1〜3全行一致。合成_test35問/28移動、反復no-op、エラー時rollback検証。両DB反復変更0、API16件・全7x30確認。PC移動/SP390両画面確認。独立レビュー指摘2件修正、型/差分/資料保護合格。CLI既知カタログコピー除去/残存0。DB反映済、ソースと記録は未コミット・未push、デプロイなし。",
+      "acceptance": [
+        {
+          "id": "checks",
+          "kind": "automated",
+          "description": "両DBの入替と原子性・反復・対象外保持を確認。",
+          "verification": "合成_test、前後digest、画面確認。",
+          "status": "passed",
+          "evidence": [
+            "docs/mock-number-swap-20261102.md",
+            "local-only/mock-reorder-20261102/verification.json",
+            "local-only/mock-reorder-20261102/api-check.json",
+            "local-only/mock-reorder-20261102/ui-check.json",
+            "local-only/mock-reorder-20261102/production-apply.json",
+            "local-only/mock-reorder-20261102/production-repeat.json",
+            "frontend/local-only/mock-reorder-20261102/result.json",
+            "frontend/local-only/mock-reorder-20261102/repeat.json"
+          ],
+          "checked_at": "2026-11-02T11:34:32.767Z"
+        },
+        {
+          "id": "review",
+          "kind": "review",
+          "description": "独立した立場で処理と結果を確認。",
+          "verification": "差分・検証記録の独立レビュー。",
+          "status": "passed",
+          "evidence": [
+            "local-only/mock-reorder-20261102/review.json"
+          ],
+          "checked_at": "2026-11-02T11:34:32.767Z",
+          "reviewer": "review_copy_alignment"
+        }
+      ],
+      "execution": {
+        "worker": "root",
+        "max_attempts": 3,
+        "attempts": [
+          {
+            "number": 1,
+            "outcome": "passed",
+            "summary": "本番・ローカルで模試4↔6、5↔7を120問入替。ID/内容/採点/履歴/お気に入りと対象外を保持。合成rollback・反復no-op・API16件・両画面・独立レビュー合格。CLI規則コピー残存0。",
+            "at": "2026-11-02T11:34:34.475Z",
+            "failed_criteria": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "author_mock_sets_8_10",
+      "context": "product",
+      "title": "模試8〜10を過去問形式・難度と山川原典に沿って作成する",
+      "status": "done",
+      "depends_on": [],
+      "authorization": "requested",
+      "request_ref": "2026-11-02 ユーザー: 模試8~10を作成してください。過去の形式・配点・許容文言方針を継承。",
+      "next_action": "追加依頼を待つ。DB登録・公開・Git送信は未実施。",
+      "evidence": [
+        "docs/mock-8-10-authoring-20261102.md",
+        "local-only/mocks-08-10-20261102/検証結果.md",
+        "local-only/mocks-08-10-20261102/reviews/automated-check.json",
+        "local-only/mocks-08-10-20261102/reviews/essay-rule-check.json"
+      ],
+      "last_verified_at": "2026-11-02T13:20:14.529Z",
+      "verification_scope": "全90問の原典・全肢・構造・最短解法を独立確認。論述6問19要素228例、共通1134/独立232ケース通過。Markdown納品。DB・稼働中カタログ・画面・公開・Git送信は対象外。",
+      "acceptance": [
+        {
+          "id": "structure",
+          "kind": "automated",
+          "description": "3セット90問、4大問、20選択/8語句/2論述、出典・全肢・参照・論述採点と非露出・重複検査",
+          "verification": "ローカルの構造/出典画像/最短解法/採点規則検査を全件実施",
+          "status": "passed",
+          "evidence": [
+            "docs/mock-8-10-authoring-20261102.md",
+            "local-only/mocks-08-10-20261102/検証結果.md",
+            "local-only/mocks-08-10-20261102/reviews/automated-check.json",
+            "local-only/mocks-08-10-20261102/reviews/essay-rule-check.json"
+          ],
+          "checked_at": "2026-11-02T13:20:14.529Z"
+        },
+        {
+          "id": "independent_review",
+          "kind": "review",
+          "description": "代表大問と全90問の原典・唯一解・最短解法・論述許容表現を作者と別担当が確認",
+          "verification": "原画像と全肢/因果関係を再判定し指摘を解決",
+          "status": "passed",
+          "evidence": [
+            "local-only/mocks-08-10-20261102/reviews/independent-ancient.json",
+            "local-only/mocks-08-10-20261102/reviews/independent-medieval.json",
+            "local-only/mocks-08-10-20261102/reviews/independent-early-modern.json",
+            "local-only/mocks-08-10-20261102/reviews/independent-modern.json",
+            "local-only/mocks-08-10-20261102/reviews/independent-essay-rules.json"
+          ],
+          "checked_at": "2026-11-02T13:20:14.529Z",
+          "reviewer": "mock_ancient / mock_source_design / mock_benchmark による相互確認、rootによる中世確認"
+        }
+      ],
+      "execution": {
+        "worker": "root",
+        "max_attempts": 3,
+        "attempts": [
+          {
+            "number": 1,
+            "outcome": "passed",
+            "summary": "模試8〜10の全90問と論述規則の原典・独立レビュー・自動検査を完了。Markdown成果物を作成。",
+            "at": "2026-11-02T13:20:14.843Z",
+            "failed_criteria": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "publish_mocks_8_10",
+      "context": "operations",
+      "title": "模試8〜10を両DBへ追加して公開する",
+      "status": "done",
+      "depends_on": [
+        "author_mock_sets_8_10"
+      ],
+      "authorization": "requested",
+      "request_ref": "2026-11-02 ユーザー: OKです、DB登録・公開してください",
+      "next_action": "追加依頼を待つ。今回の変更は未コミット・未push。",
+      "evidence": [
+        "docs/mock-8-10-publication-20261102.md"
+      ],
+      "last_verified_at": "2026-11-02T13:56:16.121Z",
+      "verification_scope": "ローカルと本番へ90問・6採点規則を登録公開。既存210問と18表保持、独立_test反復0・非空の学習記録保持。両公開API全90問と全6論述8点、20pins両VM、Netlify公開とPC/SP確認。本番再実行は一時ファイル消失で未確認、最終10×30を読取確認。Git送信なし。",
+      "acceptance": [
+        {
+          "id": "registration",
+          "kind": "automated",
+          "description": "90問登録と再実行0・旧scope保持・全6論述・公開APIを確認",
+          "verification": "独立_testと両DB Writer transaction、全件GET、採点検査",
+          "status": "passed",
+          "evidence": [
+            "docs/mock-8-10-publication-20261102.md"
+          ],
+          "checked_at": "2026-11-02T13:56:16.121Z"
+        },
+        {
+          "id": "independent",
+          "kind": "review",
+          "description": "変換と保持・対象・UIを独立確認",
+          "verification": "別担当レビューとPC/SP操作",
+          "status": "passed",
+          "evidence": [
+            "docs/mock-8-10-publication-20261102.md",
+            "local-only/mocks-08-10-publication/review-registration.json"
+          ],
+          "checked_at": "2026-11-02T13:56:16.121Z",
+          "reviewer": "publication_review"
+        }
+      ],
+      "execution": {
+        "worker": "root",
+        "max_attempts": 3,
+        "attempts": [
+          {
+            "number": 1,
+            "outcome": "passed",
+            "summary": "模試8〜10の両DB登録と公開、既存保持、独立テスト、公開API・採点・PC/SP検査を完了。本番再実行の通信失敗は読取確認と区別。",
+            "at": "2026-11-02T13:56:16.397Z",
+            "failed_criteria": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "deliver_mock_changes_20261103",
+      "context": "operations",
+      "title": "入れ替えと模試8〜10関連だけをコミット・pushする",
+      "status": "done",
+      "depends_on": [
+        "swap_mock_sets_4_6_5_7",
+        "publish_mocks_8_10"
+      ],
+      "authorization": "requested",
+      "request_ref": "2026-11-03 ユーザー: 入れ替えもコミット・pushしてください",
+      "next_action": "完了記録だけ追送し、別作業は保持する",
+      "evidence": [
+        "docs/mock-git-delivery-20261103.md"
+      ],
+      "last_verified_at": "2026-11-02T16:00:01.799Z",
+      "verification_scope": "独立候補20ファイル、原典/実教材なし、料金等の別作業除外。保護と168管理テスト、CI41476576016の全3job成功(35合成問題のDB保持テストを含む)。e227431をmain送信済み。",
+      "acceptance": [
+        {
+          "id": "checks",
+          "kind": "automated",
+          "description": "資料保護と限定差分、合成DB、CI、main同期を確認",
+          "verification": "チェックとリモートSHAを確認",
+          "status": "passed",
+          "evidence": [
+            "docs/mock-git-delivery-20261103.md"
+          ],
+          "checked_at": "2026-11-02T16:00:01.799Z"
+        },
+        {
+          "id": "review",
+          "kind": "review",
+          "description": "送信範囲と現行配置Writerの独立レビュー",
+          "verification": "別担当が候補を読取確認",
+          "status": "passed",
+          "evidence": [
+            "docs/mock-git-delivery-20261103.md"
+          ],
+          "checked_at": "2026-11-02T16:00:01.799Z",
+          "reviewer": "publication_review"
+        }
+      ],
+      "execution": {
+        "worker": "root",
+        "max_attempts": 3,
+        "attempts": [
+          {
+            "number": 1,
+            "outcome": "passed",
+            "summary": "限定20ファイルをe227431でmainへ送信、独立レビューと資料保護/168管理テスト・CI全3job成功。",
+            "at": "2026-11-02T16:00:58.752Z",
+            "failed_criteria": []
+          }
+        ]
+      }
+    },
+    {
       "id": "premium_membership_20261102",
       "context": "operations",
       "title": "情報教認と同仕様のプレミアム会員機能を実装",

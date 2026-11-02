@@ -13,6 +13,7 @@ export type QuestionRecord=Omit<NormalizedQuestionInput,'choices'>&{
  content_version:number;lock_version:number;legacy_answer_compatible:boolean;answer_type_locked:boolean;answer_history_count?:number
 }
 export const QUESTION_WRITE_LOCK=LEARNING_WRITE_LOCK
+export {placementPlan,applyPlacementPlan} from './learning-placement.ts'
 const notFound=():never=>fail(404,'not_found','対象が見つかりません')
 function canonical(v:unknown):unknown{if(Array.isArray(v))return v.map(canonical);if(v!==null&&typeof v==='object')return Object.fromEntries(Object.entries(v).sort(([a],[b])=>a.localeCompare(b)).map(([k,x])=>[k,canonical(x)]));return v}
 /** Placement, classification and visibility do not alter an answer's meaning. */
