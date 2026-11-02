@@ -1,10 +1,10 @@
 {
   "schema_version": 1,
-  "revision": 131,
-  "updated_at": "2026-11-01T23:53:56.256Z",
+  "revision": 134,
+  "updated_at": "2026-11-02T00:12:30.266Z",
   "workspace_relative_to_repo": ".",
   "active_context": "development",
-  "last_checkpoint": "docs/workflow/handoffs/2026-11-01T23-53-56-256Z-r131.json",
+  "last_checkpoint": "docs/workflow/handoffs/2026-11-02T00-12-30-266Z-r134.json",
   "gate_policy": {
     "version": 1,
     "legacy_task_ids": []
@@ -2763,43 +2763,65 @@
       "id": "prevent_netlify_static_output_regression",
       "context": "development",
       "title": "日本史版と汎用テンプレートのCIでNetlify静的公開先を検査する",
-      "status": "doing",
+      "status": "done",
       "depends_on": [
         "fix_nuxt_generated_secret_candidate"
       ],
       "authorization": "requested",
-      "request_ref": "2026-11-02: CIでもNetlifyと同じ条件で静的生成して公開先のファイル生成を確認する依頼、および汎用テンプレートにも同じ対応を行う追加依頼。",
-      "next_action": "両版の変更をskip netlify付きでpushし、実CIを順に確認する",
+      "request_ref": "2026-11-02: CIでもNetlifyと同じ条件で静的生成して公開先のファイル生成を確認する依頼、および汎用テンプレートにも同じ対応を行う追加依頼。 追加確認への回答: Netlify検査の追加だけ完了する。既存お気に入り表示の修正は対象外。",
+      "next_action": "両版のCIで再発を検出する。お気に入り表示の修正は今回の対象外。",
       "evidence": [
         "docs/netlify-ci-verification.md"
       ],
-      "last_verified_at": null,
-      "verification_scope": "未実施。例示ファイルは自動でタスクに登録されない。",
+      "last_verified_at": "2026-11-02T00:12:23.659Z",
+      "verification_scope": "両版の共通7回帰テスト・独立レビュー・保護検査成功。日本史7eb341cのCI41364368199全成功/27routes、汎用2e095f7のCI41365260368全成功/28routes、いずれも実static生成と.output/public検査が成功。初回template browser失敗を保持し、依存条件修正で独立static検査を確実に実行。既存記事/世代0 state保持。お気に入り修正はユーザー指定で対象外。新規配信なし。",
       "acceptance": [
         {
           "id": "checks",
           "kind": "automated",
           "description": "両版の設定参照・負例6件と実静的生成/公開先検査が成功し既存差分と汎用stateを保持する",
           "verification": "対象に必要な既存検査を選び、結果と根拠を記録する",
-          "status": "pending",
-          "evidence": [],
-          "checked_at": null
+          "status": "passed",
+          "evidence": [
+            "docs/netlify-ci-verification.md"
+          ],
+          "checked_at": "2026-11-02T00:12:23.659Z"
         },
         {
           "id": "review",
           "kind": "review",
           "description": "別担当が設定正本の利用、stale出力防止、公開先検査と両版への適用を確認する",
           "verification": "別担当のレビューで未解決の問題がないことを確認する",
-          "status": "pending",
-          "evidence": [],
-          "checked_at": null,
-          "reviewer": null
+          "status": "passed",
+          "evidence": [
+            "docs/netlify-ci-verification.md"
+          ],
+          "checked_at": "2026-11-02T00:12:23.659Z",
+          "reviewer": "ci_netlify_review"
         }
       ],
       "execution": {
         "worker": "root",
         "max_attempts": 3,
-        "attempts": []
+        "attempts": [
+          {
+            "number": 1,
+            "outcome": "failed",
+            "summary": "日本史CIは追加静的生成を含め全成功。汎用CIは既存browser失敗でstaticがskipされたため、待機と実行条件を分けて修正する。",
+            "at": "2026-11-02T00:04:21.712Z",
+            "failed_criteria": [
+              "checks",
+              "review"
+            ]
+          },
+          {
+            "number": 2,
+            "outcome": "passed",
+            "summary": "両版で7回帰テスト・独立レビュー・実Netlify条件の静的生成と公開先検査が成功。既存記事/空state保持。対象外のアプリ変更なし。",
+            "at": "2026-11-02T00:12:26.832Z",
+            "failed_criteria": []
+          }
+        ]
       }
     }
   ]

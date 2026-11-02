@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "revision": 132,
+  "state_hash": "577ce3510d29af8b911aab7827b9cc7f8fba933be7501236e314143502e5e0a7",
+  "recorded_at": "2026-11-02T00:04:21.712Z",
+  "timezone": "UTC",
+  "context": "development",
+  "task": "prevent_netlify_static_output_regression",
+  "summary": "日本史CIは追加静的生成を含め全成功。汎用CIは既存browser失敗でstaticがskipされたため、待機と実行条件を分けて修正する。",
+  "next_action": "browser失敗を維持しながら静的生成を実行する条件を検証する",
+  "missing_local_files": [],
+  "git": {
+    "available": true,
+    "head": "7eb341cf1b24aaff4022d01ca528b0b8ac444f0f",
+    "changes": [
+      {
+        "status": " M",
+        "path": "docs/netlify-ci-verification.md"
+      }
+    ]
+  },
+  "file_hashes": {
+    "AGENTS.md": "1748adfeefa679209bbfec56ccb79a7e482beb9511a0f041d67b535ffbfc052a",
+    "README.md": "13db1d2c82bfae17e9be7e23d79436a112bae969a92f2ea818f6907fc65594d7",
+    "docs/testing.md": "93d230e9a43d152e2a40c44defb8a05e50819063b54e7cc81042003136d2e607",
+    "docs/workflow/README.md": "45ae8a20c72aa9c36f17f24c1d5b9fa40f45e5db2e89f44a9e1888e60aeea2fc",
+    "docs/workflow/policy.json": "d21fbb063281b36ef860225f34009c32b37dd2153fbd35138bb872a6f5f947f7",
+    "docs/workflow/task.example.json": "4bf161efce99b7d0a26798e3445d1f142505e512eedd591ea11cfb194d67da9f",
+    "docs/workflow/contexts/product.md": "e86303c51c07895f982cad15d67fa8d949d633395a5e261cdbf2ee4f6bbc9298",
+    "docs/workflow/contexts/development.md": "02ada67cf4a7709a73b28356cdbee5d2b9d9d0f5e48ed01ca0c1e1f3323efcd4",
+    "docs/workflow/contexts/operations.md": "7f51221af2013d6ca2f815b396de892d2c7c8cb36edf0f3bc18fef8d8316763b",
+    "scripts/context.mjs": "3828c41d1cc5a6977b8444035e094e61e1c9895fcaa9451ecb1919e799ecaffc",
+    "scripts/context.test.mjs": "bc14ad1ba5d331f75d5f34923ac59a2cfe29b5b1c12174b0aa57e6d8ee572923",
+    "scripts/workflow-policy.mjs": "60535f2c9bf42203c059ca39a0b254c168b7cfb2468904a3842725fe3797141e",
+    "scripts/workflow-policy.test.mjs": "394287e7d1e84756a3ac8833918f964ee66f0ef2c34934d121d055fb37af4782",
+    "scripts/workspace-policy.mjs": "685272056c1fcaba765a5c1529b13a5c703aa9c6708baf13b0d63d0d189d6fcb",
+    "scripts/workspace-policy.test.mjs": "2f5517e76009fd3541cddfab0c7577f60870477a15677f53ec3284bcc434bd21",
+    "scripts/check-private-sources.mjs": "1d28447b51b39591d42151f236b837b33d695662168ee5c71500205aa0de96af",
+    "scripts/check-private-sources.test.mjs": "6e3194bd9dd502d3c40390f101d0313593eb3494e50fb11ea33da769cf615c14",
+    ".gitignore": "f7c4953bb35265d0147a09103e0363c537cbd86c8b06c19b48b44d735ead6b34",
+    ".dockerignore": "84869332c30a8da35d8f3b98b4cf16ab6c20634d2ae015710694b641846adbbe",
+    ".githooks/pre-push": "3529b300f7a655102ad899ab31fa8b2c404ec37479d1195aa9bcd3efa97bf90c",
+    "config/exam.json": "4e63e3ca1387f8a72bd261851afacf79d2c98dfb9974e05e877cd1e380bc521c",
+    "docs/verification.md": "c9232834f12be4380417793aa4bd210e2543f44490fde109d2a1e1d437498d70"
+  },
+  "attempt": {
+    "outcome": "failed",
+    "number": 1
+  },
+  "verification_note": "ハッシュ・Git・記録済み完了条件の確認であり、テストや出典照合の自動再実行ではない。依頼・権限は最新のユーザー指示とAGENTS.mdに従う。"
+}

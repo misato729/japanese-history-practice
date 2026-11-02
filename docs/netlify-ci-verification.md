@@ -6,8 +6,24 @@
 
 汎用版にはNetlify設定がなかったため、特定サービスのURLや秘密値を含まない静的生成設定を追加する。API/DB方式や問題データは移植しない。汎用版の既存verify/browser完了後、日本史版のverify完了後に新ジョブを実行する。CIから公開操作は行わない。
 
-検証中。単体検査7件は正本設定の適用、preset欠落によるdist出力、古い公開物とリンク切れ、生成失敗、空HTML/不足CSS、既存routingファイル欠落を対象とする。検査記録はlocal-only/netlify-ci/へ置く。
+単体検査7件は正本設定の適用、preset欠落によるdist出力、古い公開物とリンク切れ、生成失敗、空HTML/不足CSS、既存routingファイル欠落を対象とする。検査記録はlocal-only/netlify-ci/へ置く。
 
 両版で単体7件と差分検査・全履歴の資料保護検査が成功。独立担当ci_netlify_reviewがCIの依存関係、設定読込、設定上書き、公開先の範囲検査、既存資料保持を確認。dangling symlinkの事前拒否も追加した。検査コードとNetlify設定は両版で一致し、templateの既存記事/世代0 stateは初期digestと一致。日本史版の前回実生成111ファイルも新しい出力検査に成功した。
 
-日本史版の変更ファイルは.github/workflows/ci.yml、scripts/check-netlify-build.py、scripts/test_netlify_build.py、docs/testing.md、本書、docs/workflow/state.jsonと新しいhandoff。汎用版はCI・同じ2スクリプト・docs/testing.md・新規netlify.tomlのみ。両方ともskip netlifyを付けてCI検証用にpushし、本番公開/DB/認証設定は変更しない。
+日本史版の変更ファイルは.github/workflows/ci.yml、scripts/check-netlify-build.py、scripts/test_netlify_build.py、docs/testing.md、本書、docs/workflow/contexts/development.md、docs/workflow/state.jsonと新しいhandoff。汎用版はCI・同じ2スクリプト・docs/testing.md・新規netlify.tomlのみ。両方ともskip netlifyを付けてCI検証用にpushし、本番公開/DB/認証設定は変更しない。
+
+日本史版7eb341cf1b24aaff4022d01ca528b0b8ac444f0fはmainへpush済み、GitHub Actions 41364368199のharness/verify/netlify-staticが全成功。追加ジョブの実ログでstatic preset、27ルート、.output/public生成、公開先のHTML/JS/CSS/routing検査成功を確認した。元のNodeサーバー検査とは別のfresh checkoutで実施した結果である。
+
+汎用版6282cfb14d6b55837e8fbb9f6ff1779055f412f4も依頼分5ファイルだけをmainへpushし同期0/0。初回CI41364630671の結果は後述。既存の記事差分は未コミットのまま保持し、配布用stateは不変。
+
+汎用版の初回CI41364630671はharness/verify成功、既存browserの再ログイン後お気に入り表示が期待1/実際0で不合格となり、netlify-staticは依存関係によりskippedだった。新規設定を読む処理はE2E側に見つからず、既存のセッション更新と一覧取得の競合が候補だが未確定。ブラウザの終了は待ち、verify成功なら静的検査を実行する条件へ変更する。browserとCI全体の不合格を隠さない。別件のアプリ修正は範囲確認中。
+
+ユーザーは追加確認に「Netlify検査の追加だけ完了する」と回答。既存のお気に入り表示の修正は対象外と確定し、アプリコードは変更しない。テンプレートCIにstatus条件を追加する2e095f7をpushし、既存browser不合格でも終了を待った後に静的生成を検証する。継続しない範囲は未修正として報告する。
+
+## 完了結果
+
+汎用版2e095f7a96b7d68e4054fa2b8c09d538109ea531のGitHub Actions 41365260368はharness/verify/browser/netlify-staticすべて成功。追加ジョブの実ログでstatic preset、28ルート、.output/public生成、公開先検査成功を確認した。初回のbrowser不合格は履歴として保持し、最新の成功をアプリ不具合の修正完了とは扱わない。ユーザー指定どおりお気に入りのコードは変更していない。
+
+日本史版CI41364368199と汎用版CI41365260368により、両方の実生成と公開先検査が完了。共通7回帰テスト・独立レビューも成功、汎用版の既存記事と配布用stateのdigest保持を最終確認した。Netlifyの既存公開は6ae7cc9c23f7ddbc4ad14e5fのままで、新しい公開やDB操作は行っていない。完了記録だけの後続pushにはskip netlify/skip ciを付け、検査済みのコードを不要に再ビルドしない。
+
+今後、presetの欠落で出力がdistへ変わる・公開先の指定が誤る・必要なHTMLや資産が欠けるとnetlify-staticが失敗する。古い出力を残した検査も事前に失敗する。Netlify固有の秘密検査、管理画面で設定する外部環境変数、実公開の結果をこのCIだけで検証済みとはしない。
