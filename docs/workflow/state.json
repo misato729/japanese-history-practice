@@ -1,10 +1,10 @@
 {
   "schema_version": 1,
-  "revision": 145,
-  "updated_at": "2026-11-02T08:22:59.773Z",
+  "revision": 147,
+  "updated_at": "2026-11-02T10:18:57.806Z",
   "workspace_relative_to_repo": ".",
   "active_context": "operations",
-  "last_checkpoint": "docs/workflow/handoffs/2026-11-02T08-22-59-773Z-r145.json",
+  "last_checkpoint": "docs/workflow/handoffs/2026-11-02T10-18-57-806Z-r147.json",
   "gate_policy": {
     "version": 1,
     "legacy_task_ids": []
@@ -3064,59 +3064,75 @@
       "id": "adsense_release_20261102",
       "context": "operations",
       "title": "共通headへAdSenseを追加しGit・CI・Netlify・本番反映を確認",
-      "status": "doing",
+      "status": "done",
       "depends_on": [],
       "authorization": "requested",
       "request_ref": "2026-11-02 ユーザー: 日本史も同様に（指定AdSenseタグ追加、コミットpush、CI/Netlify自動配信・本番head確認）",
-      "next_action": "安定key付き共通head追加を検証し送信・CI・本番確認",
+      "next_action": "完了記録追送のみ。機能配信SHA2736051を維持",
       "evidence": [
         "docs/adsense-release-20261102.md"
       ],
-      "last_verified_at": null,
-      "verification_scope": "着手時のGit変更なし。今回の明示依頼で日本史のGit送信・Netlify自動配信を実施する。Fly/DB変更は対象外",
+      "last_verified_at": "2026-11-02T10:18:57.000Z",
+      "verification_scope": "共通headのNuxt/Unhead検査、原資料全履歴/テンプレート/差分検査、2736051送信・remote0:0、CI41427204815全3job success、Netlify自動Published同SHA、本番7URL HTTP200/head一件、実Chrome描画後/内部遷移後一件、独立最終PASS。Fly/DB/広告表示/Google審査対象外",
       "acceptance": [
         {
           "id": "local",
           "kind": "automated",
           "description": "共通headのタグと属性・非重複を確認",
           "verification": "実Nuxt設定とUnhead生成でsrc/async/crossorigin/data-hidと一件のみを検査、差分と資料保護",
-          "status": "pending",
-          "evidence": [],
-          "checked_at": null
+          "status": "passed",
+          "evidence": [
+            "docs/adsense-release-20261102.md"
+          ],
+          "checked_at": "2026-11-02T10:18:57.000Z"
         },
         {
           "id": "release",
           "kind": "automated",
           "description": "今回のGit送信とCI全ジョブ・Netlify自動配信成功",
           "verification": "対象SHAとremote同期、CI全jobとNetlify同SHA Published",
-          "status": "pending",
-          "evidence": [],
-          "checked_at": null
+          "status": "passed",
+          "evidence": [
+            "docs/adsense-release-20261102.md"
+          ],
+          "checked_at": "2026-11-02T10:18:57.000Z"
         },
         {
           "id": "public",
           "kind": "automated",
           "description": "本番headへの追加と読込後/遷移後の非重複",
           "verification": "複数URLのHTMLと実ブラウザDOMで指定script一件を確認",
-          "status": "pending",
-          "evidence": [],
-          "checked_at": null
+          "status": "passed",
+          "evidence": [
+            "docs/adsense-release-20261102.md"
+          ],
+          "checked_at": "2026-11-02T10:18:57.000Z"
         },
         {
           "id": "review",
           "kind": "review",
           "description": "独立レビュー",
           "verification": "差分範囲と実施済み検証・配信根拠を別担当が確認",
-          "status": "pending",
-          "evidence": [],
-          "checked_at": null,
-          "reviewer": null
+          "status": "passed",
+          "evidence": [
+            "docs/adsense-release-20261102.md"
+          ],
+          "checked_at": "2026-11-02T10:18:57.000Z",
+          "reviewer": "japanese_adsense_review"
         }
       ],
       "execution": {
         "worker": "japanese_adsense_owner",
         "max_attempts": 3,
-        "attempts": []
+        "attempts": [
+          {
+            "number": 1,
+            "outcome": "passed",
+            "summary": "CI全3job・Netlify同SHA自動公開・本番7HTML/実DOM一件を独立評価PASS",
+            "at": "2026-11-02T10:18:57.483Z",
+            "failed_criteria": []
+          }
+        ]
       }
     }
   ]

@@ -47,3 +47,7 @@ Compose・DB・ポート・Cookieは専用です。他サービスの秘密値�
 2026-11-02 日本史パスワード機能の本番反映 deploy_password_features_20261102：ユーザーがcommit/push・Fly/Netlify・SQL009010を承認。既存210問/登録1件と14採点規則の保持を事前照合し、直接DB接続で共通移行後に既存2VMと画面へ配信する。進行と結果は docs/password-release-20261102.md。実メールと本人入力は本番反映後に本人へ確認を依頼する。
 
 同タスクはアプリ2d8e73eをmainへpush、Fly v12/既存nrt2VM、SQL009010、Netlify6ae84698406d7d09c4bb2813へ反映済み。既存16表/210問/登録1件と14規則の保持、公開5経路35資産、PC/SP、CI41411702785全3job、独立レビューPASSを確認。ユーザー本人もメール到着・再設定・ログイン成功を確認した。詳細はdocs/password-release-20261102.md。
+
+## 2026-11-02 AdSense共通headの配信
+
+最新の明示依頼で指定scriptを共通headへ追加し、key=google-adsenseで重複防止。機能2736051をmainへpushし、CI41427204815のharness/verify/netlify-static全3ジョブsuccess、Netlify6ae8628a16c4faae7bd22b3bのPublished同SHAと自動公開ONを確認。本番7URLは全HTTP200・head内指定タグ1件。実Chromeの演習描画後/内部遷移後も1件、独立最終PASS。Fly/DB/Google側設定・回答送信は変更なし。文書完了記録だけskip netlify/skip ciで追送。[変更ファイルと検証範囲](../../adsense-release-20261102.md)。
