@@ -6,6 +6,7 @@ import { applyApiHeaders } from '../../core/http.ts'
 import { notifyFailure } from '../../core/notifications.ts'
 import { throttle } from '../../core/rate-limit.ts'
 import { handleAccounts } from '../../services/accounts.ts'
+import { handlePasswordReset } from '../../services/password-reset.ts'
 import { handleLearning } from '../../services/learning.ts'
 import { handlePayments } from '../../services/payments.ts'
 
@@ -23,7 +24,7 @@ export async function apiHandler(event: H3Event) {
     // Signup, login and Stripe signatures supply their own authentication.
     const user = route.startsWith('auth/') || route === 'webhooks/stripe' ? null : await authenticate(event)
     if (event.method === 'POST' && /^questions\/[^/]+\/answer$/.test(route)) await throttle(event, 'answer')
-    for (const handler of [handleAccounts, handleLearning, handlePayments]) {
+    for (const handler of [handleAccounts, handlePasswordReset, handleLearning, handlePayments]) {
       const result = await handler(event, parts, user)
       if (result !== undefined) return result
     }

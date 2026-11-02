@@ -1,10 +1,10 @@
 {
   "schema_version": 1,
-  "revision": 138,
-  "updated_at": "2026-11-02T00:58:17.385Z",
+  "revision": 143,
+  "updated_at": "2026-11-02T08:07:36.574Z",
   "workspace_relative_to_repo": ".",
-  "active_context": "development",
-  "last_checkpoint": "docs/workflow/handoffs/2026-11-02T00-58-17-385Z-r138.json",
+  "active_context": "operations",
+  "last_checkpoint": "docs/workflow/handoffs/2026-11-02T08-07-36-574Z-r143.json",
   "gate_policy": {
     "version": 1,
     "legacy_task_ids": []
@@ -2885,6 +2885,162 @@
             "failed_criteria": []
           }
         ]
+      }
+    },
+    {
+      "id": "password_features_20261102",
+      "context": "development",
+      "title": "パスワード変更とGAS期限付きリンク再設定を日本史へ実装",
+      "status": "done",
+      "depends_on": [],
+      "authorization": "requested",
+      "request_ref": "2026-11-02 ユーザー: パスワード変更・パスワード再設定の機能を日本史にも実装",
+      "next_action": "日本史用GAS設定が必要。Git送信/本番反映は追加の明示依頼時に実施",
+      "evidence": [
+        "docs/password-features-20261102.md",
+        "docs/gas-password-reset-setup.md"
+      ],
+      "last_verified_at": "2026-11-02T07:48:09.111Z",
+      "verification_scope": "日本史専用_test DBでserver100/front187成功、型/build、Node24・netlify.tomlによるクリーン静的生成、実Vue+合成API PC1440/SP390/320、独立最終レビューPASS。初回2失敗は保持。実GAS/送信/通常本番DB/commit/push/deploy未実施",
+      "acceptance": [
+        {
+          "id": "api",
+          "kind": "automated",
+          "description": "変更/再設定/失効/旧token互換/期限と競合/データ保持",
+          "verification": "日本史用隔離_test DBで実APIと既存全体検査",
+          "status": "passed",
+          "evidence": [
+            "docs/password-features-20261102.md",
+            "docs/gas-password-reset-setup.md"
+          ],
+          "checked_at": "2026-11-02T07:48:09.111Z"
+        },
+        {
+          "id": "gas",
+          "kind": "automated",
+          "description": "日本史用GASと署名/枠/重複/URL制約",
+          "verification": "GAS実ソース模擬実行/送信通信検査と設定手順",
+          "status": "passed",
+          "evidence": [
+            "docs/password-features-20261102.md",
+            "docs/gas-password-reset-setup.md"
+          ],
+          "checked_at": "2026-11-02T07:48:09.111Z"
+        },
+        {
+          "id": "ui",
+          "kind": "automated",
+          "description": "日本史UIと静的配信設定の整合",
+          "verification": "型/build/静的生成確認とPCSP実部品操作",
+          "status": "passed",
+          "evidence": [
+            "docs/password-features-20261102.md",
+            "docs/gas-password-reset-setup.md"
+          ],
+          "checked_at": "2026-11-02T07:48:09.111Z"
+        },
+        {
+          "id": "review",
+          "kind": "review",
+          "description": "独立レビュー",
+          "verification": "実装担当以外による受入条件/差分/根拠レビュー",
+          "status": "passed",
+          "evidence": [
+            "docs/password-features-20261102.md",
+            "docs/gas-password-reset-setup.md"
+          ],
+          "checked_at": "2026-11-02T07:48:09.111Z",
+          "reviewer": "email_reset_review"
+        }
+      ],
+      "execution": {
+        "worker": "japanese_password_owner",
+        "max_attempts": 3,
+        "attempts": [
+          {
+            "number": 1,
+            "outcome": "failed",
+            "summary": "初回の認証検査がローカルVue依存不足で起動失敗。GAS/fragment/通信9件は成功。依存を整えて再検証する",
+            "at": "2026-11-02T07:22:03.809Z",
+            "failed_criteria": [
+              "api",
+              "gas",
+              "ui",
+              "review"
+            ]
+          },
+          {
+            "number": 2,
+            "outcome": "failed",
+            "summary": "全体API96/98。固定SQL期待とローカル専用カタログの混入を特定。期待更新と空カタログ指定で再検証する",
+            "at": "2026-11-02T07:27:11.887Z",
+            "failed_criteria": [
+              "api",
+              "gas",
+              "ui",
+              "review"
+            ]
+          },
+          {
+            "number": 3,
+            "outcome": "passed",
+            "summary": "日本史隔離DB server100/front187・型/build・Node24静的生成・PC/SP合成API操作・独立最終レビュー合格。初回失敗は保持",
+            "at": "2026-11-02T07:48:28.172Z",
+            "failed_criteria": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "deploy_password_features_20261102",
+      "context": "operations",
+      "title": "日本史のパスワード変更とGAS再設定をコミット・pushし本番へ反映",
+      "status": "doing",
+      "depends_on": [
+        "password_features_20261102"
+      ],
+      "authorization": "requested",
+      "request_ref": "2026-11-02 ユーザー回答: 本番反映まで進める（commit/push、Fly/Netlify配信、SQL009/010）",
+      "next_action": "前後データ/規則を照合し、既存2VMと静的画面へ反映する",
+      "evidence": [
+        "docs/password-release-20261102.md"
+      ],
+      "last_verified_at": null,
+      "verification_scope": "実装検証を再利用し、本番の設定/移行/データ保持/公開UI/CIを追加確認。実メールと本人のパスワード入力は本人確認待ちとして区別する。",
+      "acceptance": [
+        {
+          "id": "release",
+          "kind": "automated",
+          "description": "承認されたGit/Fly/Netlify配信と009010の適用",
+          "verification": "リモート同期、CI全ジョブ、両VMのimage/設定、移行hashと前後の件数/digest",
+          "status": "pending",
+          "evidence": [],
+          "checked_at": null
+        },
+        {
+          "id": "public",
+          "kind": "automated",
+          "description": "公開画面と未登録への無送信の応答を確認",
+          "verification": "PC/SP操作、静的出力とHTTPヘッダー、一般API、登録実メールは本人へ引継ぎ",
+          "status": "pending",
+          "evidence": [],
+          "checked_at": null
+        },
+        {
+          "id": "review",
+          "kind": "review",
+          "description": "独立担当が配信と保持の根拠を確認",
+          "verification": "別担当によるリリース候補と最終結果のレビュー",
+          "status": "pending",
+          "evidence": [],
+          "checked_at": null,
+          "reviewer": null
+        }
+      ],
+      "execution": {
+        "worker": "japanese_password_release_owner",
+        "max_attempts": 3,
+        "attempts": []
       }
     }
   ]

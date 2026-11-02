@@ -25,3 +25,9 @@ Cookie名は `site.id` で分離します。認証・管理権限・利用資格
 Composeは `.env` をコンテナへ渡します。通常のNode.js CLIは自動読込しないため、基本はコンテナ内から実行します。`DATABASE_URL` は個別のDB接続変数より優先されます。他サービスの環境変数・秘密値を流用しないでください。
 
 API・保存形式の詳細は `frontend/shared/types/learning.ts`、`frontend/shared/types/essay.ts` と実装を確認します。コピー時の確認範囲は [検証記録](verification.md) を参照してください。
+
+## パスワードの変更・再設定
+
+`PATCH /api/v1/me/password` は現在・新しい値・確認入力を検査し、新しいセッションを返す。SQL009の認証版で旧ログイン情報を失効し、変更前の旧形式tokenは版0として扱う。
+
+`POST /api/v1/auth/forgot-password` は登録メールへGASの署名付き依頼を送り、未登録へは送らない。SQL010へhash/認証版/30分の期限を保存し、`POST /api/v1/auth/reset-password` で一度だけ保存できる。再申請や通常のパスワード変更で古いリンクは無効になる。日本史固有のGAS・共有鍵・URLを設定し、Netlifyの同一origin APIプロキシは保持する。[設定手順](gas-password-reset-setup.md)。

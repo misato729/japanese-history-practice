@@ -16,3 +16,17 @@
   X-Robots-Tag: noindex, nofollow
 /signup
   X-Robots-Tag: noindex, nofollow
+/forgot-password
+  X-Robots-Tag: noindex, nofollow
+  Referrer-Policy: no-referrer
+/reset-password
+  X-Robots-Tag: noindex, nofollow
+  Referrer-Policy: no-referrer
+  Cache-Control: no-store
+/forgot-password/
+  X-Robots-Tag: noindex, nofollow
+  Referrer-Policy: no-referrer
+/reset-password/
+  X-Robots-Tag: noindex, nofollow
+  Referrer-Policy: no-referrer
+  Cache-Control: no-store

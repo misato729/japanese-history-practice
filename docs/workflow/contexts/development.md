@@ -41,3 +41,7 @@ Nuxt / Nitro / pg / 番号付きSQL / PostgreSQLを優先し、既存差分を�
 2026-11-02 Netlify静的生成の回帰防止：日本史版と汎用テンプレートへnetlify-static CIを追加。設定正本を読みNETLIFY=true/CI=trueで実生成し、古い出力を拒否して公開先を検査する。両版7回帰テストと実CIの追加ジョブ成功、汎用記事/空state保持。既存お気に入りの失敗は記録し、追加確認の回答どおりアプリ修正は行わない。詳細はdocs/netlify-ci-verification.md。
 
 2026-11-02 汎用テンプレートのお気に入り再ログイン表示：fix_template_favorites_session_refresh。sessionVersion更新時の一覧再取得を追加し、旧応答の抑止を保持した。修正前の失敗再現と修正後14件/全体120件/型検査、CI41369381323全成功とPC/SP10件を確認。ローカルChromiumの操作待ちは成功扱いせず、UIはLinux CIで検証。既存記事/空stateを保持し、公開なし。詳細はdocs/template-favorites-session-fix.md。
+
+## 2026-11-02 パスワード変更・GAS再設定
+
+世界史の検証済み実装を日本史の認証へ移植。アカウント設定で変更/新セッション更新、旧ログイン失効、旧形式token版0互換と、30分/1回限り/hash保存のメール再設定。日本史008を保持して009/010を追加し、独立GAS/共有鍵/origin、同一origin proxy/色/Cookieを保持。初回の依存不足・SQL期待/カタログ隔離の2不合格は履歴に保持し、隔離DBの全100/フロント187、型/build、Node24静的生成とPC1440/SP390/320実部品+合成API、独立最終レビュー成功。通常/本番DB・実GAS/メール・commit/push/deployは未実施。[変更ファイルと検証](../../password-features-20261102.md)、[日本史用GAS設定手順](../../gas-password-reset-setup.md)。

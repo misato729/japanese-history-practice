@@ -305,12 +305,14 @@ test('essay migration preserves all pre-existing fields and adds strict nullable
   await query('INSERT INTO favorites(user_id,question_id,created_at,updated_at) SELECT $1,id,NOW(),NOW() FROM questions', [owner.id], db)
   const tables = ['questions','question_choices','users','answer_histories','favorites'] as const
   const before = Object.fromEntries(await Promise.all(tables.map(async table => [table, await query(`SELECT * FROM ${table} ORDER BY id`, [], db)])))
-  assert.deepEqual(await migrate(db), { applied: ['007_essay_rule_scoring.sql', '008_category_catalog.sql'] })
+  assert.deepEqual(await migrate(db), { applied: ['007_essay_rule_scoring.sql', '008_category_catalog.sql', '009_password_auth_version.sql', '010_password_reset_tokens.sql'] })
   for (const table of tables) {
     const rows = await query(`SELECT * FROM ${table} ORDER BY id`, [], db)
     const keys = Object.keys(before[table][0]!)
     assert.deepEqual(rows.map(row => Object.fromEntries(keys.map(key => [key,row[key]]))), before[table])
   }
+  assert.equal((await query<{ auth_version: number }>('SELECT * FROM users', [], db)).every(row => row.auth_version === 0), true)
+  assert.equal((await query<{ count: number }>('SELECT count(*)::int AS count FROM password_reset_tokens', [], db))[0]!.count, 0)
   assert.equal((await query<any>("SELECT count(*)::integer AS n FROM questions WHERE essay_config='{}'::jsonb", [], db))[0].n,before.questions.length)
   assert.equal((await query<any>('SELECT count(*)::integer AS n FROM answer_histories WHERE essay_result IS NULL AND is_correct IS NOT NULL', [], db))[0].n,before.answer_histories.length)
   assert.deepEqual(await migrate(db), { applied: [] })
