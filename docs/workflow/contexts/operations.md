@@ -59,3 +59,8 @@ Compose・DB・ポート・Cookieは専用です。他サービスの秘密値�
 ## 2026-11-02 広告用ポリシーを本番反映
 
 追加承認で本文/記録6件を3b99587としてmain送信。原資料保護hookとCI41433887667（harness/verify/netlify-static）全成功、Netlify同SHA自動Publishedを確認。本番HTTP200・14条/4リンク/改定日/広告説明/旧未使用記載の除去、実Chrome PC1440/SP390の折返し・横はみ出しなし・Tab移動・head script1件を確認。世界史のCSR外枠で初回本文parserが止まった件は描画後DOM確認と分けて記録。独立最終PASS。完了文書だけskip netlify/skip ciで追送し、本文配信SHAを維持。Fly/DB変更なし。[配信結果](../../adsense-release-20261102.md)。
+
+2026-11-02の明示依頼で、本番とローカルの模試4↔6、5↔7を入れ替えました。問題IDと採点・履歴・お気に入りを維持し、現在番号と原作成時の識別子を区別します。詳細は `docs/mock-number-swap-20261102.md`。デプロイやGit送信は行っていません。
+
+
+2026-11-02の追加承認で模試8〜10をローカル・本番へ90問追加し公開。合計10教材300問、稼働中の論述規則20件。両VMで20pin一致、旧210問と18表の保持、独立_test反復0、公開90問と全6論述8点、PC/SP実操作を確認。本番の再実行は一時ファイル消失で未確認として区別。Netlify6ae8927981dde2375a32cfea公開。現在の本番用20規則はfrontend/local-only/mocks-08-10-publication/catalog-production.json。旧14規則の保存物は履歴であり再投入しない。詳細はdocs/mock-8-10-publication-20261102.md。Git送信なし。
