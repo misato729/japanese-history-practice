@@ -1,10 +1,10 @@
 {
   "schema_version": 1,
-  "revision": 143,
-  "updated_at": "2026-11-02T08:07:36.574Z",
+  "revision": 145,
+  "updated_at": "2026-11-02T08:22:59.773Z",
   "workspace_relative_to_repo": ".",
   "active_context": "operations",
-  "last_checkpoint": "docs/workflow/handoffs/2026-11-02T08-07-36-574Z-r143.json",
+  "last_checkpoint": "docs/workflow/handoffs/2026-11-02T08-22-59-773Z-r145.json",
   "gate_policy": {
     "version": 1,
     "legacy_task_ids": []
@@ -2895,7 +2895,7 @@
       "depends_on": [],
       "authorization": "requested",
       "request_ref": "2026-11-02 ユーザー: パスワード変更・パスワード再設定の機能を日本史にも実装",
-      "next_action": "日本史用GAS設定が必要。Git送信/本番反映は追加の明示依頼時に実施",
+      "next_action": "後続deploy_password_features_20261102で本番反映と本人確認も完了",
       "evidence": [
         "docs/password-features-20261102.md",
         "docs/gas-password-reset-setup.md"
@@ -2995,52 +2995,69 @@
       "id": "deploy_password_features_20261102",
       "context": "operations",
       "title": "日本史のパスワード変更とGAS再設定をコミット・pushし本番へ反映",
-      "status": "doing",
+      "status": "done",
       "depends_on": [
         "password_features_20261102"
       ],
       "authorization": "requested",
       "request_ref": "2026-11-02 ユーザー回答: 本番反映まで進める（commit/push、Fly/Netlify配信、SQL009/010）",
-      "next_action": "前後データ/規則を照合し、既存2VMと静的画面へ反映する",
+      "next_action": "完了記録だけを送信し、追加依頼を待つ",
       "evidence": [
         "docs/password-release-20261102.md"
       ],
-      "last_verified_at": null,
-      "verification_scope": "実装検証を再利用し、本番の設定/移行/データ保持/公開UI/CIを追加確認。実メールと本人のパスワード入力は本人確認待ちとして区別する。",
+      "last_verified_at": "2026-11-02T08:22:58.802Z",
+      "verification_scope": "Fly v12既存nrt2VM・SQL009010・アプリ2d8e73e push・Netlify公開・既存16表/210問/登録1件/14規則保持・API10確認・公開5経路35資産・PC/SP7画像・CI全3job・独立レビューPASS。実メール/本人保存/ログインはユーザーの成功報告として区別して確認。",
       "acceptance": [
         {
           "id": "release",
           "kind": "automated",
           "description": "承認されたGit/Fly/Netlify配信と009010の適用",
           "verification": "リモート同期、CI全ジョブ、両VMのimage/設定、移行hashと前後の件数/digest",
-          "status": "pending",
-          "evidence": [],
-          "checked_at": null
+          "status": "passed",
+          "evidence": [
+            "docs/password-release-20261102.md",
+            "docs/password-features-20261102.md"
+          ],
+          "checked_at": "2026-11-02T08:22:58.802Z"
         },
         {
           "id": "public",
           "kind": "automated",
           "description": "公開画面と未登録への無送信の応答を確認",
           "verification": "PC/SP操作、静的出力とHTTPヘッダー、一般API、登録実メールは本人へ引継ぎ",
-          "status": "pending",
-          "evidence": [],
-          "checked_at": null
+          "status": "passed",
+          "evidence": [
+            "docs/password-release-20261102.md",
+            "docs/password-features-20261102.md"
+          ],
+          "checked_at": "2026-11-02T08:22:58.802Z"
         },
         {
           "id": "review",
           "kind": "review",
           "description": "独立担当が配信と保持の根拠を確認",
           "verification": "別担当によるリリース候補と最終結果のレビュー",
-          "status": "pending",
-          "evidence": [],
-          "checked_at": null,
-          "reviewer": null
+          "status": "passed",
+          "evidence": [
+            "docs/password-release-20261102.md",
+            "docs/password-features-20261102.md"
+          ],
+          "checked_at": "2026-11-02T08:22:58.802Z",
+          "reviewer": "email_reset_review"
         }
       ],
       "execution": {
         "worker": "japanese_password_release_owner",
         "max_attempts": 3,
-        "attempts": []
+        "attempts": [
+          {
+            "number": 1,
+            "outcome": "passed",
+            "summary": "Fly/SQL009010/Netlify/push・既存データと14規則保持・公開PCSP・CI全3job・独立レビュー合格、実メールと再設定ログインは本人成功報告を確認",
+            "at": "2026-11-02T08:22:59.485Z",
+            "failed_criteria": []
+          }
+        ]
       }
     }
   ]

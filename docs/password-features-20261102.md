@@ -98,3 +98,7 @@ API/全体検査/型/build/静的生成/PCSP操作/独立レビューは継続�
 - [workflow-final.log](../local-only/password-features-20261102/workflow-final.log)：最終の進捗形式/依存/根拠参照検査。
 
 単体プレビューではNuxt自動importの代替に伴うPAYMENTS_ENABLED警告があるが、今回は非課金表示だけを確認した。実ビルドと静的生成ログにはこの警告はない。実際のセッション/DB処理はAPI/認証テストで検証した。
+
+## 後続の本番反映
+
+2026-11-02の追加承認により、コミット2d8e73eをpushし、Fly v12・Netlify6ae84698406d7d09c4bb2813・SQL009/010へ反映済み。CI全3ジョブ成功、既存データと規則保持・公開PC/SP確認・独立レビューPASS、ユーザー本人が実メール受信・再設定・ログイン成功を確認した。実装段階の未公開記述は当時の範囲。[反映記録](password-release-20261102.md)を参照。

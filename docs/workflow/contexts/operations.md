@@ -45,3 +45,5 @@ Compose・DB・ポート・Cookieは専用です。他サービスの秘密値�
 同修正は9f7711dとしてmainへpushし、Netlify6ae7cc9c23f7ddbc4ad14e5fが自動でPublished（2026-11-01T23:35:24.568Z）。GitHubCI41362797715は全成功。本番HTTP6経路・7セット210問・noindex/API転送・ブラウザ遷移と独立88資産の参照確認を通過。NITRO_PRESET=staticで.output/publicへ固定し、CD完成。失敗2件を保持し総評価3回目passedとする。SQL/DB/検査設定不変。
 
 2026-11-02 日本史パスワード機能の本番反映 deploy_password_features_20261102：ユーザーがcommit/push・Fly/Netlify・SQL009010を承認。既存210問/登録1件と14採点規則の保持を事前照合し、直接DB接続で共通移行後に既存2VMと画面へ配信する。進行と結果は docs/password-release-20261102.md。実メールと本人入力は本番反映後に本人へ確認を依頼する。
+
+同タスクはアプリ2d8e73eをmainへpush、Fly v12/既存nrt2VM、SQL009010、Netlify6ae84698406d7d09c4bb2813へ反映済み。既存16表/210問/登録1件と14規則の保持、公開5経路35資産、PC/SP、CI41411702785全3job、独立レビューPASSを確認。ユーザー本人もメール到着・再設定・ログイン成功を確認した。詳細はdocs/password-release-20261102.md。
