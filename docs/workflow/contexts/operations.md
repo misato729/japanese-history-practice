@@ -51,3 +51,7 @@ Compose・DB・ポート・Cookieは専用です。他サービスの秘密値�
 ## 2026-11-02 AdSense共通headの配信
 
 最新の明示依頼で指定scriptを共通headへ追加し、key=google-adsenseで重複防止。機能2736051をmainへpushし、CI41427204815のharness/verify/netlify-static全3ジョブsuccess、Netlify6ae8628a16c4faae7bd22b3bのPublished同SHAと自動公開ONを確認。本番7URLは全HTTP200・head内指定タグ1件。実Chromeの演習描画後/内部遷移後も1件、独立最終PASS。Fly/DB/Google側設定・回答送信は変更なし。文書完了記録だけskip netlify/skip ciで追送。[変更ファイルと検証範囲](../../adsense-release-20261102.md)。
+
+## 2026-11-02 広告用プライバシーポリシー（ローカル）
+
+追加依頼で広告未使用の記述をAdSense利用/Cookie/外部送信情報と目的/広告設定とWebChoices/Google公式情報リンクへ更新。14条・制定日保持、改定日11月2日追加。両版の既存法務テスト計5件、実Vue/CSSコンパイル、部品previewのPC1440/SP390・折返し/キーボード確認、独立レビューPASS。共通レイアウト/DB/API/広告通信を含まない確認で、初回previewのSITE不足は修正後成功として区別。commit/push/本番反映なし。[詳細と公式資料](../../adsense-release-20261102.md)。
