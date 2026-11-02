@@ -45,3 +45,8 @@
 
 - `local-only/premium-release-20261103/preserved-production-profiles.json`：既存本番と内容不変の採点ファイル控え。
 - `local-only/premium-release-20261103/fly-release-private.toml`：同ファイルを保持する非公開配信設定。
+
+追加の途中経過（既存の記録を改変せず保存）：
+
+- [docs/workflow/handoffs/2026-11-02T16-43-09-692Z-r165.json](workflow/handoffs/2026-11-02T16-43-09-692Z-r165.json)：署名設定待ち又は初回配信評価の不変記録。
+- [docs/workflow/handoffs/2026-11-02T21-30-40-383Z-r166.json](workflow/handoffs/2026-11-02T21-30-40-383Z-r166.json)：署名設定待ち又は初回配信評価の不変記録。
