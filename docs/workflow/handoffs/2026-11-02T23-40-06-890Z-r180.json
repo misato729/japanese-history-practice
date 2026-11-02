@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "revision": 180,
+  "state_hash": "35a3ef36b07ab077dd1d8edcc9146b7b3ea44c502aa7c78948db101c3253ee96",
+  "recorded_at": "2026-11-02T23:40:06.890Z",
+  "timezone": "UTC",
+  "context": "development",
+  "task": "stripe_wallets_release_20261103",
+  "summary": "独立最終PASS後、完了状態と参照カードを整合。4Git/CI成功、3本番確認・設定保全、template送信のみ。文書のみ送信する。公開stateは今回タスクのみをHEADへ統合し、作業用stateには別作業を保持",
+  "next_action": "配信完了。審査・各端末での実決済確認は別途実施。既存別作業を保持",
+  "missing_local_files": [],
+  "git": {
+    "available": true,
+    "head": "a07b75b6f5a4906457323d3796aa85195799f550",
+    "changes": [
+      {
+        "status": " M",
+        "path": "docs/stripe-wallets-release.md"
+      },
+      {
+        "status": " M",
+        "path": "docs/workflow/contexts/development.md"
+      },
+      {
+        "status": " M",
+        "path": "docs/workflow/contexts/product.md"
+      }
+    ]
+  },
+  "file_hashes": {
+    "AGENTS.md": "70f195f654fb0409e3ecb352c629c3837e41fde9cfca11d071b9ee8508028dd0",
+    "README.md": "04104ac1acbc3bf6eca054eecd359ef2a3bc46e71db815b41c0023b9a9bce5e4",
+    "docs/testing.md": "93d230e9a43d152e2a40c44defb8a05e50819063b54e7cc81042003136d2e607",
+    "docs/workflow/README.md": "45ae8a20c72aa9c36f17f24c1d5b9fa40f45e5db2e89f44a9e1888e60aeea2fc",
+    "docs/workflow/policy.json": "d21fbb063281b36ef860225f34009c32b37dd2153fbd35138bb872a6f5f947f7",
+    "docs/workflow/task.example.json": "4bf161efce99b7d0a26798e3445d1f142505e512eedd591ea11cfb194d67da9f",
+    "docs/workflow/contexts/product.md": "4bff54fe14ce9b2f74958c470deabc47eeb4c728c42369a335994f724753ad23",
+    "docs/workflow/contexts/development.md": "ff872f031164a6d6e40accb47dc9e1d691f867b494f7937d84e2f182f20ded93",
+    "docs/workflow/contexts/operations.md": "c7b32e48e580804f2d0cb4ccb3f914ad91eb7bc9a7f48dbe0dbf0950e209469a",
+    "scripts/context.mjs": "3828c41d1cc5a6977b8444035e094e61e1c9895fcaa9451ecb1919e799ecaffc",
+    "scripts/context.test.mjs": "bc14ad1ba5d331f75d5f34923ac59a2cfe29b5b1c12174b0aa57e6d8ee572923",
+    "scripts/workflow-policy.mjs": "60535f2c9bf42203c059ca39a0b254c168b7cfb2468904a3842725fe3797141e",
+    "scripts/workflow-policy.test.mjs": "394287e7d1e84756a3ac8833918f964ee66f0ef2c34934d121d055fb37af4782",
+    "scripts/workspace-policy.mjs": "685272056c1fcaba765a5c1529b13a5c703aa9c6708baf13b0d63d0d189d6fcb",
+    "scripts/workspace-policy.test.mjs": "2f5517e76009fd3541cddfab0c7577f60870477a15677f53ec3284bcc434bd21",
+    "scripts/check-private-sources.mjs": "1d28447b51b39591d42151f236b837b33d695662168ee5c71500205aa0de96af",
+    "scripts/check-private-sources.test.mjs": "6e3194bd9dd502d3c40390f101d0313593eb3494e50fb11ea33da769cf615c14",
+    ".gitignore": "f7c4953bb35265d0147a09103e0363c537cbd86c8b06c19b48b44d735ead6b34",
+    ".dockerignore": "84869332c30a8da35d8f3b98b4cf16ab6c20634d2ae015710694b641846adbbe",
+    ".githooks/pre-push": "3529b300f7a655102ad899ab31fa8b2c404ec37479d1195aa9bcd3efa97bf90c",
+    "config/exam.json": "d4618a65d0eccc07da8230d3133283a41f93a2ad689dc5798608490545985b03",
+    "docs/verification.md": "c9232834f12be4380417793aa4bd210e2543f44490fde109d2a1e1d437498d70"
+  },
+  "verification_note": "ハッシュ・Git・記録済み完了条件の確認であり、テストや出典照合の自動再実行ではない。依頼・権限は最新のユーザー指示とAGENTS.mdに従う。"
+}
