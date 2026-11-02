@@ -1,10 +1,10 @@
 {
   "schema_version": 1,
-  "revision": 159,
-  "updated_at": "2026-11-02T15:52:02.067Z",
+  "revision": 161,
+  "updated_at": "2026-11-02T16:00:59.998Z",
   "workspace_relative_to_repo": ".",
   "active_context": "operations",
-  "last_checkpoint": "docs/workflow/handoffs/2026-11-02T13-56-45-773Z-r159.json",
+  "last_checkpoint": "docs/workflow/handoffs/2026-11-02T16-00-59-998Z-r161.json",
   "gate_policy": {
     "version": 1,
     "legacy_task_ids": []
@@ -3445,48 +3445,56 @@
       "id": "deliver_mock_changes_20261103",
       "context": "operations",
       "title": "入れ替えと模試8〜10関連だけをコミット・pushする",
-      "status": "doing",
+      "status": "done",
       "depends_on": [
         "swap_mock_sets_4_6_5_7",
         "publish_mocks_8_10"
       ],
       "authorization": "requested",
       "request_ref": "2026-11-03 ユーザー: 入れ替えもコミット・pushしてください",
-      "next_action": "限定差分を確認してmainへpush、CI結果とリモート一致を確認する",
+      "next_action": "完了記録だけ追送し、別作業は保持する",
       "evidence": [
         "docs/mock-git-delivery-20261103.md"
       ],
-      "last_verified_at": null,
-      "verification_scope": "独立候補のコード/設定/記録のみ。別作業のプレミアム/料金変更、実教材/原典/秘密と再配信は除外。",
+      "last_verified_at": "2026-11-02T16:00:01.799Z",
+      "verification_scope": "独立候補20ファイル、原典/実教材なし、料金等の別作業除外。保護と168管理テスト、CI41476576016の全3job成功(35合成問題のDB保持テストを含む)。e227431をmain送信済み。",
       "acceptance": [
         {
           "id": "checks",
           "kind": "automated",
           "description": "資料保護と限定差分、合成DB、CI、main同期を確認",
           "verification": "チェックとリモートSHAを確認",
-          "status": "pending",
+          "status": "passed",
           "evidence": [
             "docs/mock-git-delivery-20261103.md"
           ],
-          "checked_at": null
+          "checked_at": "2026-11-02T16:00:01.799Z"
         },
         {
           "id": "review",
           "kind": "review",
           "description": "送信範囲と現行配置Writerの独立レビュー",
           "verification": "別担当が候補を読取確認",
-          "status": "pending",
+          "status": "passed",
           "evidence": [
             "docs/mock-git-delivery-20261103.md"
           ],
-          "checked_at": null,
-          "reviewer": null
+          "checked_at": "2026-11-02T16:00:01.799Z",
+          "reviewer": "publication_review"
         }
       ],
       "execution": {
         "worker": "root",
         "max_attempts": 3,
-        "attempts": []
+        "attempts": [
+          {
+            "number": 1,
+            "outcome": "passed",
+            "summary": "限定20ファイルをe227431でmainへ送信、独立レビューと資料保護/168管理テスト・CI全3job成功。",
+            "at": "2026-11-02T16:00:58.752Z",
+            "failed_criteria": []
+          }
+        ]
       }
     }
   ]

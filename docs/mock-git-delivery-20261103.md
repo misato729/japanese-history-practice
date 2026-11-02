@@ -11,3 +11,7 @@
 入れ替えの既存35問合成テストを `frontend/server-tests/learning-placement.test.ts` へ移し、CIで履歴/お気に入り保持・反復0・途中失敗の取消を実行可能にした。ローカルサービスが停止しているため今回のDB再検査は開始できず、再起動せずCIで確認する。
 
 2026-11-03の独立限定レビューは合格（publication_review）。現行Writerの再読と表題置換6例、料金/有料機能の除外、原典/問題データ未収録、CI用35問合成テストを確認した。
+
+送信コミット `e227431961d69ea4a9ed7008e047c7718d082bf7` をorigin/mainへpush済み。CI `41476576016` のharness/verify/netlify-static全3ジョブsuccessを確認し、35問の配置変更・履歴保持・反復・失敗時取消もCIで成功。168件のローカル管理テストも成功。完了記録だけは `[skip netlify] [skip ci]` で追送し、このコード検証結果を継承する。
+
+Netlifyの公開先は `6ae8927981dde2375a32cfea` のままで、今回のコードcommitが自動公開されていないことを確認した。
