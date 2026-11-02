@@ -1,10 +1,10 @@
 {
   "schema_version": 1,
-  "revision": 134,
-  "updated_at": "2026-11-02T00:12:30.266Z",
+  "revision": 138,
+  "updated_at": "2026-11-02T00:58:17.385Z",
   "workspace_relative_to_repo": ".",
   "active_context": "development",
-  "last_checkpoint": "docs/workflow/handoffs/2026-11-02T00-12-30-266Z-r134.json",
+  "last_checkpoint": "docs/workflow/handoffs/2026-11-02T00-58-17-385Z-r138.json",
   "gate_policy": {
     "version": 1,
     "legacy_task_ids": []
@@ -2819,6 +2819,69 @@
             "outcome": "passed",
             "summary": "両版で7回帰テスト・独立レビュー・実Netlify条件の静的生成と公開先検査が成功。既存記事/空state保持。対象外のアプリ変更なし。",
             "at": "2026-11-02T00:12:26.832Z",
+            "failed_criteria": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "fix_template_favorites_session_refresh",
+      "context": "development",
+      "title": "汎用テンプレートで再ログイン後のお気に入り一覧を再取得する",
+      "status": "done",
+      "depends_on": [],
+      "authorization": "requested",
+      "request_ref": "2026-11-02ユーザーが前回の対象外事項について「では、改めてお気に入りの不具合を修正してください」と明示依頼。",
+      "next_action": "完了記録だけをskip netlify/skip ciでpushする",
+      "evidence": [
+        "docs/template-favorites-session-fix.md"
+      ],
+      "last_verified_at": "2026-11-02T00:58:10.917Z",
+      "verification_scope": "修正前9件中1失敗で同一利用者セッション更新後の再取得欠落を再現。修正後14件/クリーン全体120件/型成功、独立レビュー成功。c6a0dfcのCI41369381323全ジョブ成功、Linux PC/SP10件は失敗/再試行なし。ローカルE2Eは共通クリック待ち失敗で未確認扱いを保持しCIで代替。テンプレート既存記事と配布用state0保持。公開なし。",
+      "acceptance": [
+        {
+          "id": "checks",
+          "kind": "automated",
+          "description": "再現テストの修正前失敗と修正後成功、同一利用者更新/古い応答/ログアウト境界、PC/SP操作を確認する",
+          "verification": "対象に必要な既存検査を選び、結果と根拠を記録する",
+          "status": "passed",
+          "evidence": [
+            "docs/template-favorites-session-fix.md"
+          ],
+          "checked_at": "2026-11-02T00:58:10.917Z"
+        },
+        {
+          "id": "review",
+          "kind": "review",
+          "description": "別担当が原因・再現方法・最小修正・旧応答抑止と既存差分保持を確認する",
+          "verification": "別担当のレビューで未解決の問題がないことを確認する",
+          "status": "passed",
+          "evidence": [
+            "docs/template-favorites-session-fix.md"
+          ],
+          "checked_at": "2026-11-02T00:58:10.917Z",
+          "reviewer": "ci_netlify_review"
+        }
+      ],
+      "execution": {
+        "worker": "root",
+        "max_attempts": 3,
+        "attempts": [
+          {
+            "number": 1,
+            "outcome": "failed",
+            "summary": "決定論14件/全体120件/型は成功。ローカルE2Eはページ共通のクリック待ちで全停止し操作未確認のため、Linux CIへ検証環境を切り替える。",
+            "at": "2026-11-02T00:50:46.909Z",
+            "failed_criteria": [
+              "checks",
+              "review"
+            ]
+          },
+          {
+            "number": 2,
+            "outcome": "passed",
+            "summary": "最小修正で14対象/120全体/型成功。独立レビューとLinux CI全成功、PC/SP10件は再試行なし。既存差分と空state保持。",
+            "at": "2026-11-02T00:58:13.229Z",
             "failed_criteria": []
           }
         ]
