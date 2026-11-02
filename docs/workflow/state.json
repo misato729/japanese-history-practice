@@ -3059,6 +3059,65 @@
           }
         ]
       }
+    },
+    {
+      "id": "adsense_release_20261102",
+      "context": "operations",
+      "title": "共通headへAdSenseを追加しGit・CI・Netlify・本番反映を確認",
+      "status": "doing",
+      "depends_on": [],
+      "authorization": "requested",
+      "request_ref": "2026-11-02 ユーザー: 日本史も同様に（指定AdSenseタグ追加、コミットpush、CI/Netlify自動配信・本番head確認）",
+      "next_action": "安定key付き共通head追加を検証し送信・CI・本番確認",
+      "evidence": [
+        "docs/adsense-release-20261102.md"
+      ],
+      "last_verified_at": null,
+      "verification_scope": "着手時のGit変更なし。今回の明示依頼で日本史のGit送信・Netlify自動配信を実施する。Fly/DB変更は対象外",
+      "acceptance": [
+        {
+          "id": "local",
+          "kind": "automated",
+          "description": "共通headのタグと属性・非重複を確認",
+          "verification": "実Nuxt設定とUnhead生成でsrc/async/crossorigin/data-hidと一件のみを検査、差分と資料保護",
+          "status": "pending",
+          "evidence": [],
+          "checked_at": null
+        },
+        {
+          "id": "release",
+          "kind": "automated",
+          "description": "今回のGit送信とCI全ジョブ・Netlify自動配信成功",
+          "verification": "対象SHAとremote同期、CI全jobとNetlify同SHA Published",
+          "status": "pending",
+          "evidence": [],
+          "checked_at": null
+        },
+        {
+          "id": "public",
+          "kind": "automated",
+          "description": "本番headへの追加と読込後/遷移後の非重複",
+          "verification": "複数URLのHTMLと実ブラウザDOMで指定script一件を確認",
+          "status": "pending",
+          "evidence": [],
+          "checked_at": null
+        },
+        {
+          "id": "review",
+          "kind": "review",
+          "description": "独立レビュー",
+          "verification": "差分範囲と実施済み検証・配信根拠を別担当が確認",
+          "status": "pending",
+          "evidence": [],
+          "checked_at": null,
+          "reviewer": null
+        }
+      ],
+      "execution": {
+        "worker": "japanese_adsense_owner",
+        "max_attempts": 3,
+        "attempts": []
+      }
     }
   ]
 }
