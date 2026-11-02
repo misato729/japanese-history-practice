@@ -9,8 +9,8 @@ test('legal pages are accessible without application login and use the current s
     const page = source(name)
     assert.doesNotMatch(page, /middleware\s*:\s*['"](?:auth|admin)/)
     assert.doesNotMatch(page, /(?:authenticate|ensureCurrentUser|authHeaders)/)
-    if (name === 'commercial-disclosure') assert.match(page, /テンプレートの草案/)
-    else {
+    assert.doesNotMatch(page, /テンプレートの草案|公開前に.*設定してください/)
+    if (name !== 'commercial-disclosure') {
       assert.doesNotMatch(page, /テンプレートの草案|公開前に.*設定してください/)
       assert.match(page, /制定日：2026年11月1日/)
     }
@@ -27,4 +27,17 @@ test('commercial disclosure retains seller readiness checks and request-based co
   assert.match(page, /申込みの意思決定に先立って十分な時間的余裕/)
   assert.match(page, /PRICE_LABEL/)
   assert.match(page, /immediate: PAYMENTS_ENABLED/)
+})
+
+test('premium policies retain one-time terms and advertising privacy', () => {
+  const terms = source('terms')
+  assert.match(terms, /PRICE_LABEL/)
+  assert.match(terms, /月額料金および自動更新はありません/)
+  assert.match(terms, /全額返金、支払取消し、異議申立て/)
+  assert.match(terms, /お気に入り機能は、有効なプレミアム会員資格/)
+  const privacy = source('privacy-policy')
+  assert.match(privacy, /StripeのCheckout Session ID、PaymentIntent ID、Charge ID/)
+  assert.match(privacy, /https:\/\/stripe\.com\/jp\/privacy/)
+  assert.match(privacy, /Google AdSense/)
+  assert.match(privacy, /adssettings\.google\.com\/partnerads/)
 })
