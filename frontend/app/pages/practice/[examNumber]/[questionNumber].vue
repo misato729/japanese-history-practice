@@ -92,6 +92,9 @@ const { $api: api } = useNuxtApp()
 const { isLoggedIn, user, accessToken, authHeaders, logout } = useAuth()
 const { canUseFavorites, isFavorite, setFavorite, toggleFavorite } = useFavorites()
 const updatingFavorite = ref(false)
+const incorrectReview = useIncorrectReview()
+const incorrectPractice = useIncorrectPractice()
+const isIncorrectReview = incorrectPractice.enabled
 
 const allExamNumbers = EXAM_CATALOG.map(exam => exam.exam_number)
 const allQuestionNumbers = computed(() => publishedQuestionNumbers(matchingCatalog.value?.data ?? []))
@@ -177,7 +180,7 @@ const isRandomPractice = computed(() => (
   && practiceSeed.value !== null
 ))
 const practiceSequence = computed<PracticePosition[]>(() => (
-  isRandomPractice.value
+  isIncorrectReview.value ? incorrectPractice.sequence.value : isRandomPractice.value
     ? shufflePracticeSequence(basePracticeSequence.value, practiceSeed.value!)
     : basePracticeSequence.value
 ))
@@ -190,6 +193,7 @@ const nextPracticePosition = computed(() => (
     : null
 ))
 const practiceNavigationQuery = computed(() => {
+  if (isIncorrectReview.value) return incorrectPractice.query.value
   if (hasConditionSelection.value) {
     const query: Record<string, string> = {
       exams: selectedPracticeExamNumbers.value.join(','),
@@ -242,13 +246,17 @@ const {
   query: requestQuery,
   headers: authHeaders,
   server: false,
+  immediate: !isIncorrectReview.value,
   // 画面遷移をAPIの応答待ちで止めず、起動待ち中も読み込み表示を出す。
   lazy: true,
   watch: false,
   getCachedData: () => undefined,
 })
 
+watch(incorrectPractice.ready, ready => { if (ready && incorrectPractice.sequence.value.length) void refresh() })
+
 const question = computed(() => {
+  if (isIncorrectReview.value && !incorrectPractice.ready.value) return null
   const response = questionResponse.value
   if (status.value !== 'success' || !requestIsCurrent(response?.requestContext)) return null
   const loaded = response?.data
@@ -364,7 +372,7 @@ watch([examNumber, questionNumber], () => {
 }, { flush: 'sync' })
 watch(() => route.query.answer_history_id, resetAnswer, { flush: 'sync' })
 watch([() => question.value?.id, () => question.value?.question_version], resetAnswer, { flush: 'sync' })
-watch([scopeGeneration, navigationGeneration], () => { if (pageActive) void refresh() }, { flush: 'post' })
+watch([scopeGeneration, navigationGeneration], () => { if (pageActive && (!isIncorrectReview.value || incorrectPractice.ready.value)) void refresh() }, { flush: 'post' })
 watch([practiceSubjectQuery, accessToken, () => user.value?.id, () => user.value?.paid_content_access, () => user.value?.role], () => { if (pageActive) void refreshCatalog() }, { flush: 'post' })
 
 watch(question, (loaded) => {
@@ -394,6 +402,7 @@ const submitAnswer = async () => {
   if (question.value.answer_type === 'essay' ? Boolean(essayAnswerIssue(submittedText.value, question.value.essay_constraints)) : question.value.answer_type === 'short_text' ? Boolean(shortAnswerIssue(submittedText.value, question.value.input_constraints)) : selectedChoiceId.value === null) return
   const currentId = question.value.id
   const currentVersion = question.value.question_version ?? 1
+  const reviewOwner = incorrectReview.sessionKey.value
   const requestVersion = ++answerRequestVersion
   const currentToken = accessToken.value
   const answerContext = currentRequestContext()
@@ -412,6 +421,7 @@ const submitAnswer = async () => {
       },
     )
     if (requestVersion !== answerRequestVersion || currentId !== question.value?.id || currentToken !== accessToken.value) return
+    if (reviewOwner === incorrectReview.sessionKey.value) incorrectReview.invalidate()
     answerResult.value = response.data
   }
   catch (error: any) {
@@ -562,7 +572,13 @@ onBeforeUnmount(() => window.removeEventListener('keydown', handleFavoriteModalK
 
 <template>
   <div class="page-wrap practice-wrap">
-    <div v-if="questionLoading && !retainedPassageContext" class="state-panel" role="status" aria-live="polite" aria-busy="true">
+    <section v-if="isIncorrectReview && (!incorrectPractice.ready.value || !incorrectPractice.sequence.value.length)" class="state-panel" aria-live="polite">
+      <template v-if="incorrectPractice.error.value"><h1>復習する問題を表示できません</h1><p role="alert">{{ incorrectPractice.error.value }}</p><button class="secondary-link" type="button" @click="incorrectPractice.prepare">再読み込み</button><NuxtLink v-if="!isLoggedIn" class="primary-link" :to="{ path: '/login', query: { redirect: route.fullPath } }">ログインへ</NuxtLink></template>
+      <template v-else-if="!incorrectPractice.ready.value"><p role="status">復習する問題を読み込んでいます。</p></template>
+      <template v-else><h1>復習する問題はありません</h1><p>最新の解答で間違えた問題は、すべて正解済みです。</p></template>
+      <NuxtLink class="secondary-link" to="/#practice-launcher">トップへ戻る</NuxtLink>
+    </section>
+    <div v-else-if="questionLoading && !retainedPassageContext" class="state-panel" role="status" aria-live="polite" aria-busy="true">
       <UIcon class="spin" name="i-lucide-loader-circle" aria-hidden="true" />
       <p>問題を読み込んでいます</p>
     </div>
@@ -593,6 +609,7 @@ onBeforeUnmount(() => window.removeEventListener('keydown', handleFavoriteModalK
         <div>
           <div class="practice-context">
             <span class="exam-label">模擬試験 {{ examNumber }}</span>
+            <span v-if="isIncorrectReview">間違えた問題を復習中</span>
             <span v-if="practiceProgress" class="practice-progress">{{ practiceProgress }}</span>
           </div>
           <h1 v-if="displayedGroup"><span class="group-number">大問{{ displayedGroup.group_number }}</span> {{ displayedGroup.title }}</h1>
@@ -695,13 +712,14 @@ onBeforeUnmount(() => window.removeEventListener('keydown', handleFavoriteModalK
             </ul>
           </div>
 
-          <div v-if="completed" class="completed-message">
+          <IncorrectReviewCompletion v-if="completed && isIncorrectReview" />
+          <div v-else-if="completed" class="completed-message">
             <strong>{{ completionHeading }}</strong>
             <p>{{ completionMessage }}</p>
             <NuxtLink class="secondary-link" to="/">トップへ戻る</NuxtLink>
           </div>
           <button v-else class="primary-link next-button" type="button" :disabled="loadingNext" @click="goToNextQuestion">
-            {{ loadingNext ? '読み込み中です' : '次の問題' }}
+            {{ loadingNext ? '読み込み中です' : isIncorrectReview ? (nextPracticePosition ? '次の復習問題' : '復習結果を確認') : '次の問題' }}
             <UIcon name="i-lucide-arrow-right" />
           </button>
         </section>
