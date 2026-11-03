@@ -33,7 +33,7 @@ test('horizontal sidebar controls start expanded on desktop and closed on mobile
 
 test('navigation closes the mobile list and shares the published catalog', () => {
   assert.match(sidebar, /watch\(\(\) => route.fullPath, closeMobileList\)/)
-  assert.equal(sidebar.match(/@click="closeMobileList"/g)?.length, 2)
+  assert.equal(sidebar.match(/@click="closeMobileList"/g)?.length, 3)
   assert.match(sidebar, /@keydown.esc.prevent="closeMobilePanel"/)
   assert.match(sidebar, /mobileToggle.value\?\.focus\(\)/)
   assert.doesNotMatch(sidebar, /keepMobileFocus|sidebar-backdrop|document.body.style.overflow/)
@@ -52,8 +52,10 @@ test('sidebar labels mock exams and links published groups without listing child
   assert.doesNotMatch(sidebar, /v-for="question in exam.question_numbers"/)
   assert.doesNotMatch(sidebar, /exam.title\s*\|\|/)
   assert.match(sidebar, /v-else-if="!exams.length"/)
-  assert.match(sidebar, /catalogExamStartNumber\(exam\) !== undefined/)
-  assert.match(sidebar, /exam.access !== 'paid_membership_required'/)
+  assert.match(sidebar, /createSidebarExamCatalog\(/)
+  assert.doesNotMatch(sidebar, /v-if="exam.groupLinks.length"/)
+  assert.match(sidebar, /プレミアム会員で利用/)
+  assert.match(sidebar, /演習を開始/)
 })
 
 test('group titles wrap within the sidebar and keep comfortable link targets', () => {
