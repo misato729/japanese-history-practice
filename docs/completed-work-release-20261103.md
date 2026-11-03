@@ -16,3 +16,12 @@
 - [docs/workflow/handoffs/2026-11-03T04-03-36-517Z-r188.json](../docs/workflow/handoffs/2026-11-03T04-03-36-517Z-r188.json) — 送信タスクの進捗・文脈・引き継ぎ記録。
 
 独立担当`premium_review`がコード・完了根拠・検査ログ・送信manifestを照合し、3版とも送信判定PASS。指摘された記録の不足項目を一覧へ追加し、実施済みの検査結果へ更新した。
+
+## 送信結果
+
+実装コミット`733aef9ebf4c4ff6ffe467e68a51db93d44e42a5`をmainへpushし、[CI](https://github.com/misato729/japanese-history-practice/actions/runs/41576037508)はすべて成功（harness、verify、netlify-static）。今回の関連ローカル再検査は世界史6件、テンプレート44件と型検査が成功。3repoの公開追跡ファイルの未コミット変更は解消した。原本・ローカル教材・秘密値・私用検証は送信していない。DB再操作・Fly配信・実メール送信・記事投稿なし。最後の完了記録だけのcommitは`[skip netlify] [skip ci]`を付ける。
+
+完了記録の追加ファイル：
+
+- [docs/workflow/handoffs/2026-11-03T04-19-33-117Z-r189.json](../docs/workflow/handoffs/2026-11-03T04-19-33-117Z-r189.json) — 合格評価又は送信完了の不変記録。
+- [docs/workflow/handoffs/2026-11-03T04-19-33-882Z-r190.json](../docs/workflow/handoffs/2026-11-03T04-19-33-882Z-r190.json) — 合格評価又は送信完了の不変記録。
