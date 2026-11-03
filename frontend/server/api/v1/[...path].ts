@@ -1,3 +1,5 @@
+import { handleUpdates } from '../../services/updates.ts'
+import { handleAchievement } from '../../services/achievement.ts'
 import { defineEventHandler, getRequestURL, setResponseStatus, type H3Event } from 'h3'
 import { authenticate } from '../../core/auth.ts'
 import { configuration } from '../../core/config.ts'
@@ -24,7 +26,7 @@ export async function apiHandler(event: H3Event) {
     // Signup, login and Stripe signatures supply their own authentication.
     const user = route.startsWith('auth/') || route === 'webhooks/stripe' ? null : await authenticate(event)
     if (event.method === 'POST' && /^questions\/[^/]+\/answer$/.test(route)) await throttle(event, 'answer')
-    for (const handler of [handleAccounts, handlePasswordReset, handleLearning, handlePayments]) {
+    for (const handler of [handleUpdates, handleAchievement, handleAccounts, handlePasswordReset, handleLearning, handlePayments]) {
       const result = await handler(event, parts, user)
       if (result !== undefined) return result
     }

@@ -1,10 +1,10 @@
 {
   "schema_version": 1,
-  "revision": 194,
-  "updated_at": "2026-11-03T04:56:04.894Z",
+  "revision": 199,
+  "updated_at": "2026-11-03T21:18:23.702Z",
   "workspace_relative_to_repo": ".",
-  "active_context": "operations",
-  "last_checkpoint": "docs/workflow/handoffs/2026-11-03T04-56-04-894Z-r194.json",
+  "active_context": "development",
+  "last_checkpoint": "docs/workflow/handoffs/2026-11-03T21-18-23-702Z-r199.json",
   "gate_policy": {
     "version": 1,
     "legacy_task_ids": []
@@ -4307,6 +4307,145 @@
             "outcome": "passed",
             "summary": "既存2Netlifyを最新main SHAでPublished、Fly各2VMで同image・実ソースhash・env/guest/region/ID保持とhealth/販売設定を確認。JPは同内容local_path再試行成功、注入hash・各20profile・移行台帳前後一致。匿名PC/SP4状態と独立レビューPASS。World事前台帳未取得は区別",
             "at": "2026-11-03T04:56:03.832Z",
+            "failed_criteria": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "mypage_sidebar_parity_20261104",
+      "context": "development",
+      "title": "日本史のマイページと静的大問名を整合",
+      "status": "done",
+      "depends_on": [],
+      "authorization": "requested",
+      "request_ref": "2026-11-04 マイページとサイドバーの件、日本史にも適用してください",
+      "next_action": "元フォルダへ差分適用。送信・本番反映は未依頼",
+      "evidence": [
+        "docs/mypage-sidebar-20261104.md"
+      ],
+      "last_verified_at": "2026-11-03T20:14:05Z",
+      "verification_scope": "全フロント245件成功後locked除外追加2件成功、最終型成功、隔離PostgreSQL新API3件skipなし成功、PC1280/SP390合成Nuxtの順序/設定anchor/日本史固定大問/複数模試復習1.3→2.4を確認。独立最終レビューachievement_review PASS。送信/本番未依頼",
+      "acceptance": [
+        {
+          "id": "checks",
+          "kind": "automated",
+          "description": "型と合成テスト成功",
+          "verification": "関連単体と隔離API/型",
+          "status": "passed",
+          "evidence": [
+            "docs/mypage-sidebar-20261104.md"
+          ],
+          "checked_at": "2026-11-03T20:14:05Z"
+        },
+        {
+          "id": "ui",
+          "kind": "automated",
+          "description": "PC/SPの実操作",
+          "verification": "合成ローカルNuxtで画面とリンク操作",
+          "status": "passed",
+          "evidence": [
+            "docs/mypage-sidebar-20261104.md"
+          ],
+          "checked_at": "2026-11-03T20:14:05Z"
+        },
+        {
+          "id": "review",
+          "kind": "review",
+          "description": "独立レビュー",
+          "verification": "別担当の互換性と固有値レビュー",
+          "status": "passed",
+          "evidence": [
+            "docs/mypage-sidebar-20261104.md"
+          ],
+          "checked_at": "2026-11-03T20:14:05Z",
+          "reviewer": "achievement_review"
+        }
+      ],
+      "execution": {
+        "worker": "jp_parity_implementer",
+        "max_attempts": 3,
+        "attempts": [
+          {
+            "number": 1,
+            "outcome": "failed",
+            "summary": "初回移植で日本史未実装のusePracticeAttempt依存を検出。既存の演習巡回へexact位置列を渡す方式へ変更し、模試番号の併送も追加",
+            "at": "2026-11-03T20:12:27.466Z",
+            "failed_criteria": [
+              "checks",
+              "ui",
+              "review"
+            ]
+          },
+          {
+            "number": 2,
+            "outcome": "passed",
+            "summary": "型/全フロント245件/追加2件/隔離API3件と合成PC/SP、複数模試の正確な復習継続、最終独立レビュー成功",
+            "at": "2026-11-03T20:14:06.123Z",
+            "failed_criteria": []
+          }
+        ]
+      }
+    },
+    {
+      "id": "updates_history_20261104",
+      "context": "development",
+      "title": "トップの更新履歴と管理画面CRUDを追加",
+      "status": "done",
+      "depends_on": [],
+      "authorization": "requested",
+      "request_ref": "2026-11-04 トップの利用にあたっての下へ日付と内容、降順、管理画面管理、初期3件を日本史世界史へ",
+      "next_action": "送信・本番反映は未依頼。通常DB適用はサービス起動時",
+      "evidence": [
+        "docs/updates-history-20261104.md"
+      ],
+      "last_verified_at": "2026-11-03T21:18:18Z",
+      "verification_scope": "両隔離DB HTTP検査/型成功、初期3件の降順と権限・CRUD・競合・再適用保持確認。合成管理者のPC/SP追加編集再読込削除とトップ位置/幅確認。独立レビューPASS。世界史通常local011適用済、日本史通常local未起動で適用未実施。未送信・未公開",
+      "acceptance": [
+        {
+          "id": "checks",
+          "kind": "automated",
+          "description": "権限/入力/CRUD/競合と型",
+          "verification": "隔離DB HTTP検査と型",
+          "status": "passed",
+          "evidence": [
+            "docs/updates-history-20261104.md"
+          ],
+          "checked_at": "2026-11-03T21:18:18Z"
+        },
+        {
+          "id": "ui",
+          "kind": "automated",
+          "description": "トップ位置と管理PC/SP操作",
+          "verification": "合成管理者で追加編集削除と再読込",
+          "status": "passed",
+          "evidence": [
+            "docs/updates-history-20261104.md"
+          ],
+          "checked_at": "2026-11-03T21:18:18Z"
+        },
+        {
+          "id": "review",
+          "kind": "review",
+          "description": "独立レビュー",
+          "verification": "別担当の差分/RBAC/データ保持確認",
+          "status": "passed",
+          "evidence": [
+            "docs/updates-history-20261104.md"
+          ],
+          "checked_at": "2026-11-03T21:18:18Z",
+          "reviewer": "achievement_review"
+        }
+      ],
+      "execution": {
+        "worker": "updates_implementer",
+        "max_attempts": 3,
+        "attempts": [
+          {
+            "number": 1,
+            "outcome": "passed",
+            "summary": "更新履歴の両隔離DB権限/CRUD/競合と型、合成PCSP、独立レビュー成功",
+            "at": "2026-11-03T21:18:23.328Z",
             "failed_criteria": []
           }
         ]

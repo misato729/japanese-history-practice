@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { selectReviewPositions } from '~/utils/reviewPositions'
 import type { NitroFetchOptions } from 'nitropack/types'
 import { EXAM_CATALOG, FREE_EXAM_MAX, publishedQuestionNumbers, type ExamCatalogEntry } from '~/utils/examCatalog'
 import type { LearningBlock as ContentBlock, GroupPassage, PassageReference, InputConstraints, SourceReference as StructuredSource } from '../../../../shared/types/learning'
@@ -115,7 +116,7 @@ const practiceSubjectQuery = computed<Record<string, string>>((previous) => {
   return previous && JSON.stringify(previous) === JSON.stringify(next) ? previous : next
 })
 const conditionScope = computed(() => JSON.stringify([
-  ...['exams', 'questions', 'order', 'seed'].map(key => route.query[key] ?? null), practiceSubjectQuery.value,
+  ...['exams', 'questions', 'order', 'seed', 'review'].map(key => route.query[key] ?? null), practiceSubjectQuery.value,
 ]))
 const scopeGeneration = ref(0)
 const requestInstance = useId()
@@ -129,7 +130,7 @@ const currentRequestContext = (): PracticeRequestTag => ({ instance: requestInst
 const requestIsCurrent = (context: PracticeRequestTag | undefined) => pageActive && isCurrentPracticeRequest(context, currentRequestContext())
 const hasSubjectFilter = computed(() => Object.keys(practiceSubjectQuery.value).length > 0)
 const hasConditionSelection = computed(() => (
-  route.query.exams !== undefined || route.query.questions !== undefined || hasSubjectFilter.value
+  route.query.review !== undefined || route.query.exams !== undefined || route.query.questions !== undefined || hasSubjectFilter.value
 ))
 const selectedSubjectLabel = computed(() => [
   MAJOR_CATEGORIES.find(item => item.value === practiceSubjectQuery.value.major_category_code)?.label,
@@ -169,7 +170,7 @@ const {
   lazy: true,
   watch: false,
 })
-const basePracticeSequence = computed<PracticePosition[]>(() => selectPracticePositions(matchingCatalog.value?.data ?? [], selectedPracticeExamNumbers.value, selectedPracticeQuestionNumbers.value))
+const basePracticeSequence = computed<PracticePosition[]>(() => selectReviewPositions(matchingCatalog.value?.data ?? [], selectedPracticeExamNumbers.value, selectedPracticeQuestionNumbers.value, route.query.review))
 const isRandomPractice = computed(() => (
   hasConditionSelection.value
   && practiceOrder.value === 'random'
@@ -194,6 +195,7 @@ const practiceNavigationQuery = computed(() => {
       exams: selectedPracticeExamNumbers.value.join(','),
       ...practiceSubjectQuery.value,
     }
+    if (typeof route.query.review === 'string') query.review = route.query.review
     if (selectedPracticeQuestionNumbers.value !== undefined) query.questions = selectedPracticeQuestionNumbers.value.join(',')
     if (isRandomPractice.value) {
       query.order = 'random'
