@@ -77,3 +77,7 @@ Nuxt / Nitro / pg / 番号付きSQL / PostgreSQLを優先し、既存差分を�
 ### 静的サイドバーの配信確認完了
 
 `static_sidebar_release_20261103`。4mainの限定push・全CI、既存3Netlify同実装SHA公開を確認。各本番の静的/取得後×PC/SPを操作し12画像と親子premiumリンクを確認、独立最終レビューPASS。templateはpushのみ。実装時点の未送信状態は解消。呼出回数/ログイン無料/降格は合成・回帰の確認で、本番計測とは区別。[全変更ファイルと配信の証拠](../../static-sidebar-release.md)。最後の記録コミットは`[skip netlify] [skip ci]`で送信し、別作業は保持する。
+
+## 2026-11-03 完了済み作業の送信
+
+`completed_work_release_20261103`。完了済みの未コミット作業の送信が明示依頼された。[対象と確認](../../completed-work-release-20261103.md)。main送信とCIのみ、DBの再操作・Fly配信・実メール・記事投稿なし。

@@ -1,10 +1,10 @@
 {
   "schema_version": 1,
-  "revision": 187,
-  "updated_at": "2026-11-03T01:09:00.742Z",
+  "revision": 188,
+  "updated_at": "2026-11-03T04:03:36.517Z",
   "workspace_relative_to_repo": ".",
   "active_context": "development",
-  "last_checkpoint": "docs/workflow/handoffs/2026-11-03T01-09-00-742Z-r187.json",
+  "last_checkpoint": "docs/workflow/handoffs/2026-11-03T04-03-36-517Z-r188.json",
   "gate_policy": {
     "version": 1,
     "legacy_task_ids": []
@@ -4157,6 +4157,56 @@
             "failed_criteria": []
           }
         ]
+      }
+    },
+    {
+      "id": "completed_work_release_20261103",
+      "context": "development",
+      "title": "日本史の公開状況記録の完了確認と限定Git送信",
+      "status": "doing",
+      "depends_on": [],
+      "authorization": "requested",
+      "request_ref": "2026-11-03 ユーザー: 作業が終わっていたらコミット・pushしてください",
+      "next_action": "完了証拠・関連検査・独立レビューを確認してmainへ送信しCIを確認",
+      "evidence": [
+        "docs/completed-work-release-20261103.md"
+      ],
+      "last_verified_at": null,
+      "verification_scope": "Git commit/pushとCIのみ。DB再操作/本番手動配信/実メール/記事投稿なし",
+      "acceptance": [
+        {
+          "id": "checks",
+          "kind": "automated",
+          "description": "checks",
+          "verification": "送信候補の関連検査と資料保護、完了記録照合",
+          "status": "pending",
+          "evidence": [],
+          "checked_at": null
+        },
+        {
+          "id": "review",
+          "kind": "review",
+          "description": "review",
+          "verification": "別担当の差分・証拠レビュー",
+          "status": "pending",
+          "evidence": [],
+          "checked_at": null,
+          "reviewer": null
+        },
+        {
+          "id": "delivery",
+          "kind": "automated",
+          "description": "delivery",
+          "verification": "main送信・実装SHAのCI成功・remote一致",
+          "status": "pending",
+          "evidence": [],
+          "checked_at": null
+        }
+      ],
+      "execution": {
+        "worker": "completed_work_implementer",
+        "max_attempts": 3,
+        "attempts": []
       }
     }
   ]

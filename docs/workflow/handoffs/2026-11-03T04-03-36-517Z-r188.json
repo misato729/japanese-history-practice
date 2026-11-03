@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "revision": 188,
+  "state_hash": "e8a8d4a415dd790198b29ddfc5084e4394453fd2daa7f24cb4915cc99ceb8c2f",
+  "recorded_at": "2026-11-03T04:03:36.517Z",
+  "timezone": "UTC",
+  "context": "development",
+  "task": "completed_work_release_20261103",
+  "summary": "完了済みの未コミット作業の送信が明示依頼された。差分と既存検証を照合し範囲外反例/公開記録を修正、mainへ限定送信",
+  "next_action": "完了証拠・関連検査・独立レビューを確認してmainへ送信しCIを確認",
+  "missing_local_files": [],
+  "git": {
+    "available": true,
+    "head": "d2ad28d398b748fba2cb434a42f64c679aba559a",
+    "changes": [
+      {
+        "status": " M",
+        "path": "docs/workflow/contexts/development.md"
+      },
+      {
+        "status": " M",
+        "path": "docs/workflow/contexts/product.md"
+      },
+      {
+        "status": "??",
+        "path": "docs/completed-work-release-20261103.md"
+      }
+    ]
+  },
+  "file_hashes": {
+    "AGENTS.md": "b1f49ae797bb05bdaedfd87505892062ec0fe89d7e782ad06e936c78f34cc737",
+    "README.md": "04104ac1acbc3bf6eca054eecd359ef2a3bc46e71db815b41c0023b9a9bce5e4",
+    "docs/testing.md": "93d230e9a43d152e2a40c44defb8a05e50819063b54e7cc81042003136d2e607",
+    "docs/workflow/README.md": "45ae8a20c72aa9c36f17f24c1d5b9fa40f45e5db2e89f44a9e1888e60aeea2fc",
+    "docs/workflow/policy.json": "d21fbb063281b36ef860225f34009c32b37dd2153fbd35138bb872a6f5f947f7",
+    "docs/workflow/task.example.json": "4bf161efce99b7d0a26798e3445d1f142505e512eedd591ea11cfb194d67da9f",
+    "docs/workflow/contexts/product.md": "fa0904a2baea969a6dede5df9a16e072e86e2f1e2b18d5528bb341b2fd3f673c",
+    "docs/workflow/contexts/development.md": "73a3511ed9d39faf5b4061d92ed1db8853c9da6efc22083c2c2b9f246473b686",
+    "docs/workflow/contexts/operations.md": "c7b32e48e580804f2d0cb4ccb3f914ad91eb7bc9a7f48dbe0dbf0950e209469a",
+    "scripts/context.mjs": "3828c41d1cc5a6977b8444035e094e61e1c9895fcaa9451ecb1919e799ecaffc",
+    "scripts/context.test.mjs": "bc14ad1ba5d331f75d5f34923ac59a2cfe29b5b1c12174b0aa57e6d8ee572923",
+    "scripts/workflow-policy.mjs": "60535f2c9bf42203c059ca39a0b254c168b7cfb2468904a3842725fe3797141e",
+    "scripts/workflow-policy.test.mjs": "394287e7d1e84756a3ac8833918f964ee66f0ef2c34934d121d055fb37af4782",
+    "scripts/workspace-policy.mjs": "685272056c1fcaba765a5c1529b13a5c703aa9c6708baf13b0d63d0d189d6fcb",
+    "scripts/workspace-policy.test.mjs": "2f5517e76009fd3541cddfab0c7577f60870477a15677f53ec3284bcc434bd21",
+    "scripts/check-private-sources.mjs": "1d28447b51b39591d42151f236b837b33d695662168ee5c71500205aa0de96af",
+    "scripts/check-private-sources.test.mjs": "6e3194bd9dd502d3c40390f101d0313593eb3494e50fb11ea33da769cf615c14",
+    ".gitignore": "f7c4953bb35265d0147a09103e0363c537cbd86c8b06c19b48b44d735ead6b34",
+    ".dockerignore": "84869332c30a8da35d8f3b98b4cf16ab6c20634d2ae015710694b641846adbbe",
+    ".githooks/pre-push": "3529b300f7a655102ad899ab31fa8b2c404ec37479d1195aa9bcd3efa97bf90c",
+    "config/exam.json": "d4618a65d0eccc07da8230d3133283a41f93a2ad689dc5798608490545985b03",
+    "docs/verification.md": "c9232834f12be4380417793aa4bd210e2543f44490fde109d2a1e1d437498d70"
+  },
+  "verification_note": "ハッシュ・Git・記録済み完了条件の確認であり、テストや出典照合の自動再実行ではない。依頼・権限は最新のユーザー指示とAGENTS.mdに従う。"
+}
