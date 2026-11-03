@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "revision": 192,
+  "state_hash": "aa00177c3b54879d5904f181f0d47baa234516b3673a16f99dbf077bc345c9f3",
+  "recorded_at": "2026-11-03T04:49:46.084Z",
+  "timezone": "UTC",
+  "context": "operations",
+  "task": "completed_work_redeploy_20261103",
+  "summary": "初回Fly deployはrelease commandの論述カタログ検査で中断し、既存2VMは保持。既存API注入値を内容非表示で復元し、全20profileが現ソースで有効と確認。ファイル本体を変更せず、一時configだけlocal_pathで同じbytesを渡す方法に修正。同imageで再試行し既存設定/注入checksumと台帳前後を比較する。",
+  "next_action": "残回数内で配信結果/検証を再評価し、成功した配信を重複実行しない",
+  "missing_local_files": [],
+  "git": {
+    "available": true,
+    "head": "50321b2e39de3e565ea67d23b6482f3594686320",
+    "changes": [
+      {
+        "status": " M",
+        "path": "docs/workflow/contexts/operations.md"
+      },
+      {
+        "status": "??",
+        "path": "docs/completed-work-redeploy-20261103.md"
+      }
+    ]
+  },
+  "file_hashes": {
+    "AGENTS.md": "b1f49ae797bb05bdaedfd87505892062ec0fe89d7e782ad06e936c78f34cc737",
+    "README.md": "04104ac1acbc3bf6eca054eecd359ef2a3bc46e71db815b41c0023b9a9bce5e4",
+    "docs/testing.md": "93d230e9a43d152e2a40c44defb8a05e50819063b54e7cc81042003136d2e607",
+    "docs/workflow/README.md": "45ae8a20c72aa9c36f17f24c1d5b9fa40f45e5db2e89f44a9e1888e60aeea2fc",
+    "docs/workflow/policy.json": "d21fbb063281b36ef860225f34009c32b37dd2153fbd35138bb872a6f5f947f7",
+    "docs/workflow/task.example.json": "4bf161efce99b7d0a26798e3445d1f142505e512eedd591ea11cfb194d67da9f",
+    "docs/workflow/contexts/product.md": "fa0904a2baea969a6dede5df9a16e072e86e2f1e2b18d5528bb341b2fd3f673c",
+    "docs/workflow/contexts/development.md": "22608bcf5676780726d8ce64cb859ae6f557d33372eafd7e686520be8c7be332",
+    "docs/workflow/contexts/operations.md": "1b13ffaa3d71bf3815e2977f7dbffecdbe8efcac8cf6c55e9ae9aef25b945bc2",
+    "scripts/context.mjs": "3828c41d1cc5a6977b8444035e094e61e1c9895fcaa9451ecb1919e799ecaffc",
+    "scripts/context.test.mjs": "bc14ad1ba5d331f75d5f34923ac59a2cfe29b5b1c12174b0aa57e6d8ee572923",
+    "scripts/workflow-policy.mjs": "60535f2c9bf42203c059ca39a0b254c168b7cfb2468904a3842725fe3797141e",
+    "scripts/workflow-policy.test.mjs": "394287e7d1e84756a3ac8833918f964ee66f0ef2c34934d121d055fb37af4782",
+    "scripts/workspace-policy.mjs": "685272056c1fcaba765a5c1529b13a5c703aa9c6708baf13b0d63d0d189d6fcb",
+    "scripts/workspace-policy.test.mjs": "2f5517e76009fd3541cddfab0c7577f60870477a15677f53ec3284bcc434bd21",
+    "scripts/check-private-sources.mjs": "1d28447b51b39591d42151f236b837b33d695662168ee5c71500205aa0de96af",
+    "scripts/check-private-sources.test.mjs": "6e3194bd9dd502d3c40390f101d0313593eb3494e50fb11ea33da769cf615c14",
+    ".gitignore": "f7c4953bb35265d0147a09103e0363c537cbd86c8b06c19b48b44d735ead6b34",
+    ".dockerignore": "84869332c30a8da35d8f3b98b4cf16ab6c20634d2ae015710694b641846adbbe",
+    ".githooks/pre-push": "3529b300f7a655102ad899ab31fa8b2c404ec37479d1195aa9bcd3efa97bf90c",
+    "config/exam.json": "d4618a65d0eccc07da8230d3133283a41f93a2ad689dc5798608490545985b03",
+    "docs/verification.md": "c9232834f12be4380417793aa4bd210e2543f44490fde109d2a1e1d437498d70"
+  },
+  "attempt": {
+    "outcome": "failed",
+    "number": 1
+  },
+  "verification_note": "ハッシュ・Git・記録済み完了条件の確認であり、テストや出典照合の自動再実行ではない。依頼・権限は最新のユーザー指示とAGENTS.mdに従う。"
+}
