@@ -41,3 +41,8 @@
 - `frontend/tests/reviewPositions.test.ts`
 - `frontend/tests/sidebarCatalogAccess.test.ts`
 - `frontend/tests/siteHeaderMenu.test.ts`
+
+
+## 2026-11-04 本番公開完了
+
+上記の「未依頼・未送信・未公開」は実装時点の記録。追加の明示依頼でcommit/push、CI全成功、Fly/Netlify公開、本番DB011と初期3件を確認した。PC/SPと独立最終レビューPASS。[配信SHA・CI・全変更と確認範囲](updates-release-20261104.md)。
